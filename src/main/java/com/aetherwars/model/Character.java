@@ -19,8 +19,8 @@ public class Character extends Card{
     this.exp = 0;
     this.lvl = 1;
   }
-  public Character(String name, String description, int mana, String imageLoc, Type type, int attack, int health, int attUp, int healthUp){
-    super(name, description, mana, imageLoc);
+  public Character(int id, String name, String description, int mana, String imageLoc, Type type, int attack, int health, int attUp, int healthUp){
+    super(id, name, description, mana, imageLoc);
     this.type = type;
     this.attack = attack;
     this.attUp = attUp;
@@ -31,7 +31,7 @@ public class Character extends Card{
   }
   //copy constructor
   public Character(Character c){
-    this(c.getName(), c.getDesc(), c.getMana(), c.getImageLoc(), c.getType(), c.getAttack(), c.getHealth(), c.getAttUp(), c.getHealthUp());
+    this(c.getId(), c.getName(), c.getDesc(), c.getMana(), c.getImageLoc(), c.getType(), c.getAttack(), c.getHealth(), c.getAttUp(), c.getHealthUp());
   }
   public void setType(Type newType){
     this.type = newType;

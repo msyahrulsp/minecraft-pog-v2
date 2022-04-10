@@ -9,8 +9,8 @@ public class Potion extends tempSpell{
         this.attackBuff =0;
         this.healthBuff = 0;
     }
-    public Potion(String name, String description, int mana, String imageLoc, int duration, int attackBuff, int healthBuff){
-        super(name, description, mana, imageLoc, spellType.PTN, duration);
+    public Potion(int id, String name, String description, int mana, String imageLoc, int duration, int attackBuff, int healthBuff){
+        super(id, name, description, mana, imageLoc, spellType.PTN, duration);
         this.attackBuff = attackBuff;
         this.healthBuff = healthBuff;
     }

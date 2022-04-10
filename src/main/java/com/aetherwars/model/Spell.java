@@ -7,8 +7,8 @@ class Spell extends Card {
         super();
         this.type = spellType.PTN;
     }
-    public Spell(String name, String description, int mana, String imageLoc, spellType type){
-        super(name, description, mana, imageLoc);
+    public Spell(int id, String name, String description, int mana, String imageLoc, spellType type){
+        super(id, name, description, mana, imageLoc);
         this.type = type;
     }
     public void setType(spellType newType){
@@ -24,8 +24,8 @@ class tempSpell extends Spell{
         super();
         this.duration = 0;
     }
-    public tempSpell(String name, String description, int mana, String imageLoc, spellType type, int duration){
-        super(name, description, mana, imageLoc, type);
+    public tempSpell(int id, String name, String description, int mana, String imageLoc, spellType type, int duration){
+        super(id, name, description, mana, imageLoc, type);
         this.duration = duration;
     }
 }

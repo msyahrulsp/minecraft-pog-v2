@@ -1,21 +1,30 @@
 package com.aetherwars.model;
 
 public class Card {
+    protected int id;
     protected String name;
     protected String description;
     protected int mana;
     protected String imageLoc;
     public Card(){
+        this.id = 0;
         this.name = "-";
         this.description = "-";
         this.mana = 0;
-        this.imageLoc = "card/error-card.png"
+        this.imageLoc = "card/error-card.png";
     }
-    public Card(String name, String description, int mana, String imageLoc){
+    public Card(int id, String name, String description, int mana, String imageLoc){
+        this.id = id;
         this.name = name;
         this.description = description;
         this.mana = mana;
         this.imageLoc = imageLoc;
+    }
+    public int getId(){
+        return this.id;
+    }
+    public void setId(int id){
+        this.id = id;
     }
     public void setName(String newName){
         this.name = newName;
