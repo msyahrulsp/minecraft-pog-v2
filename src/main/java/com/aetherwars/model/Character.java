@@ -1,7 +1,8 @@
 package com.aetherwars.model;
-import com.aetherwars.model.Card;
 
 public class Character extends Card{
+  //handle death di main/player aj karena keregister death nya setiap ganti turn
+  private Type type;
   private int attack;
   private int attUp;
   private int health;
@@ -10,6 +11,7 @@ public class Character extends Card{
   private int lvl;
   public Character(){
     super();
+    this.type = Type.OVERWORLD;
     this.attack = 0;
     this.attUp = 1;
     this.health = 0;
@@ -17,8 +19,9 @@ public class Character extends Card{
     this.exp = 0;
     this.lvl = 1;
   }
-  public Character(String name, String description, Type type, int attack, int health, int attUp, int healthUp){
-    super(name, description, type);
+  public Character(String name, String description, int mana, String imageLoc, Type type, int attack, int health, int attUp, int healthUp){
+    super(name, description, mana, imageLoc);
+    this.type = type;
     this.attack = attack;
     this.attUp = attUp;
     this.health = health;
@@ -26,17 +29,39 @@ public class Character extends Card{
     this.exp = 0;
     this.lvl = 1;
   }
+  //copy constructor
+  public Character(Character c){
+    this(c.getName(), c.getDesc(), c.getMana(), c.getImageLoc(), c.getType(), c.getAttack(), c.getHealth(), c.getAttUp(), c.getHealthUp());
+  }
+  public void setType(Type newType){
+    this.type = newType;
+  }
+  public Type getType(){
+    return this.type;
+  }
   public void setAttack(int newAttack){
     this.attack = newAttack;
   }
   public int getAttack(){
     return this.attack;
   }
+  public void setAttUp(int newAttUp){
+    this.attUp = newAttUp;
+  }
+  public int getAttUp(){
+    return this.attUp;
+  }
   public void setHealth(int newHealth){
     this.health = newHealth;
   }
   public int getHealth(){
     return this.health;
+  }
+    public void setHealthUp(int newHealthUp){
+    this.healthUp = newHealthUp;
+  }
+  public int getHealthUp(){
+    return this.healthUp;
   }
   private void handleLevelup(){
     int lvlxpcap = this.lvl * 2 - 1;
@@ -51,12 +76,12 @@ public class Character extends Card{
   }
   public void addExp(int expAmount){
     if (this.lvl < 10){
-      this.exp += xpAmount;
+      this.exp += expAmount;
       handleLevelup();
     }
   }
   public int getExp(){
-    return this.Exp;
+    return this.exp;
   }
   public void setLvl(int newLvl){
     this.lvl = newLvl;
@@ -66,6 +91,6 @@ public class Character extends Card{
   }
   @Override
   public String toString() {
-    return super.toString() + "\nAttack: " + this.attack + "\nHealth: " + this.health;
+    return super.toString() + "\nType: " + this.type + "\nAttack: " + this.attack + "\nHealth: " + this.health;
   }
 }
