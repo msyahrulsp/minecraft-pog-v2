@@ -1,14 +1,24 @@
 package com.aetherwars.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Level extends Spell{
-    private static int idcounter = 400;
+    public static ArrayList<Level> levelList = new ArrayList<Level>(); //berisi Level "Murni" tapi seharusnya cuma 1 jenis potion untuk level
     public Level(){
-        super(Level.idcounter++,"XP-Bottle","Menambahkan 1 level pada card Karater yang dipilih", 2, "card/spell/xp_bottle.png", spellType.LVL);
+        super(401,"XP-Bottle","Menambahkan 1 level pada card Karater yang dipilih", 2, "card/spell/xp_bottle.png", spellType.LVL);
+        Level.levelList.add(this);
     }
     public Level(Level l){
         super(l);
+    }
+    public Level getLevel(int id){
+        for (Level l : Level.levelList){
+            if (l.getId() == id){
+                return l;
+            }
+        }
+        return null;
     }
     @Override
     public void useOn(Character c){

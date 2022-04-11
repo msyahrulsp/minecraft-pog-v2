@@ -1,10 +1,24 @@
 package com.aetherwars.model;
 public class Swap extends tempSpell{
+    public static ArrayList<Swap> swapList = new ArrayList<Swap>(); //berisi swap "Murni"
+    public Swap(){
+        super();
+        this.type = spellType.SWAP;
+    }
     public Swap(int id, String name, String description, int mana, String imageLoc, int duration){
         super(id, name, description, mana, imageLoc, spellType.SWAP, duration);
+        Swap.swapList.add(this);
     }
     public Swap(Swap s){
         super(s);
+    }
+    public Swap getSwap(int id){
+        for(Swap s : Swap.swapList){
+            if(s.getId() == id){
+                return s;
+            }
+        }
+        return null;
     }
     @Override
     public void useOn(Character c){

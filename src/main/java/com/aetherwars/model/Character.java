@@ -70,7 +70,7 @@ public class Character extends Card{
     return this.type;
   }
   public void setAttack(int newAttack){
-    this.attack = newAttack;
+    this.attack = newAttack > 0 ? newAttack : 0;
   }
   public int getAttack(){
     return this.attack;
@@ -82,12 +82,12 @@ public class Character extends Card{
     return this.attUp;
   }
   public void setHealth(int newHealth){
-    this.health = newHealth;
+    this.health = newHealth > 0 ? newHealth : 0;
   }
   public int getHealth(){
     return this.health;
   }
-    public void setHealthUp(int newHealthUp){
+  public void setHealthUp(int newHealthUp){
     this.healthUp = newHealthUp;
   }
   public int getHealthUp(){
@@ -172,12 +172,44 @@ public class Character extends Card{
       } 
     }
   };
+  public void serang(Character c){
+    System.out.println(this.name + " menyerang Karakter " + c.getName() + " Lawan");
+    if (this.type == Type.OVERWORLD){
+      if (c.getType() == Type.OVERWORLD){
+        c.setHealth(c.getHealth() - this.attack);
+      } else if (c.getType() == Type.END){
+        c.setHealth(c.getHealth() - this.attack*2);
+      } else if (c.getType() == Type.NETHER){
+        c.setHealth(c.getHealth() - this.attack/2);
+      } 
+    } else if (this.type == Type.END){
+      if (c.getType() == Type.OVERWORLD){
+        c.setHealth(c.getHealth() - this.attack/2);
+      } else if (c.getType() == Type.END){
+        c.setHealth(c.getHealth() - this.attack);
+      } else if (c.getType() == Type.NETHER){
+        c.setHealth(c.getHealth() - this.attack*2);
+      } 
+    } else if (this.type == Type.NETHER){
+      if (c.getType() == Type.OVERWORLD){
+        c.setHealth(c.getHealth() - this.attack*2);
+      } else if (c.getType() == Type.END){
+        c.setHealth(c.getHealth() - this.attack/2);
+      } else if (c.getType() == Type.NETHER){
+        c.setHealth(c.getHealth() - this.attack);
+      } 
+    }
+  }
+  public void serang(Player p){
+      //pass; nunggu data structure player
+  }
   @Override
   public String toString() {
     return super.toString() + "\nType: " + this.type + "\nAttack: " + this.attack + "\nHealth: " + this.health + "\nLevel: " + this.lvl + "\nExp: " + this.exp;
   }
   public static void main(String[] args) {
     Character d = new Character(1, "test", "test", 1, "test", Type.OVERWORLD, 1, 1, 1, 1);
+    System.out.println(d.toString());
     Character c = new Character(d);
     c.setType(Type.END);
     // System.out.println(c.getType());

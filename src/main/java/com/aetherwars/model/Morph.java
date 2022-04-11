@@ -4,15 +4,18 @@ import java.util.Arrays;
 
 public class Morph extends Spell {
     //dimain seharusnya ada array berisi template semua card, sehingga bisa target id bisa dicari pake id card
+    public static ArrayList<Morph> morphList = new ArrayList<Morph>(); //berisi Morph "Murni"
     private int target;
     public Morph(){
         super();
         this.type = spellType.MORPH;
         this.target = 0;
+        Morph.morphList.add(this);
     }
     public Morph(int id, String name, String description, int mana, String imageLoc, int target){
         super(id, name, description, mana, imageLoc, spellType.MORPH);
         this.target = target;
+        Morph.morphList.add(this);
     }
     public Morph(Morph m){
         super(m);
@@ -23,6 +26,14 @@ public class Morph extends Spell {
     }
     public int getTarget(){
         return this.target;
+    }
+    public Morph getMorph(int id){
+        for(Morph m : Morph.morphList){
+            if(m.getId() == id){
+                return m;
+            }
+        }
+        return null;
     }
     @Override
     public void useOn(Character c){
