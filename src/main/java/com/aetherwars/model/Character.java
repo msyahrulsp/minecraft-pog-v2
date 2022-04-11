@@ -13,6 +13,7 @@ public class Character extends Card{
   private int healthUp;
   private int exp;
   private int lvl;
+  private int swapDuration;
   private ArrayList<Triplet<Integer, Integer, Integer>> buffList;
   public Character(){
     super();
@@ -154,6 +155,23 @@ public class Character extends Card{
     }
     return null;
   }
+  public void setswapDur(int dur){
+    this.swapDuration = dur;
+  }
+  public int getswapDur(){
+    return this.swapDuration;
+  }
+  public void decreaseswapDur(){
+    if (this.swapDuration > 0) {
+      this.swapDuration -= 1;
+      //jika setelah di decrease, durasi = 0, maka swap akan dihentikan
+      if(this.swapDuration == 0){
+        int temp = this.attack;
+        this.attack = this.health;
+        this.health = temp;
+      } 
+    }
+  };
   @Override
   public String toString() {
     return super.toString() + "\nType: " + this.type + "\nAttack: " + this.attack + "\nHealth: " + this.health + "\nLevel: " + this.lvl + "\nExp: " + this.exp;
