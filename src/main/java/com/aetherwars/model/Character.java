@@ -91,6 +91,22 @@ public class Character extends Card{
   }
   @Override
   public String toString() {
-    return super.toString() + "\nType: " + this.type + "\nAttack: " + this.attack + "\nHealth: " + this.health;
+    return super.toString() + "\nType: " + this.type + "\nAttack: " + this.attack + "\nHealth: " + this.health + "\nLevel: " + this.lvl + "\nExp: " + this.exp;
+  }
+  public static void main(String[] args) {
+    Character c = new Character(1, "test", "test", 1, "test", Type.OVERWORLD, 1, 1, 1, 1);
+    System.out.println(c);
+    c.setType(Type.END);
+    System.out.println(c.getType());
+    c.addExp(10);
+    System.out.println(c);
+    c.setAttack(10);
+    System.out.println(c.getAttack());
+    c.setHealth(10);
+    System.out.println(c.getHealth());
+    c.setAttUp(10);
+    System.out.println(c.getAttUp());
+    c.setHealthUp(10);
+    System.out.println(c.getHealthUp());
   }
 }

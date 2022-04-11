@@ -53,7 +53,18 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Name: " + this.name + "\nDescription: " + this.description;
+        return "Id: "+ this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nMana: " + this.mana + "\nImage: " + this.imageLoc;
     }
-
+    public static void main(String[] args) {
+        Card c = new Card(1, "test", "test", 1, "test");
+        System.out.println(c);
+        c.setName("test2");
+        System.out.println(c.getName());
+        c.setDesc("test3");
+        System.out.println(c.getDesc());
+        c.setMana(2);
+        System.out.println(c.getMana());
+        c.setImageLoc("test4");
+        System.out.println(c.getImageLoc());
+    }
 }

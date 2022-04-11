@@ -23,4 +23,19 @@ public class Potion extends tempSpell{
     public void setHealthBuff(int newHealthBuff){
         this.healthBuff = newHealthBuff;
     };
+    public int getHealthBuff(){
+        return this.healthBuff;
+    };
+    @Override
+    public String toString() {
+        return super.toString() + "\nAttack Buff: " + this.attackBuff + "\nHealth Buff: " + this.healthBuff;
+    }
+    public static void main(String[] args) {
+        Potion p = new Potion();
+        System.out.println(p.toString());
+        p.setAttackBuff(1);
+        System.out.println(p.getAttackBuff());
+        p.setHealthBuff(1);
+        System.out.println(p.getHealthBuff());
+    }
 }
