@@ -1,5 +1,5 @@
 package com.aetherwars.model;
-
+import java.util.*;
 public class Card {
     protected int id;
     protected String name;
@@ -19,7 +19,14 @@ public class Card {
         this.description = description;
         this.mana = mana;
         this.imageLoc = imageLoc;
-    }
+    } // hanya dipanggil pada saat membuat card baru (di saat read file csv)
+    public Card(Card card){
+        this.id = card.getId();
+        this.name = card.getName();
+        this.description = card.getDesc();
+        this.mana = card.getMana();
+        this.imageLoc = card.getImageLoc();
+    } //yang dipanggil di game hanya copy constructor, jadi hanya mengkopi pool card di cardList (yang di cardList akan "Murni")
     public int getId(){
         return this.id;
     }
@@ -50,21 +57,23 @@ public class Card {
     public void setImageLoc(String newImageLoc){
         this.imageLoc = newImageLoc;
     }
-
     @Override
     public String toString() {
         return "Id: "+ this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nMana: " + this.mana + "\nImage: " + this.imageLoc;
     }
     public static void main(String[] args) {
-        Card c = new Card(1, "test", "test", 1, "test");
-        System.out.println(c);
+        Card d = new Card(1, "test", "test", 1, "test");
+        Card c = new Card(d);
         c.setName("test2");
-        System.out.println(c.getName());
+        // System.out.println(c.getName());
         c.setDesc("test3");
-        System.out.println(c.getDesc());
+        // System.out.println(c.getDesc());
         c.setMana(2);
-        System.out.println(c.getMana());
+        // System.out.println(c.getMana());
         c.setImageLoc("test4");
-        System.out.println(c.getImageLoc());
+        System.out.println(d);
+        System.out.println(c);
+        // System.out.println(c.getImageLoc());
+
     }
 }

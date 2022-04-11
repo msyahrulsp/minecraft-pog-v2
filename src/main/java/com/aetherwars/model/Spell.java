@@ -11,22 +11,30 @@ class Spell extends Card {
         super(id, name, description, mana, imageLoc);
         this.type = type;
     }
+    public Spell(Spell s){
+        super(s);
+        this.type = s.getType();
+    }
     public void setType(spellType newType){
         this.type = newType;
     }
     public spellType getType(){
         return this.type;
     }
+    public void useOn(Character c){
+        System.out.println("Spell " + this.name + " used on " + c.getName());
+    };
     @Override
     public String toString(){
         return super.toString() + "\nType: " + this.type;
     }
     //for debug
     public static void main(String[] args) {
-        Spell s = new Spell();
-        System.out.println(s.toString());
+        Spell ss = new Spell();
+        Spell s = new Spell(ss);
         s.setType(spellType.SWAP);
-        System.out.println(s.getType());
+        System.out.println(s.toString());
+        System.out.println(ss);
     }
 }
 class tempSpell extends Spell{
@@ -38,6 +46,10 @@ class tempSpell extends Spell{
     public tempSpell(int id, String name, String description, int mana, String imageLoc, spellType type, int duration){
         super(id, name, description, mana, imageLoc, type);
         this.duration = duration;
+    }
+    public tempSpell(tempSpell s){
+        super(s);
+        this.duration = s.getDuration();
     }
     public void setDuration(int newDuration){
         this.duration = newDuration;
