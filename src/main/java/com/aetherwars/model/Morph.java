@@ -1,6 +1,7 @@
 package com.aetherwars.model;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Morph extends Spell {
     //dimain seharusnya ada array berisi template semua card, sehingga bisa target id bisa dicari pake id card

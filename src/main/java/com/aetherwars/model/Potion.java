@@ -1,6 +1,7 @@
 package com.aetherwars.model;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Potion extends tempSpell{
     public static ArrayList<Potion> potionList = new ArrayList<Potion>(); //berisi Potion "Murni" 
@@ -11,13 +12,13 @@ public class Potion extends tempSpell{
         this.type =spellType.PTN;
         this.attackBuff =0;
         this.healthBuff = 0;
-        Potion.ArrayList.add(this);
+        Potion.potionList.add(this);
     }
     public Potion(int id, String name, String description, int mana, String imageLoc, int duration, int attackBuff, int healthBuff){
         super(id, name, description, mana, imageLoc, spellType.PTN, duration);
         this.attackBuff = attackBuff;
         this.healthBuff = healthBuff;
-        ArrayList.add(this);
+        Potion.potionList.add(this);
     }
     public Potion(Potion p){
         super(p);
