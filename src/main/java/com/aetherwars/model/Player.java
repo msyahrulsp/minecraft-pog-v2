@@ -12,7 +12,7 @@ public class Player<T> {
     private Integer mana;
     private ArrayList<Card> deck;
     private ArrayList<T> board;
-    private ArrayList<T> hand;
+    private ArrayList<Card> hand;
 
     public Player() {
         this.name = "";
@@ -21,11 +21,12 @@ public class Player<T> {
         this.deck = new ArrayList<Card>();
     }
 
-    public Player(String name, Integer health, Integer mana, ArrayList<Card> card) {
+    public Player(String name, Integer health, Integer mana) {
         this.name = name;
         this.health = health;
         this.mana = mana;
-        this.deck = card;
+        this.deck = new ArrayList<Card>();
+        this.hand = new ArrayList<Card>();
     }
 
     public String getName() {
@@ -49,27 +50,46 @@ public class Player<T> {
     }
 
     public void showDeck() {
+        System.out.println("Player " + this.getName() + " deck list: ");
         System.out.print("[");
         for(int i=0; i<this.deck.size(); i++) {
             if (i+1 != this.deck.size()) {
-                System.out.print(deck.get(i).getName() + ",");
+                System.out.print(deck.get(i).id + ":" + deck.get(i).getName() + ", ");
             } else {
-                System.out.println(deck.get(i).getName() + "]");
+                System.out.println(deck.get(i).id + ":" + deck.get(i).getName() + "]");
             }
+        }
+    }
+
+    public void showHand() {
+        System.out.println("Player " + this.getName() + " hand list: ");
+        if (!this.hand.isEmpty()) {
+            for(int i=0; i<this.hand.size(); i++) {
+                if (i+1 != this.hand.size()) {
+                    System.out.print(hand.get(i).id + ":" + hand.get(i).getName() + ", ");
+                } else {
+                    System.out.println(hand.get(i).id + ":" + hand.get(i).getName() + "]");
+                }
+            }
+        } else {
+            System.out.println("Player hand is empty");
         }
     }
     
     @Override
     public String toString() {
-        System.out.println("Player " + this.getName() + " deck list: ");
         this.showDeck();
+        this.showHand();
         return "\nName: " + this.getName() + "\nHealth: " + this.getHealth() + "\nMana: " + this.getMana();
     }
     
-    public <T> void getCard() {};
-    public void getCardInfo(T card) {};
-    public void attack() {};
-    public void nextPhase() {};
+    public List<String[]> loadCards() throws IOException, URISyntaxException {
+        File characterCSVFile = new File(getClass().getResource(CHARACTER_CSV_FILE_PATH).toURI());
+        CSVReader characterReader = new CSVReader(characterCSVFile, "\t");
+        characterReader.setSkipHeader(true);
+        List<String[]> characterRows = characterReader.read();
+        return characterRows;
+    }
 
     public void putCardToDeck(String[] row) {
         Type type;
@@ -90,22 +110,29 @@ public class Player<T> {
         }
     }
 
-    public List<String[]> loadCards() throws IOException, URISyntaxException {
-        File characterCSVFile = new File(getClass().getResource(CHARACTER_CSV_FILE_PATH).toURI());
-        CSVReader characterReader = new CSVReader(characterCSVFile, "\t");
-        characterReader.setSkipHeader(true);
-        List<String[]> characterRows = characterReader.read();
-        return characterRows;
+    public void getTopThreeCard() {
+        for(int i=0; i<3; i++) {
+            this.hand.add(this.deck.get(i));
+        }
+        for(int i=0; i<3; i++) {
+            this.deck.remove(i);
+        }
     }
+    
+    public <T> void getCard() {};
+    public void getCardInfo(T card) {};
+    public void attack() {};
+    public void nextPhase() {};
 
     public static void main(String[] args) {
-        ArrayList<Character> newDeck = new ArrayList<>();
-        Player<Card> playerOne = new Player("kevin", 80, 1, newDeck);
+        Player<Card> playerOne = new Player("kevin", 80, 1);
         try {
             playerOne.loadDeck(playerOne.loadCards());
         } catch (Exception err) {
             System.out.println("Load file error");
         }
+        System.out.println(playerOne.toString());
+        playerOne.getTopThreeCard();
         System.out.println(playerOne.toString());
     }
 }
