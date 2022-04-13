@@ -16,6 +16,7 @@ public class Player<T> {
     private ArrayList<Card> deck;
     private ArrayList<T> board;
     private ArrayList<Card> hand;
+    private ArrayList<Card> addCard;
 
     public Player() {
         this.name = "";
@@ -30,6 +31,7 @@ public class Player<T> {
         this.mana = mana;
         this.deck = new ArrayList<Card>();
         this.hand = new ArrayList<Card>();
+        this.addCard = new ArrayList<Card>();
     }
 
     public String getName() {
@@ -85,37 +87,13 @@ public class Player<T> {
         this.showHand();
         return "\nName: " + this.getName() + "\nHealth: " + this.getHealth() + "\nMana: " + this.getMana();
     }
-    
-    public List<String[]> loadCharCards() throws IOException, URISyntaxException {
-        File characterCSVFile = new File(getClass().getResource(CHARACTER_CSV_FILE_PATH).toURI());
-        CSVReader characterReader = new CSVReader(characterCSVFile, "\t");
-        characterReader.setSkipHeader(true);
-        List<String[]> characterCard = characterReader.read();
-        return characterCard;
-    }
 
-    public List<String[]> loadMorCards() throws IOException, URISyntaxException {
-        File morphCSVFile = new File(getClass().getResource(MORPH_CSV_FILE_PATH).toURI());
-        CSVReader morphReader = new CSVReader(morphCSVFile, "\t");
-        morphReader.setSkipHeader(true);
-        List<String[]> morphCard = morphReader.read();
-        return morphCard;
-    }
-
-    public List<String[]> loadPtnCard() throws IOException, URISyntaxException {
-        File ptnCSVFile = new File(getClass().getResource(PTN_CSV_FILE_PATH).toURI());
-        CSVReader ptnReader = new CSVReader(ptnCSVFile, "\t");
-        ptnReader.setSkipHeader(true);
-        List<String[]> ptnCard = ptnReader.read();
-        return ptnCard;
-    }
-
-    public List<String[]> loadSwapCard() throws IOException, URISyntaxException {
-        File swapCSVFile = new File(getClass().getResource(SWAP_CSV_FILE_PATH).toURI());
-        CSVReader swapReader = new CSVReader(swapCSVFile, "\t");
-        swapReader.setSkipHeader(true);
-        List<String[]> swapCard = swapReader.read();
-        return swapCard;
+    public List<String[]> loadCards(String path) throws IOException, URISyntaxException {
+        File CSVFile = new File(getClass().getResource(path).toURI());
+        CSVReader Reader = new CSVReader(CSVFile, "\t");
+        Reader.setSkipHeader(true);
+        List<String[]> Card = Reader.read();
+        return Card;
     }
 
     public void putCharCardToDeck(String[] row) {
@@ -131,7 +109,7 @@ public class Player<T> {
         this.deck.add(temp);
     }
 
-    public void putMorCardToDeck(String[] row) {
+    public void putMorphCardToDeck(String[] row) {
         Morph temp = new Morph(Integer.parseInt(row[0]), row[1], row[2], Integer.parseInt(row[5]), row[3], Integer.parseInt(row[4]));
         this.deck.add(temp);
     }
@@ -147,28 +125,16 @@ public class Player<T> {
     }
     
     public void loadDeck(List<String[]> deck, List<String[]> deck2, List<String[]> deck3, List<String[]> deck4) {
-        // for(int i=0; i<18; i++) {
-        //     putCharCardToDeck(deck.get(i));
-        // }
-        // for(int i=0; i<6; i++) {
-        //     putMorCardToDeck(deck2.get(i));
-        // }
-        // for(int i=0; i<18; i++) {
-        //     putPtnCardToDeck(deck3.get(i));
-        // }
-        // for(int i=0; i<10; i++) {
-        //     putSwapCardToDeck(deck4.get(i));
-        // }
         // gacha loadDeck?? tapi bener2 random sih ini
         int countCard = 0;
         Random rand = new Random();
         while (countCard < 60) {
-            int random = rand.nextInt(4);
-            if (random == 0) {
+            int random = rand.nextInt(11);
+            if (random == 0 || random == 5 || random == 6) {
                 putCharCardToDeck(deck.get(rand.nextInt(18)));
-            } else if (random == 1) {
-                putMorCardToDeck(deck2.get(rand.nextInt(6)));
-            } else if (random == 2) {
+            } else if (random == 1 || random == 7 || random == 8) {
+                putMorphCardToDeck(deck2.get(rand.nextInt(6)));
+            } else if (random == 2 || random == 9 || random == 10) {
                 putPtnCardToDeck(deck3.get(rand.nextInt(18)));
             } else {
                 putSwapCardToDeck(deck4.get(rand.nextInt(10)));
@@ -177,12 +143,41 @@ public class Player<T> {
         }
     }
 
-    public void getTopThreeCard() {
-        for(int i=0; i<3; i++) {
-            this.hand.add(this.deck.get(i));
+    public void getCardToHand(String phase) {
+        if (phase == "add") {
+            for (int i = 0; i < 3; i++) {
+                this.addCard.add(this.deck.get(i));
+            }
+        } else {
+            for(int i=0; i<3; i++) {
+                this.hand.add(this.deck.get(i));
+            }
         }
         for(int i=0; i<3; i++) {
             this.deck.remove(i);
+        }
+    }
+    
+    public void returnCardToDeck() {
+        Random rand = new Random();
+        while (!this.addCard.isEmpty()) {
+            this.deck.add(rand.nextInt(this.deck.size()), this.addCard.get(0));
+            this.addCard.remove(0);
+        }
+    }
+
+    public void throwCardFromHand(int choose) {
+        this.hand.remove(choose);
+    }
+
+    public void addCardToHand(int choose) {
+        if (this.hand.size() != 5) {
+            this.getCardToHand("add");
+            this.hand.add(this.addCard.get(choose));
+            this.addCard.remove(choose);
+            this.returnCardToDeck();
+        } else {
+            System.out.println("Hand is full");
         }
     }
     
@@ -195,13 +190,22 @@ public class Player<T> {
     public static void main(String[] args) {
         Player<Card> playerOne = new Player("kevin", 80, 1);
         try {
-            playerOne.loadDeck(playerOne.loadCharCards(), playerOne.loadMorCards(), playerOne.loadPtnCard(), playerOne.loadSwapCard());
+            playerOne.loadDeck(playerOne.loadCards(CHARACTER_CSV_FILE_PATH), playerOne.loadCards(MORPH_CSV_FILE_PATH), playerOne.loadCards(PTN_CSV_FILE_PATH), playerOne.loadCards(SWAP_CSV_FILE_PATH));
         } catch (Exception err) {
             System.out.println("Load file error");
         }
         System.out.println(playerOne.deck.size());
         System.out.println(playerOne.toString());
-        playerOne.getTopThreeCard();
+        playerOne.getCardToHand("first");
+        System.out.println(playerOne.toString());
+        playerOne.hand.remove(1);
+        System.out.println(playerOne.toString());
+        playerOne.addCardToHand(1);
+        playerOne.addCardToHand(2);
+        playerOne.addCardToHand(0);
+        playerOne.addCardToHand(0);
+        System.out.println(playerOne.toString());
+        playerOne.throwCardFromHand(1);
         System.out.println(playerOne.toString());
         // try {
         //     System.out.println(playerOne.loadCards().get(0)[2]);
