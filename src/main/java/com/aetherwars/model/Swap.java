@@ -1,4 +1,6 @@
 package com.aetherwars.model;
+
+import java.util.ArrayList;
 public class Swap extends tempSpell{
     public static ArrayList<Swap> swapList = new ArrayList<Swap>(); //berisi swap "Murni"
     public Swap(){
