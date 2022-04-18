@@ -13,25 +13,24 @@ public class Player<T> {
     private String name;
     private Integer health;
     private Integer mana;
-    private ArrayList<Card> deck;
-    private ArrayList<T> board;
-    private ArrayList<Card> hand;
-    private ArrayList<Card> addCard;
+    private CardHolder deck;
+    private CardHolder board;
+    private CardHolder hand;
+    private CardHolder addCard;
 
     public Player() {
         this.name = "";
         this.health = 80;
         this.mana = 0;
-        this.deck = new ArrayList<Card>();
     }
 
-    public Player(String name, Integer health, Integer mana) {
+    public Player(String name, Integer health, Integer mana, CardHolder deck, CardHolder hand, CardHolder addCard) {
         this.name = name;
         this.health = health;
         this.mana = mana;
-        this.deck = new ArrayList<Card>();
-        this.hand = new ArrayList<Card>();
-        this.addCard = new ArrayList<Card>();
+        this.deck = deck;
+        this.hand = hand;
+        this.addCard = addCard;
     }
 
     public String getName() {
@@ -57,11 +56,11 @@ public class Player<T> {
     public void showDeck() {
         System.out.println("Player " + this.getName() + " deck list: ");
         System.out.print("[");
-        for(int i=0; i<this.deck.size(); i++) {
-            if (i+1 != this.deck.size()) {
-                System.out.print(deck.get(i).id + ":" + deck.get(i).getName() + ", ");
+        for(int i=0; i<this.deck.getSize(); i++) {
+            if (i+1 != this.deck.getSize()) {
+                System.out.print(deck.getElmt(i).id + ":" + deck.getElmt(i).getName() + ", ");
             } else {
-                System.out.println(deck.get(i).id + ":" + deck.get(i).getName() + "]");
+                System.out.println(deck.getElmt(i).id + ":" + deck.getElmt(i).getName() + "]");
             }
         }
     }
@@ -69,11 +68,11 @@ public class Player<T> {
     public void showHand() {
         System.out.println("Player " + this.getName() + " hand list: ");
         if (!this.hand.isEmpty()) {
-            for(int i=0; i<this.hand.size(); i++) {
-                if (i+1 != this.hand.size()) {
-                    System.out.print(hand.get(i).id + ":" + hand.get(i).getName() + ", ");
+            for(int i=0; i<this.hand.getSize(); i++) {
+                if (i+1 != this.hand.getSize()) {
+                    System.out.print(hand.getElmt(i).id + ":" + hand.getElmt(i).getName() + ", ");
                 } else {
-                    System.out.println(hand.get(i).id + ":" + hand.get(i).getName() + "]");
+                    System.out.println(hand.getElmt(i).id + ":" + hand.getElmt(i).getName() + "]");
                 }
             }
         } else {
@@ -106,22 +105,22 @@ public class Player<T> {
             type = Type.END;
         }
         Character temp = new Character(Integer.parseInt(row[0]), row[1], row[3], Integer.parseInt(row[7]), row[4], type, Integer.parseInt(row[5]), Integer.parseInt(row[6]), Integer.parseInt(row[8]), Integer.parseInt(row[9]));
-        this.deck.add(temp);
+        this.deck.addElmt(temp);
     }
 
     public void putMorphCardToDeck(String[] row) {
         Morph temp = new Morph(Integer.parseInt(row[0]), row[1], row[2], Integer.parseInt(row[5]), row[3], Integer.parseInt(row[4]));
-        this.deck.add(temp);
+        this.deck.addElmt(temp);
     }
 
     public void putPtnCardToDeck(String[] row) {
         Potion temp = new Potion(Integer.parseInt(row[0]), row[1], row[2], Integer.parseInt(row[6]), row[3], Integer.parseInt(row[7]), Integer.parseInt(row[4]), Integer.parseInt(row[5]));
-        this.deck.add(temp);
+        this.deck.addElmt(temp);
     }
 
     public void putSwapCardToDeck(String[] row) {
         Swap temp = new Swap(Integer.parseInt(row[0]), row[1], row[2], Integer.parseInt(row[5]), row[3], Integer.parseInt(row[4]));
-        this.deck.add(temp);
+        this.deck.addElmt(temp);
     }
     
     public void loadDeck(List<String[]> deck, List<String[]> deck2, List<String[]> deck3, List<String[]> deck4) {
@@ -146,35 +145,36 @@ public class Player<T> {
     public void getCardToHand(String phase) {
         if (phase == "add") {
             for (int i = 0; i < 3; i++) {
-                this.addCard.add(this.deck.get(i));
+                this.addCard.addElmt(this.deck.getElmt(i));
             }
         } else {
             for(int i=0; i<3; i++) {
-                this.hand.add(this.deck.get(i));
+                this.hand.addElmt(this.deck.getElmt(i));
             }
         }
         for(int i=0; i<3; i++) {
-            this.deck.remove(i);
+            this.deck.elmt.remove(i);
         }
     }
     
     public void returnCardToDeck() {
         Random rand = new Random();
         while (!this.addCard.isEmpty()) {
-            this.deck.add(rand.nextInt(this.deck.size()), this.addCard.get(0));
-            this.addCard.remove(0);
+            // System.out.println("out");
+            this.deck.addElmtAtIdx(rand.nextInt(this.deck.getSize()), this.addCard.getElmt(0));
+            this.addCard.elmt.remove(0);
         }
     }
 
     public void throwCardFromHand(int choose) {
-        this.hand.remove(choose);
+        this.hand.elmt.remove(choose);
     }
 
     public void addCardToHand(int choose) {
-        if (this.hand.size() != 5) {
+        if (this.hand.getSize() != 5) {
             this.getCardToHand("add");
-            this.hand.add(this.addCard.get(choose));
-            this.addCard.remove(choose);
+            this.hand.addElmt(this.addCard.getElmt(choose));
+            this.addCard.elmt.remove(choose);
             this.returnCardToDeck();
         } else {
             System.out.println("Hand is full");
@@ -188,23 +188,26 @@ public class Player<T> {
 
     // for testing
     public static void main(String[] args) {
-        Player<Card> playerOne = new Player("kevin", 80, 1);
+        CardHolder deckPlayerOne = new CardHolder();
+        CardHolder handPlayerOne = new CardHolder();
+        CardHolder addCardPlayerOne = new CardHolder();
+        Player<Card> playerOne = new Player("kevin", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne);
         try {
             playerOne.loadDeck(playerOne.loadCards(CHARACTER_CSV_FILE_PATH), playerOne.loadCards(MORPH_CSV_FILE_PATH), playerOne.loadCards(PTN_CSV_FILE_PATH), playerOne.loadCards(SWAP_CSV_FILE_PATH));
         } catch (Exception err) {
             System.out.println("Load file error");
         }
-        System.out.println(playerOne.deck.size());
-        System.out.println(playerOne.toString());
+        System.out.println(playerOne.deck.getSize());
+        // System.out.println(playerOne.toString());
         playerOne.getCardToHand("first");
-        System.out.println(playerOne.toString());
-        playerOne.hand.remove(1);
-        System.out.println(playerOne.toString());
+        // System.out.println(playerOne.toString());
+        playerOne.hand.elmt.remove(1);
+        // System.out.println(playerOne.toString());
         playerOne.addCardToHand(1);
         playerOne.addCardToHand(2);
         playerOne.addCardToHand(0);
         playerOne.addCardToHand(0);
-        System.out.println(playerOne.toString());
+        // System.out.println(playerOne.toString());
         playerOne.throwCardFromHand(1);
         System.out.println(playerOne.toString());
         // try {
