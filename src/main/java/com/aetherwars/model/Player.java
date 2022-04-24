@@ -46,6 +46,18 @@ public class Player<T extends Card> {
         return this.mana;
     }
 
+    public CardHolder getDeck() {
+        return this.deck;
+    }
+
+    public CardHolder getHand() {
+        return this.hand;
+    }
+
+    public CardHolder getAddCard() {
+        return this.addCard;
+    }
+
     public void setHealth(Integer health) {
         this.health = health;
     }
