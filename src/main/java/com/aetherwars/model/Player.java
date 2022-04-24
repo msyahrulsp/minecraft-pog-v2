@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import com.aetherwars.util.CSVReader;
 
-public class Player<T> {
+public class Player<T extends Card> {
     private static final String CHARACTER_CSV_FILE_PATH = "../card/data/character.csv";
     private static final String MORPH_CSV_FILE_PATH = "../card/data/spell_morph.csv";
     private static final String PTN_CSV_FILE_PATH = "../card/data/spell_ptn.csv";
@@ -24,11 +24,12 @@ public class Player<T> {
         this.mana = 0;
     }
 
-    public Player(String name, Integer health, Integer mana, CardHolder deck, CardHolder hand, CardHolder addCard) {
+    public Player(String name, Integer health, Integer mana, CardHolder deck, CardHolder hand, CardHolder addCard, CardHolder board) {
         this.name = name;
         this.health = health;
         this.mana = mana;
         this.deck = deck;
+        this.board = board;
         this.hand = hand;
         this.addCard = addCard;
     }
@@ -183,7 +184,7 @@ public class Player<T> {
     }
 
     public void addCardToHand(int choose) {
-        if (this.hand.getSize() != 5) {
+        if (this.hand.getSize() < 5) {
             this.getCardToHand("add");
             this.hand.addElmt(this.addCard.getElmt(choose));
             this.addCard.elmt.remove(choose);
@@ -192,9 +193,28 @@ public class Player<T> {
             System.out.println("Hand is full");
         }
     }
-    
+
+    public void addCardToBoard(int choose) {
+        if (this.board.getSize() < 5) {
+            this.board.addElmt(this.hand.getElmt(choose));
+            this.hand.elmt.remove(choose);
+        } else {
+            System.out.println("Board is full");
+        }
+    }
+
+    public void removeCardFromBoard(int choose) {
+        this.board.elmt.remove(choose);
+    }
+
+    // gatau ini buat apa yak
     public <T> void getCard() {};
-    public void getCardInfo(T card) {};
+
+    public void getCardInfo(T card) {
+        System.out.println(card.toString());
+    }
+
+    
     public void attack() {};
     public void nextPhase() {};
 
@@ -203,7 +223,8 @@ public class Player<T> {
         CardHolder deckPlayerOne = new CardHolder();
         CardHolder handPlayerOne = new CardHolder();
         CardHolder addCardPlayerOne = new CardHolder();
-        Player<Card> playerOne = new Player("kevin", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne);
+        CardHolder boardPlayerOne = new CardHolder();
+        Player<Card> playerOne = new Player("kevin", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne, boardPlayerOne);
         try {
             playerOne.loadDeck(playerOne.loadCards(CHARACTER_CSV_FILE_PATH), playerOne.loadCards(MORPH_CSV_FILE_PATH), playerOne.loadCards(PTN_CSV_FILE_PATH), playerOne.loadCards(SWAP_CSV_FILE_PATH));
         } catch (Exception err) {
@@ -222,6 +243,12 @@ public class Player<T> {
         // System.out.println(playerOne.toString());
         playerOne.throwCardFromHand(1);
         System.out.println(playerOne.toString());
+        playerOne.addCardToBoard(0);
+        playerOne.addCardToBoard(0);
+        playerOne.addCardToBoard(0);
+        playerOne.getCardInfo(playerOne.board.getElmt(0));
+        playerOne.getCardInfo(playerOne.board.getElmt(1));
+        playerOne.getCardInfo(playerOne.board.getElmt(2));
         // try {
         //     System.out.println(playerOne.loadCards().get(0)[2]);
         // } catch (Exception err) {
