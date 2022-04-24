@@ -13,9 +13,9 @@ public class Player<T extends Card> {
     private String name;
     private Integer health;
     private Integer mana;
-    private CardHolder deck;
-    private CardHolder board;
-    private CardHolder hand;
+    private Deck deck;
+    private Board board;
+    private Hand hand;
     private CardHolder addCard;
 
     public Player() {
@@ -24,7 +24,7 @@ public class Player<T extends Card> {
         this.mana = 0;
     }
 
-    public Player(String name, Integer health, Integer mana, CardHolder deck, CardHolder hand, CardHolder addCard, CardHolder board) {
+    public Player(String name, Integer health, Integer mana, Deck deck, Hand hand, CardHolder addCard, Board board) {
         this.name = name;
         this.health = health;
         this.mana = mana;
