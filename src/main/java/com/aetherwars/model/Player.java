@@ -228,10 +228,10 @@ public class Player<T extends Card> {
 
     // for testing
     public static void main(String[] args) {
-        CardHolder deckPlayerOne = new CardHolder();
-        CardHolder handPlayerOne = new CardHolder();
+        Deck deckPlayerOne = new Deck();
+        Hand handPlayerOne = new Hand();
         CardHolder addCardPlayerOne = new CardHolder();
-        CardHolder boardPlayerOne = new CardHolder();
+        Board boardPlayerOne = new Board();
         Player<Card> playerOne = new Player("kevin", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne, boardPlayerOne);
         try {
             playerOne.loadDeck();
