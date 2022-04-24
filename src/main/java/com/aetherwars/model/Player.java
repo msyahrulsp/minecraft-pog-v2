@@ -5,11 +5,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import com.aetherwars.util.CSVReader;
 
-public class Player<T extends Card> {
-    private static final String CHARACTER_CSV_FILE_PATH = "../card/data/character.csv";
-    private static final String MORPH_CSV_FILE_PATH = "../card/data/spell_morph.csv";
-    private static final String PTN_CSV_FILE_PATH = "../card/data/spell_ptn.csv";
-    private static final String SWAP_CSV_FILE_PATH = "../card/data/spell_swap.csv";
+public class Player {
     private String name;
     private Integer health;
     private Integer mana;
@@ -17,6 +13,7 @@ public class Player<T extends Card> {
     private Board board;
     private Hand hand;
     private CardHolder addCard;
+    private Phase phase;
 
     public Player() {
         this.name = "";
@@ -32,6 +29,7 @@ public class Player<T extends Card> {
         this.board = board;
         this.hand = hand;
         this.addCard = addCard;
+        this.phase = Phase.DRAW;
     }
 
     public String getName() {
@@ -46,16 +44,20 @@ public class Player<T extends Card> {
         return this.mana;
     }
 
-    public CardHolder getDeck() {
+    public Deck getDeck() {
         return this.deck;
     }
 
-    public CardHolder getHand() {
+    public Hand getHand() {
         return this.hand;
     }
 
     public CardHolder getAddCard() {
         return this.addCard;
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 
     public void setHealth(Integer health) {
@@ -64,6 +66,14 @@ public class Player<T extends Card> {
 
     public void setMana(Integer mana) {
         this.mana = mana;
+    }
+
+    public Phase getPhase() {
+        return this.phase;
+    }
+
+    public void setPhase(Phase phase) {
+        this.phase = phase;
     }
     
     @Override
@@ -126,15 +136,9 @@ public class Player<T extends Card> {
         this.board.delElmt(choose);
     }
 
-    public void getCardInfo(T card) {
+    public void getCardInfo(Card card) {
         System.out.println(card);
     }
-    
-    // gatau ini buat apa yak
-    public <T> void getCard() {};
-    
-    public void attack() {};
-    public void nextPhase() {};
 
     // for testing
     public static void main(String[] args) {
@@ -142,7 +146,7 @@ public class Player<T extends Card> {
         Hand handPlayerOne = new Hand();
         CardHolder addCardPlayerOne = new CardHolder();
         Board boardPlayerOne = new Board();
-        Player<Card> playerOne = new Player("kevin", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne, boardPlayerOne);
+        Player playerOne = new Player("kevin", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne, boardPlayerOne);
         try {
             playerOne.deck.loadDeck();
         } catch (Exception err) {

@@ -6,61 +6,76 @@ public class Card {
     protected String description;
     protected int mana;
     protected String imageLoc;
-    public Card(){
+
+    public Card() {
         this.id = 0;
         this.name = "-";
         this.description = "-";
         this.mana = 0;
         this.imageLoc = "card/error-card.png";
     }
-    public Card(int id, String name, String description, int mana, String imageLoc){
+
+    public Card(int id, String name, String description, int mana, String imageLoc) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.mana = mana;
         this.imageLoc = imageLoc;
     } // hanya dipanggil pada saat membuat card baru (di saat read file csv)
-    public Card(Card card){
+
+    public Card(Card card) {
         this.id = card.getId();
         this.name = card.getName();
         this.description = card.getDesc();
         this.mana = card.getMana();
         this.imageLoc = card.getImageLoc();
     } //yang dipanggil di game hanya copy constructor, jadi hanya mengkopi pool card di cardList (yang di cardList akan "Murni")
-    public int getId(){
+    
+    public int getId() {
         return this.id;
     }
-    public void setId(int id){
+
+    public void setId(int id) {
         this.id = id;
     }
-    public void setName(String newName){
+
+    public void setName(String newName) {
         this.name = newName;
     }
-    public String getName(){
+
+    public String getName() {
         return this.name;
     }
-    public void setDesc(String newDesc){
+
+    public void setDesc(String newDesc) {
         this.description = newDesc;
     }
-    public String getDesc(){
+
+    public String getDesc() {
         return this.description;
     }
-    public void setMana(int mana){
+
+    public void setMana(int mana) {
         this.mana = mana;
     }
-    public int getMana(){
+
+    public int getMana() {
         return this.mana;
     }
-    public String getImageLoc(){
+
+    public String getImageLoc() {
         return this.imageLoc;
     }
-    public void setImageLoc(String newImageLoc){
+
+    public void setImageLoc(String newImageLoc) {
         this.imageLoc = newImageLoc;
     }
+
     @Override
     public String toString() {
         return "Id: "+ this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nMana: " + this.mana + "\nImage: " + this.imageLoc;
     }
+    
     public static void main(String[] args) {
         Card d = new Card(1, "test", "test", 1, "test");
         Card c = new Card(d);
