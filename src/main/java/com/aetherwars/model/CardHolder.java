@@ -2,17 +2,17 @@ package com.aetherwars.model;
 import java.util.*;
 
 public class CardHolder {
-  public ArrayList<Card> elmt;
+  protected ArrayList<Card> elmt;
 
   public CardHolder() {
     this.elmt = new ArrayList<Card>();
   }
 
-  public Integer getSize() {
+  public int getSize() {
     return this.elmt.size();
   }
 
-  public Card getElmt(Integer index) {
+  public Card getElmt(int index) {
     return this.elmt.get(index);
   }
 
@@ -20,8 +20,12 @@ public class CardHolder {
     this.elmt.add(card);
   }
 
-  public void addElmtAtIdx(Integer index, Card card) {
+  public void addElmtAtIdx(int index, Card card) {
     this.elmt.add(index, card);
+  }
+
+  public void delElmt(int index) {
+    this.elmt.remove(index);
   }
 
   public void delElmt(Card card) {
