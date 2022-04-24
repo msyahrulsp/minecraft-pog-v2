@@ -73,7 +73,7 @@ public class Player<T extends Card> {
                 if (i+1 != this.hand.getSize()) {
                     System.out.print(hand.getElmt(i).id + ":" + hand.getElmt(i).getName() + ", ");
                 } else {
-                    System.out.println(hand.getElmt(i).id + ":" + hand.getElmt(i).getName() + "]");
+                    System.out.println(hand.getElmt(i).id + ":" + hand.getElmt(i).getName());
                 }
             }
         } else {
@@ -106,26 +106,34 @@ public class Player<T extends Card> {
             type = Type.END;
         }
         Character temp = new Character(Integer.parseInt(row[0]), row[1], row[3], Integer.parseInt(row[7]), row[4], type, Integer.parseInt(row[5]), Integer.parseInt(row[6]), Integer.parseInt(row[8]), Integer.parseInt(row[9]));
-        this.deck.addElmt(temp);
+        Character fixChar = new Character(temp);
+        this.deck.addElmt(fixChar);
     }
 
     public void putMorphCardToDeck(String[] row) {
         Morph temp = new Morph(Integer.parseInt(row[0]), row[1], row[2], Integer.parseInt(row[5]), row[3], Integer.parseInt(row[4]));
-        this.deck.addElmt(temp);
+        Morph fixMorph = new Morph(temp);
+        this.deck.addElmt(fixMorph);
     }
 
     public void putPtnCardToDeck(String[] row) {
         Potion temp = new Potion(Integer.parseInt(row[0]), row[1], row[2], Integer.parseInt(row[6]), row[3], Integer.parseInt(row[7]), Integer.parseInt(row[4]), Integer.parseInt(row[5]));
-        this.deck.addElmt(temp);
+        Potion fixPotion = new Potion(temp);
+        this.deck.addElmt(fixPotion);
     }
 
     public void putSwapCardToDeck(String[] row) {
         Swap temp = new Swap(Integer.parseInt(row[0]), row[1], row[2], Integer.parseInt(row[5]), row[3], Integer.parseInt(row[4]));
-        this.deck.addElmt(temp);
+        Swap fixSwap = new Swap(temp);
+        this.deck.addElmt(fixSwap);
     }
     
-    public void loadDeck(List<String[]> deck, List<String[]> deck2, List<String[]> deck3, List<String[]> deck4) {
+    public void loadDeck() throws IOException, URISyntaxException {
         // gacha loadDeck?? tapi bener2 random sih ini
+        List<String[]> deck = this.loadCards(CHARACTER_CSV_FILE_PATH);
+        List<String[]> deck2 = this.loadCards(MORPH_CSV_FILE_PATH);
+        List<String[]> deck3 = this.loadCards(PTN_CSV_FILE_PATH);
+        List<String[]> deck4 = this.loadCards(SWAP_CSV_FILE_PATH);
         int countCard = 0;
         Random rand = new Random();
         while (countCard < 60) {
@@ -214,7 +222,7 @@ public class Player<T extends Card> {
         CardHolder boardPlayerOne = new CardHolder();
         Player<Card> playerOne = new Player("kevin", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne, boardPlayerOne);
         try {
-            playerOne.loadDeck(playerOne.loadCards(CHARACTER_CSV_FILE_PATH), playerOne.loadCards(MORPH_CSV_FILE_PATH), playerOne.loadCards(PTN_CSV_FILE_PATH), playerOne.loadCards(SWAP_CSV_FILE_PATH));
+            playerOne.loadDeck();
         } catch (Exception err) {
             System.out.println("Load file error");
         }
