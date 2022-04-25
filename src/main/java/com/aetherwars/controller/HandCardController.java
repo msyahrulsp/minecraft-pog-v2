@@ -54,7 +54,7 @@ public class HandCardController extends StackPane {
         if (this.card instanceof Character) {
             this.cardEffect.setText("ATK " + Integer.toString(((Character) card).getAttack()) + "/HP " + Integer.toString(((Character) card).getHealth()));
         } else if (card instanceof Spell) {
-            if (((TempSpell) card).getType().equals(spellType.PTN)) {
+            if (((Spell) card).getType().equals(spellType.PTN)) {
                 this.cardEffect.setText("ATK " + Integer.toString(((Potion) card).getAttackBuff()) + "/HP " + Integer.toString(((Potion) card).getHealthBuff()));
             } else if (card instanceof Swap) {
                 this.cardEffect.setText("SWAP");
