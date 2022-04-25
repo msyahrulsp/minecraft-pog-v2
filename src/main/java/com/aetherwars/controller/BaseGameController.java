@@ -1,16 +1,14 @@
 package com.aetherwars.controller;
 
-import com.aetherwars.controller.DeckController;
-import com.aetherwars.model.Player;
+import com.aetherwars.model.*;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.StackPane;
 
 public class BaseGameController  {
 
-    @FXML private StackPane handCard;
-    @FXML private StackPane boardLeft;
-    @FXML private StackPane boardRight;
+    @FXML private StackPane handSlot;
+    @FXML private StackPane leftBoardSlot;
+    @FXML private StackPane rightBoardSlot;
     @FXML private StackPane deck;
 
     private DeckController deckController;
@@ -27,9 +25,30 @@ public class BaseGameController  {
     private Player playerTwo;
 
     public void initialize() {
-        this.playerOne = new Player();
-        this.playerTwo = new Player();
+        Deck deckPlayerOne = new Deck();
+        Deck deckPlayerTwo = new Deck();
+
+        Hand handPlayerOne = new Hand();
+        Hand handPlayerTwo = new Hand();
+
+        CardHolder addCard = new CardHolder();
+
+        Board boardPlayerOne = new Board();
+        Board boardPlayerTwo = new Board();
+
+        Player playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCard, boardPlayerOne);
+        Player playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCard, boardPlayerTwo);
         System.out.println("base game initialized");
+    }
+
+//    @FXML
+//    public void
+
+    @FXML
+    public void setHandController() {
+        this.handSlot.getChildren().clear();
+        this.handController = new HandController(this);
+        this.handSlot.getChildren().add(this.handController);
     }
 
 }
