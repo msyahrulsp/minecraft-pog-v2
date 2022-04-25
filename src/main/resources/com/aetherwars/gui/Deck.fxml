@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="141.0" prefWidth="1280.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="141.0" prefWidth="1280.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"   type="HBox">
    <children>
       <GridPane fx:id="handSlot" prefHeight="183.0" prefWidth="598.0" style="-fx-border-color: #000000;">
          <columnConstraints>
@@ -23,17 +23,17 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <ImageView fitHeight="183.0" fitWidth="185.0" pickOnBounds="true" preserveRatio="true" />
-      <Label prefHeight="234.0" prefWidth="171.0" style="-fx-border-color: #000000;" text="CARD STATS" />
-      <Label prefHeight="206.0" prefWidth="166.0" style="-fx-border-color: #000000;" text="CARD DESC" />
+      <ImageView fx:id="cardImage" fitHeight="183.0" fitWidth="185.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="cardStats" prefHeight="234.0" prefWidth="171.0" style="-fx-border-color: #000000;" text="CARD STATS" />
+      <Label fx:id="cardDesc" prefHeight="206.0" prefWidth="166.0" style="-fx-border-color: #000000;" text="CARD DESC" />
       <VBox prefHeight="150.0" prefWidth="187.0" spacing="10.0">
          <children>
-            <Label prefHeight="49.0" prefWidth="95.0" style="-fx-border-color: #000;" text="DECK N/40" />
-            <Label prefHeight="55.0" prefWidth="96.0" style="-fx-border-color: #000;" text="MANA N/1" />
+            <Label fx:id="deckCount" prefHeight="49.0" prefWidth="95.0" style="-fx-border-color: #000;" text="DECK N/40" />
+            <Label fx:id="manaCount" prefHeight="55.0" prefWidth="96.0" style="-fx-border-color: #000;" text="MANA N/1" />
          </children>
       </VBox>
    </children>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
    </padding>
-</HBox>
+</fx:root>

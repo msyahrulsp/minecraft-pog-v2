@@ -1,20 +1,16 @@
 package com.aetherwars.controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.aetherwars.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 
-public class BaseGameController  {
-
-    @FXML private StackPane handSlot;
-    @FXML private StackPane leftBoardSlot;
-    @FXML private StackPane rightBoardSlot;
-    @FXML private StackPane deck;
+public class BaseGameController {
 
     private DeckController deckController;
-    private HandController handController;
-    private LeftBoardController leftBoardController;
-    private RightBoardController rightBoardController;
+    private PlayerBoardController[] playerBoardController;
     private PhaseController phaseController;
 
     /**
@@ -24,7 +20,24 @@ public class BaseGameController  {
     private Player playerOne;
     private Player playerTwo;
 
-    public void initialize() {
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
+
+    @FXML
+    private StackPane deckSlot;
+
+    @FXML
+    private StackPane leftBoardSlot;
+
+    @FXML
+    private StackPane rightBoardSLot;
+
+    @FXML
+    void initialize() {
+
         Deck deckPlayerOne = new Deck();
         Deck deckPlayerTwo = new Deck();
 
@@ -38,17 +51,14 @@ public class BaseGameController  {
 
         Player playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCard, boardPlayerOne);
         Player playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCard, boardPlayerTwo);
-        System.out.println("base game initialized");
+
+        this.setDeckInterface();
     }
-
-//    @FXML
-//    public void
-
     @FXML
-    public void setHandController() {
-        this.handSlot.getChildren().clear();
-        this.handController = new HandController(this);
-        this.handSlot.getChildren().add(this.handController);
-    }
+    public void setDeckInterface() {
+        this.deckSlot.getChildren().clear();
+        this.deckController = new DeckController(this);
+        this.deckSlot.getChildren().add(this.deckController);
 
+    }
 }
