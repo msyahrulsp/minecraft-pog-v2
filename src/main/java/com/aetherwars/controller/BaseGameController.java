@@ -20,24 +20,22 @@ public class BaseGameController {
     private Player playerOne;
     private Player playerTwo;
 
+    private Player activePlayer;
+    private Player idlePlayer;
+
     @FXML
     private ResourceBundle resources;
-
     @FXML
     private URL location;
-
     @FXML
     private StackPane deckSlot;
-
     @FXML
     private StackPane leftBoardSlot;
-
     @FXML
     private StackPane rightBoardSLot;
 
     @FXML
     void initialize() {
-
         Deck deckPlayerOne = new Deck();
         Deck deckPlayerTwo = new Deck();
 
@@ -52,13 +50,22 @@ public class BaseGameController {
         Player playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCard, boardPlayerOne);
         Player playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCard, boardPlayerTwo);
 
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+
+        try {
+            this.playerOne.getDeck().loadDeck();
+            this.playerTwo.getDeck().loadDeck();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
         this.setDeckInterface();
     }
     @FXML
     public void setDeckInterface() {
         this.deckSlot.getChildren().clear();
-        this.deckController = new DeckController(this);
+        this.deckController = new DeckController(this, playerOne);
         this.deckSlot.getChildren().add(this.deckController);
-
     }
 }

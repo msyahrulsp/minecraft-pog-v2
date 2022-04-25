@@ -16,6 +16,10 @@ public class CardHolder {
     return this.elmt.get(index);
   }
 
+  public ArrayList<Card> getCards() {
+    return this.elmt;
+  }
+
   public void addElmt(Card card) {
     this.elmt.add(card);
   }

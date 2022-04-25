@@ -3,7 +3,7 @@ package com.aetherwars.model;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-public class Potion extends tempSpell{
+public class Potion extends TempSpell{
     public static ArrayList<Potion> potionList = new ArrayList<Potion>(); //berisi Potion "Murni" 
     private int attackBuff;
     private int healthBuff;

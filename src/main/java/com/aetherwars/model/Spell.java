@@ -1,6 +1,6 @@
 package com.aetherwars.model;
 
-class Spell extends Card {
+public class Spell extends Card {
     //behaviornya seharusnya Character menggunakan spell jadi, di character ntar bikin metod memakai spell
     protected spellType type;
     public Spell(){
@@ -37,34 +37,4 @@ class Spell extends Card {
         System.out.println(ss);
     }
 }
-class tempSpell extends Spell{
-    protected int duration;
-    public tempSpell(){
-        super();
-        this.duration = 0;
-    }
-    public tempSpell(int id, String name, String description, int mana, String imageLoc, spellType type, int duration){
-        super(id, name, description, mana, imageLoc, type);
-        this.duration = duration;
-    }
-    public tempSpell(tempSpell s){
-        super(s);
-        this.duration = s.getDuration();
-    }
-    public void setDuration(int newDuration){
-        this.duration = newDuration;
-    }
-    public int getDuration(){
-        return this.duration;
-    }
-    @Override
-    public String toString() {
-        return super.toString() + "\nDuration: " + this.duration;
-    }
-    public static void main(String[] args) {
-        tempSpell s = new tempSpell();
-        System.out.println(s.toString());
-        s.setDuration(1);
-        System.out.println(s.getDuration());
-    }
-}
+
