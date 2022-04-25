@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 public class BaseGameController {
 
     private DeckController deckController;
+    private DrawController drawController;
     private PlayerBoardController[] playerBoardController;
     private PhaseController phaseController;
 
