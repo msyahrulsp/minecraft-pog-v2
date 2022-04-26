@@ -32,6 +32,8 @@ public class BaseGameController {
     private Player activePlayer;
     private Player idlePlayer;
 
+    private int index;
+
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -63,6 +65,8 @@ public class BaseGameController {
 
         this.playerOneController = new PlayerBoardController(this, this.playerOne);
         this.playerTwoController = new PlayerBoardController(this, this.playerTwo);
+
+        this.index = -1;
 
         try {
             this.playerOne.getDeck().loadDeck();
@@ -141,4 +145,8 @@ public class BaseGameController {
         this.activePlayer.setPhase(this.nextPhase(this.activePlayer));
 
     }
+
+    public int getIndex() { return this.index; }
+
+    public void setIndex(int idx) { this.index = idx; }
 }
