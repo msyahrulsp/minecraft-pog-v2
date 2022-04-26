@@ -5,11 +5,14 @@ import java.util.ResourceBundle;
 
 import com.aetherwars.AetherWars;
 import com.aetherwars.model.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -57,7 +60,7 @@ public class DeckController extends HBox {
         this.cardInfoStats.setText(card.toString());
         this.cardInfoStats.setText("asdasdadas");
         this.cardInfoDesc.setText(card.getDesc());
-        System.out.println(this.getChildren().toString());
+//        System.out.println(this.getChildren().toString());
     }
 
     public void initDeck() {

@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
@@ -35,6 +36,13 @@ public class HandCardController extends StackPane {
     @FXML
     void onHover(MouseEvent event) {
         baseGameController.getDeckController().setCardInfo(this.card);
+//        System.out.println(GridPane.getColumnIndex(this));
+        this.setStyle("-fx-background-color:" + "#32a85e");
+    }
+
+    @FXML
+    void onLeave(MouseEvent event) {
+        this.setStyle("-fx-background-color: transparent");
     }
 
     public HandCardController(BaseGameController baseGameController, Card card) {

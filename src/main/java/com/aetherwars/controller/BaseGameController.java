@@ -71,14 +71,16 @@ public class BaseGameController {
             System.out.println("Error: " + e.getMessage());
         }
 
-        this.setDeckInterface();
+        this.activePlayer = this.playerOne;
+        this.setDeckInterface(this.activePlayer);
         this.setDrawInterface();
         this.setPlayerInterface();
+        this.gameState();
     }
     @FXML
-    public void setDeckInterface() {
+    public void setDeckInterface(Player activePlayer) {
         this.deckSlot.getChildren().clear();
-        this.deckController = new DeckController(this, playerOne);
+        this.deckController = new DeckController(this, activePlayer);
         this.deckSlot.getChildren().add(this.deckController);
     }
 
@@ -110,5 +112,33 @@ public class BaseGameController {
 
     public Player getPlayer() {
         return this.playerOne;
+    }
+
+    public Phase nextPhase(Player activePlayer) {
+
+        if (this.activePlayer.getPhase() == Phase.DRAW) {
+            return Phase.PLAN;
+        } else if (this.activePlayer.getPhase() == Phase.PLAN) {
+            return Phase.ATTACK;
+        } else if (this.activePlayer.getPhase() == Phase.ATTACK) {
+            return Phase.END;
+        } else if (this.activePlayer.getPhase() == Phase.END) {
+//            if (i == 1) {
+//                rounds++;
+//                capMana++;
+//                if (capMana > 10) {
+//                    capMana = 10;
+//                }
+//                this.player[i].setMana(capMana);
+//            }
+            return Phase.DRAW;
+        }
+        return null;
+    }
+
+    public void gameState() {
+        // misal draw udah jalan, sekarang lanjut ke phase plan
+        this.activePlayer.setPhase(this.nextPhase(this.activePlayer));
+
     }
 }
