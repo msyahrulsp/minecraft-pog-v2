@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 
@@ -18,7 +18,7 @@ public class DrawController extends VBox {
     @FXML private ImageView imgDraw;
     @FXML private Label manaDraw;
     @FXML private Label effectDraw;
-    // @FXML private Button draw;
+    @FXML private Button draw;
 
     private BaseGameController controller;
     private Card card;
@@ -27,19 +27,20 @@ public class DrawController extends VBox {
         FXMLLoader drawLoader = new FXMLLoader(AetherWars.class.getResource("gui/Draw.fxml"));
         drawLoader.setRoot(this);
         drawLoader.setController(this);
+        this.card = card;
         try {
             drawLoader.load();
-//            this.controller = controller;
-//            this.card = card;
+            this.controller = controller;
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-//        this.initDrawCard();
+        this.initDrawCard();
     }
 
     public void initDrawCard() {
-//        Image imageDraw = new Image(AetherWars.class.getResource(this.card.getImageLoc()).toString());
-//        this.imgDraw.setImage(imageDraw);
+        Image imageDraw = new Image(AetherWars.class.getResource(this.card.getImageLoc()).toString());
+        this.imgDraw.setImage(imageDraw);
 
         this.manaDraw.setText("MANA " + Integer.toString(card.getMana()));
         if (this.card instanceof Character) {
@@ -55,13 +56,19 @@ public class DrawController extends VBox {
                 this.effectDraw.setText("MORPH");
             }
         }
-        // this.draw.setText("Select");
-        // this.draw.setOnAction(e -> {
-        //     this.selectCard();
-        // });
+        this.draw.setText("Select");
+        this.draw.setOnAction(e -> {
+            this.selectCard();
+        });
+        System.out.println(this.controller.getIndex());
     }
 
-    // public void selectCard() {
-    //     this.controller.getPlayer().addCardToHand(((DrawCardController)this.getParent()).getChildren().indexOf(this));
-    // }
+     public void selectCard() {
+//         this.controller.getPlayer().addCardToHand(((DrawCardController)this.getParent()).getChildren().indexOf(this));
+//         System.out.println(((DrawCardController)this.getParent()).getChildren().indexOf(this));
+//         System.out.println(this.controller.getPlayer().getHand().getCards().size());
+        int idx = ((DrawCardController)this.getParent()).getChildren().indexOf(this);
+        this.controller.setIndex(idx);
+        System.out.println(this.controller.getIndex());
+     }
 }

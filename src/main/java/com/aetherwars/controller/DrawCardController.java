@@ -8,7 +8,7 @@ import com.aetherwars.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
-
+import javafx.scene.control.Button;
 
 public class DrawCardController extends HBox {
     private BaseGameController controller;
@@ -17,7 +17,6 @@ public class DrawCardController extends HBox {
     private ResourceBundle resources;
     @FXML
     private URL location;
-
 
     public DrawCardController(BaseGameController controller) {
         FXMLLoader drawCardLoader = new FXMLLoader(AetherWars.class.getResource("gui/DrawCard.fxml"));
