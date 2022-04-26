@@ -8,12 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 
 public class HandCardController extends StackPane {
-
     private BaseGameController baseGameController;
     private Card card;
 
@@ -30,6 +30,11 @@ public class HandCardController extends StackPane {
         assert cardMana != null : "fx:id=\"cardMana\" was not injected: check your FXML file 'HandCard.fxml'.";
         assert cardEffect != null : "fx:id=\"cardEffect\" was not injected: check your FXML file 'HandCard.fxml'.";
 
+    }
+
+    @FXML
+    void onHover(MouseEvent event) {
+        baseGameController.getDeckController().setCardInfo(this.card);
     }
 
     public HandCardController(BaseGameController baseGameController, Card card) {

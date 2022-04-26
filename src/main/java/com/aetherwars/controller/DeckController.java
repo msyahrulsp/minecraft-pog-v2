@@ -8,6 +8,7 @@ import com.aetherwars.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -25,15 +26,15 @@ public class DeckController extends HBox {
     @FXML
     private GridPane handSlot;
     @FXML
-    private ImageView cardImage;
+    private ImageView cardInfoImage;
     @FXML
-    private Label cardStats;
+    private Label cardInfoStats;
     @FXML
-    private Label cardDesc;
+    private Label cardInfoDesc;
     @FXML
-    private Label deckCount;
+    private Label deckInfoCount;
     @FXML
-    private Label manaCount;
+    private Label manaInfoCount;
 
     public DeckController(BaseGameController controller, Player activePlayer) {
         FXMLLoader handLoader = new FXMLLoader(AetherWars.class.getResource("gui/Deck.fxml"));
@@ -49,13 +50,21 @@ public class DeckController extends HBox {
         }
     }
 
+    public void setCardInfo(Card card) {
+//        System.out.println(this.getChildren().toString());
+        Image cardImg = new Image(AetherWars.class.getResource(card.getImageLoc()).toString());
+        this.cardInfoImage.setImage(cardImg);
+        this.cardInfoStats.setText(card.toString());
+        this.cardInfoStats.setText("asdasdadas");
+        this.cardInfoDesc.setText(card.getDesc());
+        System.out.println(this.getChildren().toString());
+    }
+
     public void initDeck() {
         this.currentPlayer.getCardToHand("first");
 
-        this.getChildren().clear();
-
-        for(Card card: this.currentPlayer.getHand().getCards()) {
-            this.getChildren().add(new HandCardController(this.baseGameController, card));
+        for(int i=0; i<this.currentPlayer.getHand().getSize(); i++) {
+            this.handSlot.add(new HandCardController(this.baseGameController, this.currentPlayer.getHand().getElmt(i)), i, 0);
         }
     }
 }

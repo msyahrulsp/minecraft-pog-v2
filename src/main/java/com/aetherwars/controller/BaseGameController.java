@@ -3,15 +3,17 @@ package com.aetherwars.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.aetherwars.AetherWars;
 import com.aetherwars.model.*;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 
 public class BaseGameController {
-
     private DeckController deckController;
     private PlayerBoardController[] playerBoardController;
     private PhaseController phaseController;
+    private HandCardController handCardController;
 
     /**
      * player one used left board
@@ -68,4 +70,10 @@ public class BaseGameController {
         this.deckController = new DeckController(this, playerOne);
         this.deckSlot.getChildren().add(this.deckController);
     }
+
+    public DeckController getDeckController() {
+        return this.deckController;
+    }
+
+
 }
