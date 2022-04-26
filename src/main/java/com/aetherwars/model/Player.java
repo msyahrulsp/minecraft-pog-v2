@@ -114,7 +114,6 @@ public class Player {
 
     public void addCardToHand(int choose) {
         if (this.hand.getSize() < 5) {
-            this.getCardToHand("add");
             this.hand.addElmt(this.addCard.getElmt(choose));
             this.addCard.delElmt(choose);
             this.returnCardToDeck();
@@ -158,6 +157,7 @@ public class Player {
         System.out.println(playerOne.toString());
         playerOne.hand.elmt.remove(1);
         System.out.println(playerOne.toString());
+        playerOne.getCardToHand("add");
         playerOne.addCardToHand(1);
         // playerOne.addCardToHand(2);
         // playerOne.addCardToHand(0);

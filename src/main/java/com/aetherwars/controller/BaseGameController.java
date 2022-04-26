@@ -7,10 +7,16 @@ import com.aetherwars.AetherWars;
 import com.aetherwars.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
+import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.event.*;
 
 public class BaseGameController {
+
     private DeckController deckController;
+    private DrawCardController drawController;
     private PlayerBoardController[] playerBoardController;
     private PhaseController phaseController;
     private HandCardController handCardController;
@@ -35,9 +41,11 @@ public class BaseGameController {
     private StackPane leftBoardSlot;
     @FXML
     private StackPane rightBoardSLot;
-
     @FXML
-    void initialize() {
+    private StackPane drawSlot;
+
+    // @FXML
+    public void initialize() {
         Deck deckPlayerOne = new Deck();
         Deck deckPlayerTwo = new Deck();
 
@@ -63,6 +71,7 @@ public class BaseGameController {
         }
 
         this.setDeckInterface();
+        this.setDrawInterface();
     }
     @FXML
     public void setDeckInterface() {
@@ -76,4 +85,24 @@ public class BaseGameController {
     }
 
 
+
+    @FXML
+    public void setDrawInterface() {
+        // VBox draw = new VBox();
+        // draw.setAlignment(Pos.CENTER);
+
+        // Button button = new Button("Draw");
+        // this.leftBoardSlot.getChildren().add(button);
+
+        // this.drawController = new DrawController(this, playerOne);
+        // draw.getChildren().add(this.drawController);
+        // this.leftBoardSlot.getChildren().add(draw);
+        this.drawSlot.getChildren().clear();
+        this.drawController = new DrawCardController(this);
+        this.drawSlot.getChildren().add(this.drawController);
+    }
+
+    public Player getPlayer() {
+        return this.playerOne;
+    }
 }
