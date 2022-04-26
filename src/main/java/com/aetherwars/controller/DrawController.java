@@ -1,51 +1,66 @@
 package com.aetherwars.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.aetherwars.AetherWars;
 import com.aetherwars.model.*;
+import com.aetherwars.model.Character;
+import com.aetherwars.model.Spell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.AnchorPane;
 
-public class DrawController extends HBox {
-    private BaseGameController baseGameController;
-    private Player currentPlayer;
 
-    @FXML
-    private GridPane drawGrid;
+public class DrawController extends AnchorPane {
+    @FXML private ImageView imgDraw;
+    @FXML private Label manaDraw;
+    @FXML private Label effectDraw;
+    // @FXML private Button draw;
 
-    @FXML
-    private URL location;
+    private BaseGameController controller;
+    private Card card;
 
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private ImageView cardImage;
-
-    public DrawController(BaseGameController controller, Player activePlayer) {
-        FXMLLoader drawLoader = new FXMLLoader(AetherWars.class.getResource("gui/DrawCard.fxml"));
+    public DrawController(BaseGameController controller, Card card) {
+        FXMLLoader drawLoader = new FXMLLoader(AetherWars.class.getResource("/gui/Draw.fxml"));
+        drawLoader.setRoot(this);
         drawLoader.setController(this);
         try {
             drawLoader.load();
-            this.currentPlayer = activePlayer;
-            this.baseGameController = controller;
-            this.initDraw();
+            this.controller = controller;
+            this.card = card;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        this.initDrawCard();
     }
 
-    public void initDraw() {
-        this.currentPlayer.getCardToHand("add");
-        this.getChildren().clear();
+    public void initDrawCard() {
+        Image imageDraw = new Image(AetherWars.class.getResource(this.card.getImageLoc()).toString());
+        this.imgDraw.setImage(imageDraw);
 
-        for (Card card: this.currentPlayer.getAddCard().getCards()) {
-            this.getChildren().add(new HandCardController(this.baseGameController, card));
+        this.manaDraw.setText("MANA " + Integer.toString(card.getMana()));
+        if (this.card instanceof Character) {
+            this.effectDraw.setText("ATK " + Integer.toString(((Character) card).getAttack()) + "/HP " + Integer.toString(((Character) card).getHealth()));
+        } else if (card instanceof Spell) {
+            if (((Spell) card).getType().equals(spellType.PTN)) {
+                this.effectDraw.setText("ATK " + Integer.toString(((Potion) card).getAttackBuff()) + "/HP " + Integer.toString(((Potion) card).getHealthBuff()));
+            } else if (card instanceof Swap) {
+                this.effectDraw.setText("SWAP");
+            } else if (card instanceof Level) {
+                this.effectDraw.setText("LEVEL");
+            } else if (this.card instanceof Morph) {
+                this.effectDraw.setText("MORPH");
+            }
         }
+        // this.draw.setText("Select");
+        // this.draw.setOnAction(e -> {
+        //     this.selectCard();
+        // });
     }
+
+    // public void selectCard() {
+    //     this.controller.getPlayer().addCardToHand(((DrawCardController)this.getParent()).getChildren().indexOf(this));
+    // }
 }
