@@ -17,7 +17,8 @@ public class BaseGameController {
 
     private DeckController deckController;
     private DrawCardController drawController;
-    private PlayerBoardController[] playerBoardController;
+    private PlayerBoardController playerOneController;
+    private PlayerBoardController playerTwoController;
     private PhaseController phaseController;
     private HandCardController handCardController;
 
@@ -40,7 +41,7 @@ public class BaseGameController {
     @FXML
     private StackPane leftBoardSlot;
     @FXML
-    private StackPane rightBoardSLot;
+    private StackPane rightBoardSlot;
     @FXML
     private StackPane drawSlot;
 
@@ -57,11 +58,11 @@ public class BaseGameController {
         Board boardPlayerOne = new Board();
         Board boardPlayerTwo = new Board();
 
-        Player playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCard, boardPlayerOne);
-        Player playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCard, boardPlayerTwo);
+        this.playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCard, boardPlayerOne);
+        this.playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCard, boardPlayerTwo);
 
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
+        this.playerOneController = new PlayerBoardController(this, this.playerOne);
+        this.playerTwoController = new PlayerBoardController(this, this.playerTwo);
 
         try {
             this.playerOne.getDeck().loadDeck();
@@ -72,6 +73,7 @@ public class BaseGameController {
 
         this.setDeckInterface();
         this.setDrawInterface();
+        this.setPlayerInterface();
     }
     @FXML
     public void setDeckInterface() {
@@ -84,7 +86,11 @@ public class BaseGameController {
         return this.deckController;
     }
 
-
+    @FXML
+    public void setPlayerInterface() {
+        this.leftBoardSlot.getChildren().add(this.playerOneController);
+        this.rightBoardSlot.getChildren().add(this.playerTwoController);
+    }
 
     @FXML
     public void setDrawInterface() {
