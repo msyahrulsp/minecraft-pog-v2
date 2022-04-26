@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -67,7 +68,7 @@ public class DrawController extends VBox {
 //         this.controller.getPlayer().addCardToHand(((DrawCardController)this.getParent()).getChildren().indexOf(this));
 //         System.out.println(((DrawCardController)this.getParent()).getChildren().indexOf(this));
 //         System.out.println(this.controller.getPlayer().getHand().getCards().size());
-        int idx = ((DrawCardController)this.getParent()).getChildren().indexOf(this);
+        int idx = ((HBox)this.getParent()).getChildren().indexOf(this);
         this.controller.setIndex(idx);
         System.out.println(this.controller.getIndex());
      }
