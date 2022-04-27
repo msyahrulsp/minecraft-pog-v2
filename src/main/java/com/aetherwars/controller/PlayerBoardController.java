@@ -1,7 +1,8 @@
 package com.aetherwars.controller;
 
 import java.net.URL;
-        import java.util.ResourceBundle;
+import java.util.ResourceBundle;
+import java.util.stream.IntStream;
 
 import com.aetherwars.AetherWars;
 import com.aetherwars.model.Player;
@@ -16,36 +17,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 public class PlayerBoardController extends StackPane {
-
     private BaseGameController baseGameController;
     private Player player;
+    private Boolean[] isFilledSlot;
 
     @FXML
     private ResourceBundle resources;
-
     @FXML
     private URL location;
-
     @FXML
     private ProgressBar playerHealth;
-
     @FXML
     private Label playerName;
-
     @FXML
     private GridPane playerBoard;
-
     @FXML
     private ImageView playerImage;
-
-    @FXML
-    void initialize() {
-        assert playerHealth != null : "fx:id=\"playerHealth\" was not injected: check your FXML file 'PlayerBoard.fxml'.";
-        assert playerName != null : "fx:id=\"playerName\" was not injected: check your FXML file 'PlayerBoard.fxml'.";
-        assert playerBoard != null : "fx:id=\"playerBoard\" was not injected: check your FXML file 'PlayerBoard.fxml'.";
-        assert playerImage != null : "fx:id=\"playerImage\" was not injected: check your FXML file 'PlayerBoard.fxml'.";
-
-    }
 
     public PlayerBoardController(BaseGameController baseGameController, Player player) {
         FXMLLoader boardLoader = new FXMLLoader(AetherWars.class.getResource("gui/PlayerBoard.fxml"));
@@ -53,9 +40,9 @@ public class PlayerBoardController extends StackPane {
         boardLoader.setController(this);
         this.player = player;
         this.baseGameController = baseGameController;
+        this.isFilledSlot = new Boolean[]{false,false,false,false,false};
         try {
             boardLoader.load();
-
             this.initPlayerBoard();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -76,5 +63,13 @@ public class PlayerBoardController extends StackPane {
         this.playerImage.setImage(playerImg);
         this.playerName.setText(this.player.getName());
         System.out.println(this.player.toString());
+    }
+
+    public GridPane getPlayerBoard() {
+        return this.playerBoard;
+    }
+
+    public Boolean[] isFilledSlot() {
+        return this.isFilledSlot;
     }
 }

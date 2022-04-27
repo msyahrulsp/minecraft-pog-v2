@@ -21,6 +21,7 @@ public class BaseGameController {
     private PlayerBoardController playerTwoController;
     private PhaseController phaseController;
     private HandCardController handCardController;
+    private BoardCardController boardCardController;
 
     /**
      * player one used left board
@@ -90,6 +91,18 @@ public class BaseGameController {
 
     public DeckController getDeckController() {
         return this.deckController;
+    }
+
+    public PlayerBoardController getPlayerOneController() {
+        return this.playerOneController;
+    }
+
+    public PlayerBoardController getPlayerTwoController() {
+        return this.playerTwoController;
+    }
+
+    public Player getActivePlayer() {
+        return this.activePlayer;
     }
 
     @FXML

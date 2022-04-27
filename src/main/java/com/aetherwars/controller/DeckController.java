@@ -54,13 +54,10 @@ public class DeckController extends HBox {
     }
 
     public void setCardInfo(Card card) {
-//        System.out.println(this.getChildren().toString());
         Image cardImg = new Image(AetherWars.class.getResource(card.getImageLoc()).toString());
         this.cardInfoImage.setImage(cardImg);
         this.cardInfoStats.setText(card.toString());
-        this.cardInfoStats.setText("asdasdadas");
         this.cardInfoDesc.setText(card.getDesc());
-//        System.out.println(this.getChildren().toString());
     }
 
     public void initDeck() {

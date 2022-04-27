@@ -14,9 +14,40 @@ import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 
+class Slot {
+    private Integer x;
+    private Integer y;
+    public Slot(Integer x, Integer y) {
+        this.x = x;
+        this.y = y;
+    }
+    public Integer getX() {
+        return this.x;
+    }
+    public Integer getY() {
+        return this.y;
+    }
+}
+
 public class HandCardController extends StackPane {
     private BaseGameController baseGameController;
     private Card card;
+    private Card selectedCard;
+
+    private static class BoardSlot {
+        private static Slot[] slot;
+        /**
+         * using 0 indexing for 5 slot position
+         */
+        private static void initSlot() {
+            slot = new Slot[5];
+            slot[0] = new Slot(1,0);
+            slot[1] = new Slot(0,0);
+            slot[2] = new Slot(0,1);
+            slot[3] = new Slot(0,2);
+            slot[4] = new Slot(1,2);
+        }
+    }
 
     @FXML
     private ImageView cardImage;
@@ -25,33 +56,15 @@ public class HandCardController extends StackPane {
     @FXML
     private Label cardEffect;
 
-    @FXML
-    void initialize() {
-        assert cardImage != null : "fx:id=\"cardImage\" was not injected: check your FXML file 'HandCard.fxml'.";
-        assert cardMana != null : "fx:id=\"cardMana\" was not injected: check your FXML file 'HandCard.fxml'.";
-        assert cardEffect != null : "fx:id=\"cardEffect\" was not injected: check your FXML file 'HandCard.fxml'.";
-
-    }
-
-    @FXML
-    void onHover(MouseEvent event) {
-        baseGameController.getDeckController().setCardInfo(this.card);
-//        System.out.println(GridPane.getColumnIndex(this));
-        this.setStyle("-fx-background-color:" + "#32a85e");
-    }
-
-    @FXML
-    void onLeave(MouseEvent event) {
-        this.setStyle("-fx-background-color: transparent");
-    }
-
     public HandCardController(BaseGameController baseGameController, Card card) {
         FXMLLoader handLoader = new FXMLLoader(AetherWars.class.getResource("gui/HandCard.fxml"));
         handLoader.setRoot(this);
         handLoader.setController(this);
-        this.card = card;
+
         try {
             handLoader.load();
+            BoardSlot.initSlot();
+            this.card = card;
             this.baseGameController = baseGameController;
             this.initCard();
         } catch (Exception e) {
@@ -77,5 +90,49 @@ public class HandCardController extends StackPane {
                 this.cardEffect.setText("MORPH");
             }
         }
+    }
+
+    @FXML
+    //TODO tambahin warning kalo boxnya udah full
+    //TODO tambahin komentar di semua fungsi
+    void onClick(MouseEvent event) {
+        PlayerBoardController activePlayerController;
+        int i;
+        int xPos = -1;
+        int yPos = -1;
+
+        if (baseGameController.getActivePlayer().getName().equals("Player One")) {
+            activePlayerController = baseGameController.getPlayerOneController();
+        } else {
+            activePlayerController = baseGameController.getPlayerTwoController();
+        }
+
+        for(i=0; i<5; i++) {
+            if (!activePlayerController.isFilledSlot()[i]) {
+                xPos = BoardSlot.slot[i].getX();
+                yPos = BoardSlot.slot[i].getY();
+                activePlayerController.isFilledSlot()[i] = true;
+                break;
+            }
+        }
+
+        if (xPos != -1 && yPos != -1) {
+            activePlayerController.getPlayerBoard().add(new BoardCardController(this.baseGameController, this.card), yPos, xPos);
+        }
+
+       //TODO hapus card dari player handCard
+
+    }
+
+    @FXML
+    void onHover(MouseEvent event) {
+        baseGameController.getDeckController().setCardInfo(this.card);
+//        System.out.println(GridPane.getColumnIndex(this));
+        this.setStyle("-fx-background-color:" + "#32a85e");
+    }
+
+    @FXML
+    void onLeave(MouseEvent event) {
+        this.setStyle("-fx-background-color: transparent");
     }
 }
