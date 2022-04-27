@@ -3,6 +3,8 @@ package com.aetherwars.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.aetherwars.util.Triplet;
+import com.sun.org.apache.bcel.internal.generic.FALOAD;
+
 public class Character extends Card{
   //handle death di main/player aj karena keregister death nya setiap ganti turn
     public static ArrayList<Character> characterList = new ArrayList<Character>(); //berisi Character "Murni"
@@ -199,7 +201,7 @@ public class Character extends Card{
         }
     }
     
-    public void serang(Character c){
+    public void serang(Character c, boolean first){
       System.out.println(this.name + " menyerang Karakter " + c.getName() + " Lawan");
       if (this.type == Type.OVERWORLD){
         if (c.getType() == Type.OVERWORLD){
@@ -225,6 +227,10 @@ public class Character extends Card{
         } else if (c.getType() == Type.NETHER){
           c.setHealth(c.getHealth() - this.attack);
         } 
+      }
+      if (first) {
+          c.serang(this, false);
+          //serang balik
       }
     }
 
@@ -257,7 +263,7 @@ public class Character extends Card{
       // System.out.println(d);
       System.out.println(c);
       System.out.println(e);
-      c.serang(e);
+      c.serang(e,true);
       System.out.println(c);
       System.out.println(e);
     }
