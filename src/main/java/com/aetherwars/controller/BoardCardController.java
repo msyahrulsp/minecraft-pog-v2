@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 public class BoardCardController extends StackPane {
     private BaseGameController baseGameController;
@@ -24,16 +23,13 @@ public class BoardCardController extends StackPane {
     @FXML
     private Label cardLevel;
 
-    @FXML
-    void initialize() {
-        assert cardAttack != null : "fx:id=\"cardAttack\" was not injected: check your FXML file 'BoardCard.fxml'.";
-        assert cardHealth != null : "fx:id=\"cardHealth\" was not injected: check your FXML file 'BoardCard.fxml'.";
-        assert cardImage != null : "fx:id=\"cardImage\" was not injected: check your FXML file 'BoardCard.fxml'.";
-        assert cardLevel != null : "fx:id=\"cardLevel\" was not injected: check your FXML file 'BoardCard.fxml'.";
-    }
-
+    /**
+     * Constructor for board card controller,
+     * used to control the cards placed on player board.
+     * @param baseGameController
+     * @param card - current card
+     */
     public BoardCardController(BaseGameController baseGameController, Card card) {
-//        System.out.println("jalan");
         FXMLLoader boardLoader = new FXMLLoader(AetherWars.class.getResource("gui/BoardCard.fxml"));
         boardLoader.setRoot(this);
         boardLoader.setController(this);
@@ -47,6 +43,10 @@ public class BoardCardController extends StackPane {
         }
     }
 
+    /**
+     * Display card image, attack, and health information
+     * that placed player board.
+     */
     public void initBoard() {
         Image cardImg = new Image(AetherWars.class.getResource(this.card.getImageLoc()).toString());
         this.cardImage.setImage(cardImg);
@@ -55,17 +55,6 @@ public class BoardCardController extends StackPane {
             this.cardAttack.setText(Integer.toString(((Character) card).getAttack()));
             this.cardHealth.setText(Integer.toString(((Character) card).getHealth()));
         }
-//        else if (card instanceof Spell) {
-//            if (((Spell) card).getType().equals(spellType.PTN)) {
-//                this.cardEffect.setText("ATK " + Integer.toString(((Potion) card).getAttackBuff()) + "/HP " + Integer.toString(((Potion) card).getHealthBuff()));
-//            } else if (card instanceof Swap) {
-//                this.cardEffect.setText("SWAP");
-//            } else if (card instanceof Level) {
-//                this.cardEffect.setText("LEVEL");
-//            } else if (this.card instanceof Morph) {
-//                this.cardEffect.setText("MORPH");
-//            }
-//        }
     }
 }
 

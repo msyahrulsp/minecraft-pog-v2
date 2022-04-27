@@ -34,7 +34,10 @@ public class BaseGameController {
     @FXML
     private StackPane drawSlot;
 
-    // @FXML
+    /**
+     * Initialize all components when main program is started.
+     */
+     @FXML
     public void initialize() {
         Deck deckPlayerOne = new Deck();
         Deck deckPlayerTwo = new Deck();
@@ -69,6 +72,13 @@ public class BaseGameController {
         this.setPlayerInterface();
         this.gameState();
     }
+
+    /**
+     * Set deck interface such as initialize player deck,
+     * get card from player deck to hand,
+     * and display the cards on player's hand slol.
+     * @param activePlayer
+     */
     @FXML
     public void setDeckInterface(Player activePlayer) {
         this.deckSlot.getChildren().clear();
@@ -76,22 +86,43 @@ public class BaseGameController {
         this.deckSlot.getChildren().add(this.deckController);
     }
 
+    /**
+     * Getter for deck controller.
+     * @return DeckController
+     */
     public DeckController getDeckController() {
         return this.deckController;
     }
 
+    /**
+     * Getter for player one 'player board controller'.
+     * @return PlayerBoardController
+     */
     public PlayerBoardController getPlayerOneController() {
         return this.playerOneController;
     }
 
+    /**
+     * Getter for player two 'player board controller'.
+     * @return PlayerBoardController
+     */
     public PlayerBoardController getPlayerTwoController() {
         return this.playerTwoController;
     }
 
+    /**
+     * Getter for current active player.
+     * @return Player
+     */
     public Player getActivePlayer() {
         return this.activePlayer;
     }
 
+    /**
+     * Set player interface such as
+     * display player one and player two image,
+     * set player health bar and name.
+     */
     @FXML
     public void setPlayerInterface() {
         this.leftBoardSlot.getChildren().add(this.playerOneController);
@@ -119,7 +150,6 @@ public class BaseGameController {
     }
 
     public Phase nextPhase(Player activePlayer) {
-
         if (this.activePlayer.getPhase() == Phase.DRAW) {
             return Phase.PLAN;
         } else if (this.activePlayer.getPhase() == Phase.PLAN) {

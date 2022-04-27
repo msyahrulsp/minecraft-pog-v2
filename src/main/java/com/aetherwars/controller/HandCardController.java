@@ -12,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
+/**
+ *
+ */
 class Slot {
     private final Integer x;
     private final Integer y;
@@ -27,10 +30,21 @@ class Slot {
     }
 }
 
+/**
+ * Controller class for HandCard.fxml,
+ * used to control the behavior of cards
+ * that placed on player's hand.
+ */
 public class HandCardController extends StackPane {
     private final BaseGameController baseGameController;
     private Card card;
 
+    /**
+     * Static class to store remaining card
+     * that left on player's hand
+     * to re-initialize to fill
+     * the empty card slot.
+     */
     public static class RemainingCard {
         private static Integer newSize;
         private static HandCardController[] card;
@@ -39,11 +53,14 @@ public class HandCardController extends StackPane {
         }
     }
 
+    /**
+     * Static class to store
+     * the x and y position of player's board card
+     * using 0 indexing to maintain 5 card slot location.
+     * ex: Card 1 placed on position (1,0).
+     */
     private static class BoardSlot {
         private static Slot[] slot;
-        /**
-         * using 0 indexing for 5 slot position
-         */
         private static void initSlot() {
             slot = new Slot[5];
             slot[0] = new Slot(1,0);

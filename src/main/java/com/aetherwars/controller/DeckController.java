@@ -1,31 +1,19 @@
 package com.aetherwars.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.aetherwars.AetherWars;
 import com.aetherwars.model.*;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 
 public class DeckController extends HBox {
-
-    private BaseGameController baseGameController;
+    private final BaseGameController baseGameController;
     private Player currentPlayer;
 
-    @FXML
-    private ResourceBundle resources;
-    @FXML
-    private URL location;
     @FXML
     private GridPane handSlot;
     @FXML
@@ -39,6 +27,11 @@ public class DeckController extends HBox {
     @FXML
     private Label manaInfoCount;
 
+    /**
+     * Constructor for deck controller.
+     * @param controller
+     * @param activePlayer
+     */
     public DeckController(BaseGameController controller, Player activePlayer) {
         FXMLLoader handLoader = new FXMLLoader(AetherWars.class.getResource("gui/Deck.fxml"));
         handLoader.setRoot(this);
@@ -53,6 +46,10 @@ public class DeckController extends HBox {
         }
     }
 
+    /**
+     * Set deck card info.
+     * @param card - onHover card
+     */
     public void setCardInfo(Card card) {
         Image cardImg = new Image(AetherWars.class.getResource(card.getImageLoc()).toString());
         this.cardInfoImage.setImage(cardImg);
@@ -60,6 +57,9 @@ public class DeckController extends HBox {
         this.cardInfoDesc.setText(card.getDesc());
     }
 
+    /**
+     * Load 3 player card from deck to hand.
+     */
     public void initDeck() {
         this.currentPlayer.getCardToHand("first");
 
@@ -68,16 +68,29 @@ public class DeckController extends HBox {
         }
     }
 
+    /**
+     * Getter for hand card slot gridpane.
+     * @return gridpane
+     */
     public GridPane getHandSlot() {
         return this.handSlot;
     }
 
+    /**
+     * Used to move hand card to player board card.
+     * @param idx - clicked card index on hand slot
+     * @return HandCardController
+     */
     public HandCardController getClickedCardController(Integer idx) {
         return (HandCardController) this.handSlot.getChildren().get(idx);
     }
 
-    public void removeHandSlot(HandCardController removecCard) {
-        this.handSlot.getChildren().remove(removecCard);
+    /**
+     * Remove removed card from hand slot gridpane children.
+     * @param removedCard - removed card on hand slot
+     */
+    public void removeHandSlot(HandCardController removedCard) {
+        this.handSlot.getChildren().remove(removedCard);
     }
 }
 
