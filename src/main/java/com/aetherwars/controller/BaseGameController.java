@@ -78,7 +78,8 @@ public class BaseGameController {
 
         this.activePlayer = this.playerOne;
         this.setDeckInterface(this.activePlayer);
-        this.setDrawInterface();
+        //TODO setDrawInterface masih throw null pointer
+//        this.setDrawInterface();
         this.setPlayerInterface();
         this.gameState();
     }
