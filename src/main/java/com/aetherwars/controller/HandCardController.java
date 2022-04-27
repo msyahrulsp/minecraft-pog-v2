@@ -29,10 +29,25 @@ class Slot {
     }
 }
 
+class tempCard {
+    private HandCardController tempCard;
+    public tempCard(HandCardController cardController) {
+        this.tempCard = cardController;
+    }
+}
+
 public class HandCardController extends StackPane {
     private BaseGameController baseGameController;
     private Card card;
     private Card selectedCard;
+
+    public static class RemainingCard {
+        private static Integer newSize;
+        private static HandCardController[] card;
+        private static void init() {
+            card = new HandCardController[5];
+        }
+    }
 
     private static class BoardSlot {
         private static Slot[] slot;
@@ -64,6 +79,7 @@ public class HandCardController extends StackPane {
         try {
             handLoader.load();
             BoardSlot.initSlot();
+            RemainingCard.init();
             this.card = card;
             this.baseGameController = baseGameController;
             this.initCard();
@@ -120,19 +136,45 @@ public class HandCardController extends StackPane {
             activePlayerController.getPlayerBoard().add(new BoardCardController(this.baseGameController, this.card), yPos, xPos);
         }
 
-       //TODO hapus card dari player handCard
+        //TODO hapus card dari player handCard attribute
+        Integer selectedCardIdx = GridPane.getColumnIndex(this);
 
+        /**
+         * Kenapa enggak langsung pake remove card at clicked index aja?
+         * Soalnya deck card bakal dinamis (otomatis fill posisi card yang kosong),
+         * jadinya harus inisialisasi ulang setiap ada card yang di delete
+         */
+
+        // remove clicked card
+        HandCardController removedCard = baseGameController.getDeckController().getClickedCardController(selectedCardIdx);
+        baseGameController.getDeckController().removeHandSlot(removedCard);
+
+        // add removed card to temporary array of card
+        RemainingCard.newSize = baseGameController.getDeckController().getHandSlot().getChildren().size();
+        for(int j=0; j<RemainingCard.newSize; j++) {
+            if ((HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j) != null) {
+                RemainingCard.card[j] = (HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j); // card 0 1 2 jadi card 0 2
+            }
+        }
+
+        // clear the deck and re-adding remaining cards
+        baseGameController.getDeckController().getHandSlot().getChildren().clear();
+        for(int k=0; k<RemainingCard.newSize; k++) {
+            baseGameController.getDeckController().getHandSlot().add(RemainingCard.card[k], k, 0);
+        }
     }
 
+
+
     @FXML
-    void onHover(MouseEvent event) {
+    public void onHover(MouseEvent event) {
         baseGameController.getDeckController().setCardInfo(this.card);
-//        System.out.println(GridPane.getColumnIndex(this));
+        System.out.println(GridPane.getColumnIndex(this));
         this.setStyle("-fx-background-color:" + "#32a85e");
     }
 
     @FXML
-    void onLeave(MouseEvent event) {
+    public void onLeave(MouseEvent event) {
         this.setStyle("-fx-background-color: transparent");
     }
 }

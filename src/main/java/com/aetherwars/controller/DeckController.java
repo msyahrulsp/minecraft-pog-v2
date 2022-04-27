@@ -67,5 +67,17 @@ public class DeckController extends HBox {
             this.handSlot.add(new HandCardController(this.baseGameController, this.currentPlayer.getHand().getElmt(i)), i, 0);
         }
     }
+
+    public GridPane getHandSlot() {
+        return this.handSlot;
+    }
+
+    public HandCardController getClickedCardController(Integer idx) {
+        return (HandCardController) this.handSlot.getChildren().get(idx);
+    }
+
+    public void removeHandSlot(HandCardController removecCard) {
+        this.handSlot.getChildren().remove(removecCard);
+    }
 }
 
