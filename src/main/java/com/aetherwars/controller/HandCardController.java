@@ -12,11 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
-import java.util.ArrayList;
-
 class Slot {
-    private Integer x;
-    private Integer y;
+    private final Integer x;
+    private final Integer y;
     public Slot(Integer x, Integer y) {
         this.x = x;
         this.y = y;
@@ -29,17 +27,9 @@ class Slot {
     }
 }
 
-class tempCard {
-    private HandCardController tempCard;
-    public tempCard(HandCardController cardController) {
-        this.tempCard = cardController;
-    }
-}
-
 public class HandCardController extends StackPane {
-    private BaseGameController baseGameController;
+    private final BaseGameController baseGameController;
     private Card card;
-    private Card selectedCard;
 
     public static class RemainingCard {
         private static Integer newSize;
@@ -92,12 +82,12 @@ public class HandCardController extends StackPane {
         Image cardImg = new Image(AetherWars.class.getResource(this.card.getImageLoc()).toString());
         this.cardImage.setImage(cardImg);
 
-        this.cardMana.setText("MANA " + Integer.toString(card.getMana()));
+        this.cardMana.setText("MANA " + card.getMana());
         if (this.card instanceof Character) {
-            this.cardEffect.setText("ATK " + Integer.toString(((Character) card).getAttack()) + "/HP " + Integer.toString(((Character) card).getHealth()));
+            this.cardEffect.setText("ATK " + ((Character) card).getAttack() + "/HP " + ((Character) card).getHealth());
         } else if (card instanceof Spell) {
             if (((Spell) card).getType().equals(spellType.PTN)) {
-                this.cardEffect.setText("ATK " + Integer.toString(((Potion) card).getAttackBuff()) + "/HP " + Integer.toString(((Potion) card).getHealthBuff()));
+                this.cardEffect.setText("ATK " + ((Potion) card).getAttackBuff() + "/HP " + ((Potion) card).getHealthBuff());
             } else if (card instanceof Swap) {
                 this.cardEffect.setText("SWAP");
             } else if (card instanceof Level) {
@@ -153,7 +143,7 @@ public class HandCardController extends StackPane {
         // add removed card to temporary array of card
         RemainingCard.newSize = baseGameController.getDeckController().getHandSlot().getChildren().size();
         for(int j=0; j<RemainingCard.newSize; j++) {
-            if ((HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j) != null) {
+            if (baseGameController.getDeckController().getHandSlot().getChildren().get(j) != null) {
                 RemainingCard.card[j] = (HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j); // card 0 1 2 jadi card 0 2
             }
         }
@@ -164,8 +154,6 @@ public class HandCardController extends StackPane {
             baseGameController.getDeckController().getHandSlot().add(RemainingCard.card[k], k, 0);
         }
     }
-
-
 
     @FXML
     public void onHover(MouseEvent event) {

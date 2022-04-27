@@ -1,20 +1,10 @@
 package com.aetherwars.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import com.aetherwars.AetherWars;
 import com.aetherwars.model.*;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
-import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.Button;
-import javafx.event.*;
 
 public class BaseGameController {
-
     private DeckController deckController;
     private DrawCardController drawController;
     private PlayerBoardController playerOneController;
@@ -35,10 +25,6 @@ public class BaseGameController {
 
     private int index;
 
-    @FXML
-    private ResourceBundle resources;
-    @FXML
-    private URL location;
     @FXML
     private StackPane deckSlot;
     @FXML
