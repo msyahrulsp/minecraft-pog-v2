@@ -38,9 +38,14 @@ public class Potion extends TempSpell{
         return this.healthBuff;
     };
     @Override
-    public void useOn(Character c){
+    public void useOn(Player caster, Character c){
+        if (c.isAbleToBeUsedBy(caster)){
         System.out.println("Potion " + this.name + " used on " + c.getName());
         c.addBuff(this.duration, this.attackBuff, this.healthBuff);
+        }
+        else{
+            System.out.println("Potion " + this.name + " can't be used on " + c.getName());
+        }
     };
     @Override
     public String toString() {
@@ -57,10 +62,10 @@ public class Potion extends TempSpell{
         Potion ingameP = new Potion(p);
         Potion ingamePP = new Potion(pp);
         ingameCard.seeBuff();
-        ingameP.useOn(ingameCard);
+//        ingameP.useOn(ingameCard);
         System.out.println(ingameCard);
         ingameCard.decreaseBuff();
-        ingamePP.useOn(ingameCard);
+//        ingamePP.useOn(ingameCard);
         ingameCard.seeBuff();
         ingameCard.decreaseBuff();
         ingameCard.decreaseBuff();

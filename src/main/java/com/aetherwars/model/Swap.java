@@ -23,15 +23,20 @@ public class Swap extends TempSpell{
         return null;
     }
     @Override
-    public void useOn(Character c){
-        System.out.println("Swap " + this.name + " used on " + c.getName());
-        if (c.getswapDur() > 0){
-            c.setswapDur(c.getswapDur() + this.duration);
-        } else {
-            c.setswapDur(this.duration);
-            int temp = c.getHealth();
-            c.setHealth(c.getAttack());
-            c.setAttack(temp);
+    public void useOn(Player caster, Character c){
+        if (c.isAbleToBeUsedBy(caster)) {
+            System.out.println("Swap " + this.name + " used on " + c.getName());
+            if (c.getswapDur() > 0) {
+                c.setswapDur(c.getswapDur() + this.duration);
+            } else {
+                c.setswapDur(this.duration);
+                int temp = c.getHealth();
+                c.setHealth(c.getAttack());
+                c.setAttack(temp);
+            }
+        }
+        else{
+            System.out.println("Swap " + this.name + " cannot be used on " + c.getName());
         }
     };
     public static void main(String[] args) {
@@ -41,13 +46,13 @@ public class Swap extends TempSpell{
         System.out.println(ingameCard);
         Swap s = new Swap(0, "Swap", "Swap", 0, "", 5);
         System.out.println(s.toString());
-        s.useOn(ingameCard);
+//        s.useOn(ingameCard);
         System.out.println(ingameCard);
         Potion p = new Potion(2001,"Jamu kuat", "Supaya tahan lama", 4, "-", 8,10,3);
         Potion pp = new Potion(2002,"Josu", "ExtraJoss Susu mantapp", 4, "-", 4,2,5);
         Potion ingameP = new Potion(p);
         Potion ingamePP = new Potion(pp);
-        p.useOn(ingameCard);
+//        p.useOn(ingameCard);
         System.out.println(ingameCard);
         ingameCard.decreaseswapDur();
         ingameCard.decreaseBuff();
