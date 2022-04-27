@@ -111,6 +111,7 @@ public class HandCardController extends StackPane {
     @FXML
     //TODO tambahin warning kalo boxnya udah full
     //TODO tambahin komentar di semua fungsi
+    //TODO implementasi efek spell kalo dipilih
     void onClick(MouseEvent event) {
         PlayerBoardController activePlayerController;
         int i;
@@ -136,8 +137,8 @@ public class HandCardController extends StackPane {
             activePlayerController.getPlayerBoard().add(new BoardCardController(this.baseGameController, this.card), yPos, xPos);
         }
 
-        //TODO hapus card dari player handCard attribute
         Integer selectedCardIdx = GridPane.getColumnIndex(this);
+        baseGameController.getActivePlayer().addCardToBoard(selectedCardIdx);
 
         /**
          * Kenapa enggak langsung pake remove card at clicked index aja?
