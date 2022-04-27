@@ -60,10 +60,12 @@ public class DrawCardController extends VBox {
     }
 
     public void submitDraw() {
-        System.out.println(this.controller.getIndex());
+//        System.out.println(this.controller.getIndex());
         this.controller.getPlayer().addCardToHand(this.controller.getIndex());
-        System.out.println(this.controller.getPlayer().getHand().getCards().size());
+//        System.out.println(this.controller.getPlayer().getHand().getCards().size());
         this.getChildren().clear();
         this.controller.setIsDrawing(false);
+        this.controller.setIndex(-1);
+        this.controller.getDeckController().addDrawCardDeck();
     }
 }

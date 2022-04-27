@@ -65,9 +65,6 @@ public class DrawController extends VBox {
     }
 
      public void selectCard() {
-//         this.controller.getPlayer().addCardToHand(((DrawCardController)this.getParent()).getChildren().indexOf(this));
-//         System.out.println(((DrawCardController)this.getParent()).getChildren().indexOf(this));
-//         System.out.println(this.controller.getPlayer().getHand().getCards().size());
         int idx = ((HBox)this.getParent()).getChildren().indexOf(this);
         this.controller.setIndex(idx);
         System.out.println(this.controller.getIndex());

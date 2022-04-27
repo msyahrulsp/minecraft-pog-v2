@@ -137,11 +137,12 @@ public class BaseGameController {
 
     @FXML
     public void setDrawInterface() {
-        if (!this.isDrawing) {
+        if (!this.isDrawing && this.activePlayer.getHand().getCards().size() < 5) {
             this.isDrawing = true;
             this.drawSlot.getChildren().clear();
             this.drawController = new DrawCardController(this);
             this.drawSlot.getChildren().add(this.drawController);
+
         }
     }
 
