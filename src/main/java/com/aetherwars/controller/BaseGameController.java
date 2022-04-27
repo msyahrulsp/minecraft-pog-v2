@@ -3,6 +3,7 @@ package com.aetherwars.controller;
 import com.aetherwars.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.Button;
 
 public class BaseGameController {
     private DeckController deckController;
@@ -24,6 +25,7 @@ public class BaseGameController {
     private Player idlePlayer;
 
     private int index;
+    private boolean isDrawing = false;
 
     @FXML
     private StackPane deckSlot;
@@ -33,6 +35,8 @@ public class BaseGameController {
     private StackPane rightBoardSlot;
     @FXML
     private StackPane drawSlot;
+    @FXML
+    private Button drawSec;
 
     /**
      * Initialize all components when main program is started.
@@ -68,9 +72,11 @@ public class BaseGameController {
         this.activePlayer = this.playerOne;
         this.setDeckInterface(this.activePlayer);
         //TODO setDrawInterface masih throw null pointer
-//        this.setDrawInterface();
         this.setPlayerInterface();
         this.gameState();
+        this.drawSec.setOnAction(e -> {
+            this.setDrawInterface();
+        });
     }
 
     /**
@@ -131,18 +137,12 @@ public class BaseGameController {
 
     @FXML
     public void setDrawInterface() {
-        // VBox draw = new VBox();
-        // draw.setAlignment(Pos.CENTER);
-
-        // Button button = new Button("Draw");
-        // this.leftBoardSlot.getChildren().add(button);
-
-        // this.drawController = new DrawController(this, playerOne);
-        // draw.getChildren().add(this.drawController);
-        // this.leftBoardSlot.getChildren().add(draw);
-        this.drawSlot.getChildren().clear();
-        this.drawController = new DrawCardController(this);
-        this.drawSlot.getChildren().add(this.drawController);
+        if (!this.isDrawing) {
+            this.isDrawing = true;
+            this.drawSlot.getChildren().clear();
+            this.drawController = new DrawCardController(this);
+            this.drawSlot.getChildren().add(this.drawController);
+        }
     }
 
     public Player getPlayer() {
@@ -179,4 +179,6 @@ public class BaseGameController {
     public int getIndex() { return this.index; }
 
     public void setIndex(int idx) { this.index = idx; }
+
+    public void setIsDrawing(boolean isDrawing) { this.isDrawing = isDrawing; }
 }

@@ -35,11 +35,11 @@
       <StackPane fx:id="rightBoardSlot" prefHeight="455.0" prefWidth="500.0" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" prefHeight="254.0" prefWidth="280.0" style="-fx-border-color: #000;" text="Tes aja" />
-            <Label alignment="CENTER" prefHeight="261.0" prefWidth="280.0" style="-fx-border-color: #000;" text="Tes aja" />
-            <StackPane fx:id="drawSlot" prefHeight="349.0" prefWidth="280.0" />
+            <Button fx:id="drawSec" mnemonicParsing="false" text="Draw" />
+            <StackPane fx:id="drawSlot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="280.0" />
          </children>
       </VBox>
    </center>

@@ -21,6 +21,8 @@ public class DrawCardController extends VBox {
     @FXML
     private HBox drawCard;
     @FXML
+    private HBox boxSubmit;
+    @FXML
     private Button submitBtn;
 
     public DrawCardController(BaseGameController controller) {
@@ -49,11 +51,12 @@ public class DrawCardController extends VBox {
             // this.getChildren().add(drawCard);
         }
         this.getChildren().add(drawCard);
+
         this.submitBtn.setText("Choose");
         this.submitBtn.setOnAction(e -> {
             this.submitDraw();
         });
-        this.getChildren().add(submitBtn);
+        this.getChildren().add(boxSubmit);
     }
 
     public void submitDraw() {
@@ -61,5 +64,6 @@ public class DrawCardController extends VBox {
         this.controller.getPlayer().addCardToHand(this.controller.getIndex());
         System.out.println(this.controller.getPlayer().getHand().getCards().size());
         this.getChildren().clear();
+        this.controller.setIsDrawing(false);
     }
 }

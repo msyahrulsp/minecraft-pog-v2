@@ -4,10 +4,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<fx:root type="VBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="315.0" type="VBox" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox fx:id="drawCard" prefHeight="205.0" prefWidth="315.0" />
-      <Button fx:id="submitBtn" mnemonicParsing="false" text="Button" />
+      <HBox fx:id="drawCard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="205.0" prefWidth="315.0" style="-fx-background-color: #32a85e;" />
+      <HBox fx:id="boxSubmit" alignment="CENTER" style="-fx-background-color: #32a85e;">
+         <children>
+            <Button fx:id="submitBtn" mnemonicParsing="false" text="Button"  />
+         </children>
+      </HBox>
    </children>
 </fx:root>
