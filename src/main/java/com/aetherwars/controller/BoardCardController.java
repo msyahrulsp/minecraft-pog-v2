@@ -40,6 +40,7 @@ public class BoardCardController extends StackPane {
             this.card = card;
             this.initBoard();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
