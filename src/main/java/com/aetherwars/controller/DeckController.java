@@ -64,7 +64,7 @@ public class DeckController extends HBox {
     public void initDeck() {
         this.currentPlayer.getCardToHand("first");
 
-        for(int i=0; i<this.currentPlayer.getHand().getSize(); i++) {
+        for(int i=0; i < this.currentPlayer.getHand().getSize(); i++) {
             this.handSlot.add(new HandCardController(this.baseGameController, this.currentPlayer.getHand().getElmt(i)), i, 0);
         }
     }
@@ -75,6 +75,7 @@ public class DeckController extends HBox {
 
     public void setDeckInfo() {
         this.deckInfoCount.setText("Deck(s) Remaining: " + ((Integer) this.currentPlayer.getDeck().getSize()).toString());
+        this.manaInfoCount.setText("Mana: " + ((Integer) this.currentPlayer.getMana()).toString() + "/" + this.baseGameController.getManaCap());
     }
 
     /**

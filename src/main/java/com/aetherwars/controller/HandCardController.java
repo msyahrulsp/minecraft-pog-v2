@@ -140,10 +140,14 @@ public class HandCardController extends StackPane {
      */
     @FXML
     void onClickBtn(MouseEvent event) {
-        selectedCardIdx = GridPane.getColumnIndex(this);
-        baseGameController.getDeckController().removeHandSlot(this);
-        baseGameController.getActivePlayer().throwCardFromHand(selectedCardIdx);
-        this.relayout();
+        if (this.baseGameController.getCurrentPhase() != Phase.PLAN) {
+            AlertBox.display("Throw Card hanya bisa\ndi Phase Planning");
+        } else {
+            selectedCardIdx = GridPane.getColumnIndex(this);
+            baseGameController.getDeckController().removeHandSlot(this);
+            baseGameController.getActivePlayer().throwCardFromHand(selectedCardIdx);
+            this.relayout();
+        }
     }
 
     /**

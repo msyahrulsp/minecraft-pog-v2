@@ -1,5 +1,11 @@
 package com.aetherwars.controller;
 
-public class PhaseController {
+import com.aetherwars.model.Phase;
 
+public class PhaseController {
+    public static Phase currentPhase = Phase.DRAW;
+
+    public static void setCurPhase(Phase phase) {
+        currentPhase = phase;
+    }
 }

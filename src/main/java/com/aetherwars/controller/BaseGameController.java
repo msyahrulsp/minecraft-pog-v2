@@ -23,10 +23,12 @@ public class BaseGameController {
     private Player playerTwo;
 
     private Player activePlayer;
-    private Player idlePlayer;
 
     private int index;
+    private int rounds;
+    private int manaCap;
     private boolean isDrawing = false;
+    private Phase currentPhase;
 
     @FXML
     private StackPane deckSlot;
@@ -38,6 +40,8 @@ public class BaseGameController {
     private StackPane drawSlot;
     @FXML
     private Button drawSec;
+    @FXML
+    private Button nxtPhaseBtn;
     @FXML
     private Label drawPanel;
     @FXML
@@ -70,6 +74,9 @@ public class BaseGameController {
         this.playerTwoController = new PlayerBoardController(this, this.playerTwo);
 
         this.index = -1;
+        this.rounds = 1;
+        this.manaCap = 1;
+        this.currentPhase = Phase.DRAW;
 
         try {
             this.playerOne.getDeck().loadDeck();
@@ -82,9 +89,14 @@ public class BaseGameController {
         this.setDeckInterface(this.activePlayer);
         //TODO setDrawInterface masih throw null pointer
         this.setPlayerInterface();
-        this.gameState();
+        // this.gameState();
+
         this.drawSec.setOnAction(e -> {
             this.setDrawInterface();
+        });
+
+        this.nxtPhaseBtn.setOnAction(e -> {
+            this.nextPhase();
         });
     }
 
@@ -169,14 +181,55 @@ public class BaseGameController {
         return this.playerOne;
     }
 
-    public Phase nextPhase(Player activePlayer) {
-        if (this.activePlayer.getPhase() == Phase.DRAW) {
-            return Phase.PLAN;
-        } else if (this.activePlayer.getPhase() == Phase.PLAN) {
-            return Phase.ATTACK;
-        } else if (this.activePlayer.getPhase() == Phase.ATTACK) {
-            return Phase.END;
-        } else if (this.activePlayer.getPhase() == Phase.END) {
+    public int getRounds() {
+        return this.rounds;
+    }
+
+    public int getManaCap() {
+        return this.manaCap;
+    }
+
+    public Phase getCurrentPhase() {
+        return this.currentPhase;
+    }
+
+    public void nextPhase() {
+        if (this.currentPhase == Phase.DRAW) {
+            this.currentPhase = Phase.PLAN;
+            this.drawPanel.setStyle("-fx-border-color: #000;");
+            this.planPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
+        } else if (this.currentPhase == Phase.PLAN) {
+            this.currentPhase = Phase.ATTACK;
+            this.planPanel.setStyle("-fx-border-color: #000;");
+            this.attackPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
+        } else if (this.currentPhase == Phase.ATTACK) {
+            this.currentPhase = Phase.END;
+            this.attackPanel.setStyle("-fx-border-color: #000;");
+            this.endPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
+        } else if (this.currentPhase == Phase.END) {
+            this.endPanel.setStyle("-fx-border-color: #000;");
+            this.drawPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
+            
+            
+            if (this.activePlayer.getName().equals("Player One")) {
+                this.activePlayer = this.playerTwo;
+            } else {
+                this.activePlayer = this.playerOne;
+                this.rounds += 1;
+                this.manaCap += 1;
+
+                if (this.manaCap > 10) {
+                    this.manaCap = 10;
+                }
+
+                this.playerOne.setMana(this.manaCap);
+                this.playerTwo.setMana(this.manaCap);
+            }
+            this.setDeckInterface(this.activePlayer);
+
+            System.out.println(this.rounds);
+            System.out.println(this.playerOne.getMana());
+            this.currentPhase = Phase.DRAW;
 //            if (i == 1) {
 //                rounds++;
 //                capMana++;
@@ -185,16 +238,15 @@ public class BaseGameController {
 //                }
 //                this.player[i].setMana(capMana);
 //            }
-            return Phase.DRAW;
         }
-        return null;
+        
     }
 
-    public void gameState() {
-        // misal draw udah jalan, sekarang lanjut ke phase plan
-        this.activePlayer.setPhase(this.nextPhase(this.activePlayer));
+    // public void gameState() {
+    //     // misal draw udah jalan, sekarang lanjut ke phase plan
+    //     this.activePlayer.setPhase(this.nextPhase(this.activePlayer));
 
-    }
+    // }
 
     public int getIndex() { return this.index; }
 

@@ -22,6 +22,10 @@ public class BoardCardController extends StackPane {
     @FXML
     private ImageView cardImage;
     @FXML
+    private ImageView cardAttackImg;
+    @FXML
+    private ImageView cardHealthImg;
+    @FXML
     private Label cardLevel;
 
     /**
@@ -51,10 +55,15 @@ public class BoardCardController extends StackPane {
      */
     public void initBoard() {
         Image cardImg = new Image(AetherWars.class.getResource(this.card.getImageLoc()).toString());
+        System.out.println(this.card.getImageLoc());
+        Image attackImg = new Image(AetherWars.class.getResource("card/image/attack.png").toString());
+        Image healthImg = new Image(AetherWars.class.getResource("card/image/heart.png").toString());
         this.cardImage.setImage(cardImg);
+        this.cardAttackImg.setImage(attackImg);
+        this.cardHealthImg.setImage(healthImg);
 
-            this.cardAttack.setText(Integer.toString(((Character) card).getAttack()));
-            this.cardHealth.setText(Integer.toString(((Character) card).getHealth()));
+        this.cardAttack.setText(Integer.toString(((Character) card).getAttack()));
+        this.cardHealth.setText(Integer.toString(((Character) card).getHealth()));
     }
 
     @FXML
