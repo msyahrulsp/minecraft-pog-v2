@@ -14,10 +14,10 @@
          <children>
             <HBox prefHeight="53.0" prefWidth="1280.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="128.0" prefWidth="301.0" style="-fx-border-color: #000;" text="DRAW" />
-                  <Label alignment="CENTER" prefHeight="171.0" prefWidth="274.0" style="-fx-border-color: #000;" text="PLAN" />
-                  <Label alignment="CENTER" prefHeight="168.0" prefWidth="248.0" style="-fx-border-color: #000;" text="ATTACK" textAlignment="CENTER" />
-                  <Label alignment="CENTER" prefHeight="110.0" prefWidth="266.0" style="-fx-border-color: #000;" text="END" textAlignment="CENTER" />
+                  <Label fx:id="drawPanel" alignment="CENTER" prefHeight="128.0" prefWidth="301.0" style="-fx-border-color: #000; -fx-background-color: #75fc92" text="DRAW" />
+                  <Label fx:id="planPanel" alignment="CENTER" prefHeight="171.0" prefWidth="274.0" style="-fx-border-color: #000;" text="PLAN" />
+                  <Label fx:id="attackPanel" alignment="CENTER" prefHeight="168.0" prefWidth="248.0" style="-fx-border-color: #000;" text="ATTACK" textAlignment="CENTER" />
+                  <Label fx:id="endPanel" alignment="CENTER" prefHeight="110.0" prefWidth="266.0" style="-fx-border-color: #000;" text="END" textAlignment="CENTER" />
                   <Button mnemonicParsing="false" prefHeight="96.0" prefWidth="190.0" text="&gt;&gt;" />
                </children>
                <padding>

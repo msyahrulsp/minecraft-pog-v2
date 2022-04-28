@@ -41,6 +41,7 @@ public class DeckController extends HBox {
             this.currentPlayer = activePlayer;
             this.baseGameController = controller;
             this.initDeck();
+            this.setDeckInfo();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -54,7 +55,7 @@ public class DeckController extends HBox {
         Image cardImg = new Image(AetherWars.class.getResource(card.getImageLoc()).toString());
         this.cardInfoImage.setImage(cardImg);
         this.cardInfoStats.setText(card.toString());
-        this.cardInfoDesc.setText(card.getDesc());
+        this.cardInfoDesc.setText("\"" + card.getDesc() + "\"");
     }
 
     /**
@@ -70,6 +71,10 @@ public class DeckController extends HBox {
 
     public void addDrawCardDeck() {
         this.handSlot.add(new HandCardController(this.baseGameController, this.currentPlayer.getHand().getElmt(this.currentPlayer.getHand().getSize()-1)), this.currentPlayer.getHand().getSize()-1, 0);
+    }
+
+    public void setDeckInfo() {
+        this.deckInfoCount.setText("Deck(s) Remaining: " + ((Integer) this.currentPlayer.getDeck().getSize()).toString());
     }
 
     /**
@@ -97,4 +102,3 @@ public class DeckController extends HBox {
         this.handSlot.getChildren().remove(removedCard);
     }
 }
-

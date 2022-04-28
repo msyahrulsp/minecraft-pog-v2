@@ -234,12 +234,13 @@ public class Character extends Card{
     }
 
     public void serang(Player p){
-        //pass; nunggu data structure player
+      System.out.println(this.name + " menyerang Player " + p.getName());
+      p.setHealth(p.getHealth() - this.attack);
     }
 
     @Override
     public String toString() {
-      return super.toString() + "\nType: " + this.type + "\nAttack: " + this.attack + "\nHealth: " + this.health + "\nLevel: " + this.lvl + "\nExp: " + this.exp;
+        return super.toString() + "\nAttack: " + this.attack + "\nHealth: " + this.health + "\nLevel: " + this.lvl + "\nExp: " + this.exp + "\nType: " + this.type;
     }
     
     public static void main(String[] args) {
