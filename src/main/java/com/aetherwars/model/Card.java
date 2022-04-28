@@ -73,7 +73,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Id: "+ this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nMana: " + this.mana + "\nImage: " + this.imageLoc;
+        return this.name;
     }
     public boolean isAbleToBeUsedBy(Player p){
         //true jika mana p sudah cukup. jika true langsung mengurangi mana p sesuai mana yang dibutuhkan

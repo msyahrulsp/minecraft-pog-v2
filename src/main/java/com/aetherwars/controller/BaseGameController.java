@@ -4,6 +4,7 @@ import com.aetherwars.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class BaseGameController {
     private DeckController deckController;
@@ -37,11 +38,19 @@ public class BaseGameController {
     private StackPane drawSlot;
     @FXML
     private Button drawSec;
+    @FXML
+    private Label drawPanel;
+    @FXML
+    private Label planPanel;
+    @FXML
+    private Label attackPanel;
+    @FXML
+    private Label endPanel;
 
     /**
      * Initialize all components when main program is started.
      */
-     @FXML
+    @FXML
     public void initialize() {
         Deck deckPlayerOne = new Deck();
         Deck deckPlayerTwo = new Deck();

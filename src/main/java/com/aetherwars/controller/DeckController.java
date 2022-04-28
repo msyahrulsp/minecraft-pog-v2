@@ -55,7 +55,7 @@ public class DeckController extends HBox {
         Image cardImg = new Image(AetherWars.class.getResource(card.getImageLoc()).toString());
         this.cardInfoImage.setImage(cardImg);
         this.cardInfoStats.setText(card.toString());
-        this.cardInfoDesc.setText(card.getDesc());
+        this.cardInfoDesc.setText("\"" + card.getDesc() + "\"");
     }
 
     /**
@@ -102,4 +102,3 @@ public class DeckController extends HBox {
         this.handSlot.getChildren().remove(removedCard);
     }
 }
-
