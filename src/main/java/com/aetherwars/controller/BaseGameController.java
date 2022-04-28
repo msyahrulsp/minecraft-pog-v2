@@ -124,6 +124,14 @@ public class BaseGameController {
         return this.activePlayer;
     }
 
+    public PlayerBoardController getActivePlayerBoardController() {
+        if (this.activePlayer.getName().equals("Player One")) {
+            return this.playerOneController;
+        } else {
+            return this.playerTwoController;
+        }
+    }
+
     /**
      * Set player interface such as
      * display player one and player two image,

@@ -52,14 +52,17 @@ public class BoardCardController extends StackPane {
         Image cardImg = new Image(AetherWars.class.getResource(this.card.getImageLoc()).toString());
         this.cardImage.setImage(cardImg);
 
-        if (this.card instanceof Character) {
             this.cardAttack.setText(Integer.toString(((Character) card).getAttack()));
             this.cardHealth.setText(Integer.toString(((Character) card).getHealth()));
-        }
     }
 
     @FXML
     void onClicked(MouseEvent event) {
+        baseGameController.getActivePlayerBoardController().setClickedCard((Character) this.card);
+        baseGameController.getActivePlayerBoardController().setClickedCardController(this);
+        // ini blom ditambahin sama previous attack/health
+        this.cardAttack.setText(String.valueOf(baseGameController.getActivePlayerBoardController().getClickedCard().getAttack()));
+        this.cardHealth.setText(String.valueOf(baseGameController.getActivePlayerBoardController().getClickedCard().getHealth()));
         this.setStyle("-fx-background-color:" + "#90ee90");
         this.getChildren().get(0).setStyle("-fx-border-color:" + "#ffa500");
         baseGameController.getDeckController().setCardInfo(this.card);
