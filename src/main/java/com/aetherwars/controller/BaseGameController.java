@@ -86,7 +86,7 @@ public class BaseGameController {
         }
 
         this.activePlayer = this.playerOne;
-        this.setDeckInterface(this.activePlayer);
+        this.setDeckInterface(this.activePlayer, true);
         //TODO setDrawInterface masih throw null pointer
         this.setPlayerInterface();
         // this.gameState();
@@ -107,9 +107,9 @@ public class BaseGameController {
      * @param activePlayer
      */
     @FXML
-    public void setDeckInterface(Player activePlayer) {
+    public void setDeckInterface(Player activePlayer, boolean First) {
         this.deckSlot.getChildren().clear();
-        this.deckController = new DeckController(this, activePlayer);
+        this.deckController = new DeckController(this, activePlayer, First);
         this.deckSlot.getChildren().add(this.deckController);
     }
 
@@ -223,6 +223,11 @@ public class BaseGameController {
             
             if (this.activePlayer.getName().equals("Player One")) {
                 this.activePlayer = this.playerTwo;
+                if (this.rounds == 1) {
+                    this.setDeckInterface(this.activePlayer, true);
+                } else {
+                    this.setDeckInterface(this.activePlayer, false);
+                }
             } else {
                 this.activePlayer = this.playerOne;
                 this.rounds += 1;
@@ -234,8 +239,9 @@ public class BaseGameController {
 
                 this.playerOne.setMana(this.manaCap);
                 this.playerTwo.setMana(this.manaCap);
+                this.setDeckInterface(this.activePlayer, false);
             }
-            this.setDeckInterface(this.activePlayer);
+
 
             System.out.println(this.rounds);
             System.out.println(this.playerOne.getMana());

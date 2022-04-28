@@ -32,7 +32,7 @@ public class DeckController extends HBox {
      * @param controller
      * @param activePlayer
      */
-    public DeckController(BaseGameController controller, Player activePlayer) {
+    public DeckController(BaseGameController controller, Player activePlayer, boolean First) {
         FXMLLoader handLoader = new FXMLLoader(AetherWars.class.getResource("gui/Deck.fxml"));
         handLoader.setRoot(this);
         handLoader.setController(this);
@@ -40,7 +40,7 @@ public class DeckController extends HBox {
             handLoader.load();
             this.currentPlayer = activePlayer;
             this.baseGameController = controller;
-            this.initDeck();
+            this.initDeck(First);
             this.setDeckInfo();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -61,8 +61,18 @@ public class DeckController extends HBox {
     /**
      * Load 3 player card from deck to hand.
      */
-    public void initDeck() {
-        this.currentPlayer.getCardToHand("first");
+    public void initDeck(boolean First) {
+        if(First) {
+            this.currentPlayer.getCardToHand("first");
+        }
+
+        for(int i=0; i < this.currentPlayer.getHand().getSize(); i++) {
+            this.handSlot.add(new HandCardController(this.baseGameController, this.currentPlayer.getHand().getElmt(i)), i, 0);
+        }
+    }
+
+    public void reInitDeck() {
+//        this.currentPlayer.getCardToHand("first");
 
         for(int i=0; i < this.currentPlayer.getHand().getSize(); i++) {
             this.handSlot.add(new HandCardController(this.baseGameController, this.currentPlayer.getHand().getElmt(i)), i, 0);

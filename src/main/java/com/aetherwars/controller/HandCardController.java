@@ -237,36 +237,36 @@ public class HandCardController extends StackPane {
 
         else if (this.card instanceof  Level) {
             //TODO benerin class Level
-            String levelModifierType = ((Level) this.card).getModifierType;
-            int targetedCharLvl = baseGameController.getActivePlayerBoardController().getClickedCard().getLvl();
-
-            //    if (baseGameController.getActivePlayerBoardController().getClickedCard().isAbleToChangeLevel(baseGameController.getActivePlayer())){
-            //        copy yang dibawah
-            //    }
-            //    else{
-            //        System.out.println("Cannot use Level spell card due to lack of mana");
-            //    }
-
-            if (levelModifierType.equals("LVLUP")) {
-                if (targetedCharLvl != 10) {
-                    baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl+1);
-                    baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
-                    removeSpellfromHand();
-                }
-                else {
-                    System.out.println("Target character card is already at max level!");
-                }
-            }
-            else if (levelModifierType.equals("LVLDOWN")) {
-                if (targetedCharLvl != 1) {
-                    baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl-1);
-                    baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
-                    removeSpellfromHand();
-                }
-                else {
-                    System.out.println("Target character card is already at lowest level!");
-                }
-            }
+//            String levelModifierType = ((Level) this.card).getModifierType();
+//            int targetedCharLvl = baseGameController.getActivePlayerBoardController().getClickedCard().getLvl();
+//
+//            //    if (baseGameController.getActivePlayerBoardController().getClickedCard().isAbleToChangeLevel(baseGameController.getActivePlayer())){
+//            //        copy yang dibawah
+//            //    }
+//            //    else{
+//            //        System.out.println("Cannot use Level spell card due to lack of mana");
+//            //    }
+//
+//            if (levelModifierType.equals("LVLUP")) {
+//                if (targetedCharLvl != 10) {
+//                    baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl+1);
+//                    baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
+//                    removeSpellfromHand();
+//                }
+//                else {
+//                    System.out.println("Target character card is already at max level!");
+//                }
+//            }
+//            else if (levelModifierType.equals("LVLDOWN")) {
+//                if (targetedCharLvl != 1) {
+//                    baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl-1);
+//                    baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
+//                    removeSpellfromHand();
+//                }
+//                else {
+//                    System.out.println("Target character card is already at lowest level!");
+//                }
+//            }
         }
 
         else if (this.card instanceof  Swap) {
