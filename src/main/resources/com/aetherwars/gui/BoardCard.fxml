@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="184.0" prefWidth="160.0" type="StackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="180.0" maxWidth="160.0" minHeight="180.0" minWidth="160.0" prefHeight="180.0" prefWidth="160.0" style="-fx-border-radius: 10;" type="StackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="CENTER" maxHeight="180.0" maxWidth="160.0" minHeight="180.0" minWidth="160.0" onMouseClicked="#onClicked" prefHeight="180.0" prefWidth="160.0" style="-fx-border-color: #636363; -fx-border-radius: 10;">
          <children>
             <HBox prefHeight="49.0" prefWidth="160.0">
                <children>
@@ -33,9 +33,15 @@
                   </VBox>
                </children>
             </HBox>
-            <ImageView fx:id="cardImage" fitHeight="119.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="cardLevel" alignment="CENTER" prefHeight="28.0" prefWidth="160.0" text="0/1 [1]" />
+            <ImageView fx:id="cardImage" fitHeight="109.0" fitWidth="158.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER" />
+            <Label fx:id="cardLevel" alignment="CENTER" prefHeight="68.0" prefWidth="158.0" text="0/1 [1]" VBox.vgrow="NEVER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Label>
          </children>
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
       </VBox>
    </children>
 </fx:root>

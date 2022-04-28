@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 public class BoardCardController extends StackPane {
@@ -55,6 +56,13 @@ public class BoardCardController extends StackPane {
             this.cardAttack.setText(Integer.toString(((Character) card).getAttack()));
             this.cardHealth.setText(Integer.toString(((Character) card).getHealth()));
         }
+    }
+
+    @FXML
+    void onClicked(MouseEvent event) {
+        this.setStyle("-fx-background-color:" + "#90ee90");
+        this.getChildren().get(0).setStyle("-fx-border-color:" + "#ffa500");
+        baseGameController.getDeckController().setCardInfo(this.card);
     }
 }
 
