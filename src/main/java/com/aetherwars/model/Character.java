@@ -235,7 +235,8 @@ public class Character extends Card{
     }
 
     public void serang(Player p){
-        //pass; nunggu data structure player
+      System.out.println(this.name + " menyerang Player " + p.getName());
+      p.setHealth(p.getHealth() - this.attack);
     }
 
     @Override
