@@ -74,7 +74,11 @@ public class DeckController extends HBox {
     }
 
     public void setDeckInfo() {
-        this.deckInfoCount.setText("Deck(s) Remaining: " + ((Integer) this.currentPlayer.getDeck().getSize()).toString());
+        if (this.currentPlayer.getDeck().getSize() != 0) {
+            this.deckInfoCount.setText("Deck(s) Remaining: " + ((Integer) this.currentPlayer.getDeck().getSize()).toString());
+        } else if (this.currentPlayer.getDeck().getSize() == 0 && this.currentPlayer.getAddCard().getSize() < 3) {
+            this.deckInfoCount.setText("Deck(s) Remaining: " + ((Integer) this.currentPlayer.getAddCard().getSize()).toString());
+        }
         this.manaInfoCount.setText("Mana: " + ((Integer) this.currentPlayer.getMana()).toString() + "/" + this.baseGameController.getManaCap());
     }
 

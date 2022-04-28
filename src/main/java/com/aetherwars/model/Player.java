@@ -86,16 +86,28 @@ public class Player {
 
     public void getCardToHand(String phase) {
         if (phase == "add") {
-            for (int i = 0; i < 3; i++) {
-                this.addCard.addElmt(this.deck.getElmt(i));
+            if (this.deck.getSize() > 2) {
+                for (int i = 0; i < 3; i++) {
+                    this.addCard.addElmt(this.deck.getElmt(i));
+                }
+                for (int i=0; i<3; i++) {
+                    this.deck.delElmt(0);
+                }
+            } else {
+                for (int i = 0; i < this.deck.getSize(); i++) {
+                    this.addCard.addElmt(this.deck.getElmt(i));
+                }
+                for (int i=0; i<this.deck.getSize(); i++) {
+                    this.deck.delElmt(0);
+                }
             }
         } else {
             for(int i=0; i<3; i++) {
                 this.hand.addElmt(this.deck.getElmt(i));
             }
-        }
-        for (int i=0; i<3; i++) {
-            this.deck.delElmt(0);
+            for (int i=0; i<3; i++) {
+                this.deck.delElmt(0);
+            }
         }
     }
 
@@ -116,7 +128,9 @@ public class Player {
         if (this.hand.getSize() < 5) {
             this.hand.addElmt(this.addCard.getElmt(choose));
             this.addCard.delElmt(choose);
-            this.returnCardToDeck();
+            if (!this.deck.isEmpty()) {
+                this.returnCardToDeck();
+            }
         } else {
             System.out.println("Hand is full");
         }

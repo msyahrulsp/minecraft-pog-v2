@@ -166,14 +166,24 @@ public class BaseGameController {
 
     @FXML
     public void setDrawInterface() {
-        if (!this.isDrawing && this.activePlayer.getHand().getCards().size() < 5) {
-            this.isDrawing = true;
-            this.drawSlot.getChildren().clear();
-            this.drawController = new DrawCardController(this);
-            this.drawSlot.getChildren().add(this.drawController);
-        } else if (this.activePlayer.getHand().getCards().size() >= 5) {
-            AlertBox.display("Hand can't be more than 5 cards");
+        if (this.currentPhase == Phase.DRAW) {
+            if (!this.isDrawing && this.activePlayer.getHand().getCards().size() < 5) {
+                if (this.activePlayer.getDeck().getSize() != 0 || this.activePlayer.getAddCard().getSize() != 0) {
+                    this.isDrawing = true;
+                    this.drawSlot.getChildren().clear();
+                    this.drawController = new DrawCardController(this);
+                    this.drawSlot.getChildren().add(this.drawController);
+                } else {
+                    AlertBox.display("No more card to draw");
+                }
+
+            } else if (this.activePlayer.getHand().getCards().size() >= 5) {
+                AlertBox.display("Hand can't be more than 5 cards");
+            }
+        } else {
+            AlertBox.display("Can't draw card in this phase");
         }
+
 //        System.out.println(this.activePlayer.getHand().getCards().size());
     }
 

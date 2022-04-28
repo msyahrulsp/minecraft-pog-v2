@@ -20,10 +20,6 @@ public class DrawCardController extends VBox {
     private URL location;
     @FXML
     private HBox drawCard;
-    @FXML
-    private HBox boxSubmit;
-    @FXML
-    private Button submitBtn;
 
     public DrawCardController(BaseGameController controller) {
         FXMLLoader drawCardLoader = new FXMLLoader(AetherWars.class.getResource("gui/DrawCard.fxml"));
@@ -41,33 +37,12 @@ public class DrawCardController extends VBox {
     public void displayDrawCard() {
         this.getChildren().clear();
 
-        System.out.println(this.controller.getPlayer().getAddCard().getCards().size());
-        this.controller.getPlayer().getCardToHand("add");
-        System.out.println(this.controller.getPlayer().getAddCard().getCards().size());
-        for (Card card : this.controller.getPlayer().getAddCard().getCards()) {
+        System.out.println(this.controller.getActivePlayer().getAddCard().getCards().size());
+        this.controller.getActivePlayer().getCardToHand("add");
+        System.out.println(this.controller.getActivePlayer().getAddCard().getCards().size());
+        for (Card card : this.controller.getActivePlayer().getAddCard().getCards()) {
             drawCard.getChildren().add(new DrawController(this.controller, card));
-            // DrawController drawCard = new DrawController(this.controller, card);
-            // System.out.println(card.getName());
-            // this.getChildren().add(drawCard);
         }
         this.getChildren().add(drawCard);
-
-        this.submitBtn.setText("Choose");
-        this.submitBtn.setOnAction(e -> {
-            this.submitDraw();
-        });
-        this.getChildren().add(boxSubmit);
-    }
-
-    public void submitDraw() {
-//        System.out.println(this.controller.getIndex());
-        this.controller.getPlayer().addCardToHand(this.controller.getIndex());
-//        System.out.println(this.controller.getPlayer().getHand().getCards().size());
-        this.getChildren().clear();
-        this.controller.setIsDrawing(false);
-        this.controller.setIndex(-1);
-        this.controller.getDeckController().addDrawCardDeck();
-        this.controller.getDeckController().setDeckInfo();
-        this.controller.nextPhase();
     }
 }
