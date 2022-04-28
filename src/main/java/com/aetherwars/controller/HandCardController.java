@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
+import javax.jws.HandlerChain;
+
 /**
  *
  */
@@ -183,31 +185,135 @@ public class HandCardController extends StackPane {
                 AlertBox.display("Board sudah penuh!");
             }
         }
-        else if (this.card instanceof  Potion) {
-            if (((Potion) this.card).getDuration() == 0) {
-                /*
-                * get clicked board card
-                * character add buf based on potion atk health (permanent potion)
-                */
-                // TODO: tambah current card attack dengan buff attack
-//                baseGameController.getActivePlayerBoardController().getClickedCard().setAttack(((Potion) this.card).getAttackBuff());
-//                baseGameController.getActivePlayerBoardController().getClickedCard().setHealth(((Potion) this.card).getHealthBuff());
-                // TODO: harus set card di player board biar keupdate juga guinya
 
-            } else {
-                System.out.println("TODO: HANDLING NON PERMANENT POTION");
+        else if (this.card instanceof  Potion) {
+            int atkBuff = ((Potion) this.card).getAttackBuff();
+            int healthBuff = ((Potion) this.card).getHealthBuff();
+            int duration = ((Potion) this.card).getDuration();
+            this.getChildren().get(0).setStyle("-fx-border-color:" + "#ffa500");
+
+        //    if (this.card.isAbleToBeUsedBy(baseGameController.getActivePlayer())){
+        //        baseGameController.getActivePlayerBoardController().getClickedCard().addBuff(duration, atkBuff, healthBuff);
+        //        System.out.println("Potion " + this.card.getName() + " used on " + baseGameController.getActivePlayerBoardController().getClickedCard().getName());
+        //    }
+        //    else{
+        //        System.out.println("NOT ENOUGH MANA, Potion " + this.card.getName() + " can't be used on " + baseGameController.getActivePlayerBoardController().getClickedCard().getName() );
+        //    }
+
+            baseGameController.getActivePlayerBoardController().getClickedCard().addBuff(duration, atkBuff, healthBuff);
+            removeSpellfromHand();
+            // CHARACTER MATI
+            //    if (targetedChar.getHealth() == 0) {
+            //        Integer selectedCardIdx = GridPane.getColumnIndex(this);
+            //        baseGameController.getActivePlayer().removeCardFromBoard(selectedCardIdx);
+            //    }
+        }
+
+        else if (this.card instanceof  Level) {
+            //TODO benerin class Level
+            String levelModifierType = ((Level) this.card).getModifierType;
+            int targetedCharLvl = baseGameController.getActivePlayerBoardController().getClickedCard().getLvl();
+
+            //    if (baseGameController.getActivePlayerBoardController().getClickedCard().isAbleToChangeLevel(baseGameController.getActivePlayer())){
+            //        copy yang dibawah
+            //    }
+            //    else{
+            //        System.out.println("Cannot use Level spell card due to lack of mana");
+            //    }
+
+            if (levelModifierType.equals("LVLUP")) {
+                if (targetedCharLvl != 10) {
+                    baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl+1);
+                    baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
+                    removeSpellfromHand();
+                }
+                else {
+                    System.out.println("Target character card is already at max level!");
+                }
+            }
+            else if (levelModifierType.equals("LVLDOWN")) {
+                if (targetedCharLvl != 1) {
+                    baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl-1);
+                    baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
+                    removeSpellfromHand();
+                }
+                else {
+                    System.out.println("Target character card is already at lowest level!");
+                }
             }
         }
-        else {
-            System.out.println("CLICKED CARD IS NOT A CHARACTER, ADD HANDLING FOR SPELL!!!!");
+
+        else if (this.card instanceof  Swap) {
+        //    if (this.card.isAbleToBeUsedBy(baseGameController.getActivePlayer())) {
+        //        copy yang di bawah
+        //    }
+        //    else {
+        //        System.out.println("Cannot use Swap Spell Card due to lack of mana!");
+        //    }
+            Character targetedChar = baseGameController.getActivePlayerBoardController().getClickedCard();
+            System.out.println("Swap " + this.card.getName() + " used on " + baseGameController.getActivePlayerBoardController().getClickedCard().getName());
+            if (targetedChar.getswapDur() > 0) {
+                targetedChar.setswapDur(targetedChar.getswapDur() + ((Swap) this.card).getDuration());
+                removeSpellfromHand();
+            }
+            else {
+                targetedChar.setswapDur(((Swap) this.card).getDuration());
+
+                int temp = targetedChar.getHealth();
+                targetedChar.setHealth(targetedChar.getAttack());
+                targetedChar.setAttack(temp);
+                removeSpellfromHand();
+
+            // CHARACTER MATI
+            //    if (targetedChar.getHealth() == 0) {
+            //        Integer selectedCardIdx = GridPane.getColumnIndex(this);
+            //        baseGameController.getActivePlayer().removeCardFromBoard(selectedCardIdx);
+            //    }
+            }
         }
 
+        else if (this.card instanceof  Morph) {
+            Character targetedChar = baseGameController.getActivePlayerBoardController().getClickedCard();
+            if (this.card.isAbleToBeUsedBy(baseGameController.getActivePlayer())) {
+                Character targetRef = Character.getCharacter(((Morph) this.card).getTarget());
+                if (targetRef != null) {
+                    System.out.println("Morph " + this.card.getName() + " used on " + targetedChar.getName() + " and morph to " + targetRef.getName());
+                    targetedChar.changeTo(targetRef);
+                    removeSpellfromHand();
+                } else {
+                    System.out.println("Target not found");
+                }
+            } else {
+                System.out.println("Cannot use Morph Spell Card due to lack of mana!");
+            }
+        }
     }
 
     public void setBoardCardEffect(Card card) {
 
     }
 
+    public void removeSpellfromHand() {
+        Integer selectedCardIdx = GridPane.getColumnIndex(this);
+        baseGameController.getActivePlayer().throwCardFromHand(selectedCardIdx);
+
+        HandCardController removedCard = baseGameController.getDeckController().getClickedCardController(selectedCardIdx);
+        baseGameController.getDeckController().removeHandSlot(removedCard);
+
+        // add removed card to temporary array of card
+        RemainingCard.newSize = baseGameController.getDeckController().getHandSlot().getChildren().size();
+        for (int j = 0; j < RemainingCard.newSize; j++) {
+            if (baseGameController.getDeckController().getHandSlot().getChildren().get(j) != null) {
+                RemainingCard.card[j] = (HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j); // card 0 1 2 jadi card 0 2
+            }
+        }
+
+        // clear the deck and re-adding remaining cards
+        baseGameController.getDeckController().getHandSlot().getChildren().clear();
+        for(int k=0; k<RemainingCard.newSize; k++) {
+            baseGameController.getDeckController().getHandSlot().add(RemainingCard.card[k], k, 0);
+        }
+    }
     @FXML
     public void onHover(MouseEvent event) {
         baseGameController.getDeckController().setCardInfo(this.card);

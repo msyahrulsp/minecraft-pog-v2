@@ -3,6 +3,8 @@ package com.aetherwars.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.aetherwars.util.Triplet;
+import java.lang.Math;
+
 
 public class Character extends Card{
   //handle death di main/player aj karena keregister death nya setiap ganti turn
@@ -54,7 +56,7 @@ public class Character extends Card{
         this.buffList = new ArrayList<Triplet<Integer, Integer, Integer>>();
     }//yang hanya punya bufflist hanya character yang dimainkan (yang dibuat dengan copy constructor)
     
-    public void changeTo(Character c) { // buat swap
+    public void changeTo(Character c) { // buat morph
         this.id = c.getId();
         this.name = c.getName();
         this.description = c.getDesc();
@@ -65,8 +67,8 @@ public class Character extends Card{
         this.attUp = c.getAttUp();
         this.health = c.getHealth();
         this.healthUp = c.getHealthUp();
-        this.exp = c.getExp();
-        this.lvl = c.getLvl();
+        this.exp = 0;
+        this.lvl = 1;
     }
 
     public void setType(Type newType) {
@@ -144,12 +146,28 @@ public class Character extends Card{
         return this.lvl;
     }
 
+    public boolean isAbleToChangeLevel(Player p) {
+        //true jika mana p sudah cukup. jika true langsung mengurangi mana p sesuai mana yang dibutuhkan
+        int manaReq = (this.lvl + 1)/2; // sama aja kayak fungsi ceiling
+        if (p.getMana() >= manaReq)
+            if (p.getMana() >= manaReq) {
+                p.setMana(p.getMana() - manaReq);
+                return true;
+            }
+        return false;
+    }
     public void addBuff(int duration, int attBuff, int healthBuff){
-        if (duration >0) {
+        if (duration > 0) {
             this.buffList.add(new Triplet<Integer, Integer, Integer>(duration, attBuff, healthBuff));
         } // kalo durasi = 0 buff permanen jadi gaperlu di monitor
         this.attack += attBuff;
+        if (this.attack < 0) {
+            this.attack = 0;
+        }
         this.health += healthBuff;
+        if (this.health <= 0) {
+            this.health = 0;
+        }
     }
 
     // sumur https://stackoverflow.com/questions/14231688/how-to-remove-element-from-arraylist-by-checking-its-value
