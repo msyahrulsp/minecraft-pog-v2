@@ -21,7 +21,7 @@ public class Spell extends Card {
     public spellType getType(){
         return this.type;
     }
-    public void useOn(Character c){
+    public void useOn(Player caster, Character c){
         System.out.println("Spell " + this.name + " used on " + c.getName());
     };
     @Override

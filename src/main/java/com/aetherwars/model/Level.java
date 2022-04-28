@@ -21,15 +21,19 @@ public class Level extends Spell{
         return null;
     }
     @Override
-    public void useOn(Character c){
-        if (c.getLvl() < 10){
-            c.setExp(0);
-            
-            c.addExp(c.getLvl()*2 - 1);
-            System.out.println("Level up " + c.getName() + " to " + (c.getLvl()));
+    public void useOn(Player caster, Character c){
+        if (c.isAbleToBeUsedBy(caster)) {
+            if (c.getLvl() < 10) {
+                c.setExp(0);
+
+                c.addExp(c.getLvl() * 2 - 1);
+                System.out.println("Level up " + c.getName() + " to " + (c.getLvl()));
+            } else {
+                System.out.println(c.getName() + " Level is " + c.getLvl() + ", maximum Level reached");
+            }
         }
         else{
-            System.out.println(c.getName() +" Level is " + c.getLvl() + ", maximum Level reached");
+            System.out.println(c.getName() + " is not able to be used by " + caster.getName());
         }
     }
     public static void main(String[] args) {
@@ -39,17 +43,17 @@ public class Level extends Spell{
         System.out.println(ingameCard);
         Level l = new Level();
         Level ll = new Level(l);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
-        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
+//        ll.useOn(ingameCard);
         System.out.println(ingameCard);
         // System.out.println(ll);
 

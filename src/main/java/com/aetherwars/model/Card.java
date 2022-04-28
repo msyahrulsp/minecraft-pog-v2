@@ -75,6 +75,14 @@ public class Card {
     public String toString() {
         return "Id: "+ this.id + "\nName: " + this.name + "\nDescription: " + this.description + "\nMana: " + this.mana + "\nImage: " + this.imageLoc;
     }
+    public boolean isAbleToBeUsedBy(Player p){
+        //true jika mana p sudah cukup. jika true langsung mengurangi mana p sesuai mana yang dibutuhkan
+        if (p.getMana() >= this.mana) {
+            p.setMana(p.getMana() - this.mana);
+            return true;
+        }
+        return false;
+    }
     
     public static void main(String[] args) {
         Card d = new Card(1, "test", "test", 1, "test");

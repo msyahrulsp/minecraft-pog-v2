@@ -37,14 +37,17 @@ public class Morph extends Spell {
         return null;
     }
     @Override
-    public void useOn(Character c){
-        Character targetRef = Character.getCharacter(this.target);
-        if (targetRef != null){
-            System.out.println("Morph " + this.name + " used on " + c.getName() + " and morph to " + targetRef.getName());
-            c.changeTo(targetRef);
-        }
-        else{
-            System.out.println("Target not found");
+    public void useOn(Player caster, Character c){
+        if (c.isAbleToBeUsedBy(caster)) {
+            Character targetRef = Character.getCharacter(this.target);
+            if (targetRef != null) {
+                System.out.println("Morph " + this.name + " used on " + c.getName() + " and morph to " + targetRef.getName());
+                c.changeTo(targetRef);
+            } else {
+                System.out.println("Target not found");
+            }
+        } else {
+            System.out.println("Cannot be used on " + c.getName());
         }
     }
     @Override
@@ -58,7 +61,7 @@ public class Morph extends Spell {
         System.out.println(ingameCard);
         Morph m = new Morph(1001,"Morphing to Sapi", "haloo", 4, "-", 1);
         Morph mm = new Morph(m);
-        mm.useOn(ingameCard);
+//        mm.useOn(ingameCard);
         System.out.println(ingameCard);
     }
 }
