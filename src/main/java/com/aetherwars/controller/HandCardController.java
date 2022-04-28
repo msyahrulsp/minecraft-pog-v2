@@ -37,6 +37,7 @@ class Slot {
  */
 public class HandCardController extends StackPane {
     private final BaseGameController baseGameController;
+    PlayerBoardController activePlayerController;
     private Card card;
 
     /**
@@ -118,62 +119,92 @@ public class HandCardController extends StackPane {
     @FXML
     //TODO tambahin komentar di semua fungsi
     //TODO implementasi efek spell kalo dipilih
+    /*
+    * Card yang ditambahkan ke board controller,
+    * memiliki 1 indexing di children dari gridpane player board
+     */
     void onClick(MouseEvent event) {
-        if (baseGameController.getActivePlayer().getBoard().getSize() < 5) {
-            System.out.println("deck size: " + baseGameController.getActivePlayer().getBoard().getSize());
-            PlayerBoardController activePlayerController;
-            int i;
-            int xPos = -1;
-            int yPos = -1;
+        if (this.card instanceof Character) {
+            if (baseGameController.getActivePlayer().getBoard().getSize() < 5) {
+                System.out.println("deck size: " + baseGameController.getActivePlayer().getBoard().getSize());
+                int i;
+                int xPos = -1;
+                int yPos = -1;
 
-            if (baseGameController.getActivePlayer().getName().equals("Player One")) {
-                activePlayerController = baseGameController.getPlayerOneController();
+                if (baseGameController.getActivePlayer().getName().equals("Player One")) {
+                    activePlayerController = baseGameController.getPlayerOneController();
+                } else {
+                    activePlayerController = baseGameController.getPlayerTwoController();
+                }
+
+                for(i=0; i<5; i++) {
+                    if (!activePlayerController.isFilledSlot()[i]) {
+                        xPos = BoardSlot.slot[i].getX();
+                        yPos = BoardSlot.slot[i].getY();
+                        activePlayerController.isFilledSlot()[i] = true;
+                        break;
+                    }
+                }
+
+                if (xPos != -1 && yPos != -1) {
+                    BoardCardController temp = new BoardCardController(this.baseGameController, this.card);
+                    System.out.println("added card: " + temp.toString());
+                    activePlayerController.getPlayerBoard().add(temp, yPos, xPos);
+                    System.out.println("children: " + activePlayerController.getPlayerBoard().getChildren().toString());
+                }
+
+                Integer selectedCardIdx = GridPane.getColumnIndex(this);
+                baseGameController.getActivePlayer().addCardToBoard(selectedCardIdx);
+
+                /**
+                 * Kenapa enggak langsung pake remove card at clicked index aja?
+                 * Soalnya deck card bakal dinamis (otomatis fill posisi card yang kosong),
+                 * jadinya harus inisialisasi ulang setiap ada card yang di delete
+                 */
+
+                // remove clicked card
+                HandCardController removedCard = baseGameController.getDeckController().getClickedCardController(selectedCardIdx);
+                baseGameController.getDeckController().removeHandSlot(removedCard);
+
+                // add removed card to temporary array of card
+                RemainingCard.newSize = baseGameController.getDeckController().getHandSlot().getChildren().size();
+                for(int j=0; j<RemainingCard.newSize; j++) {
+                    if (baseGameController.getDeckController().getHandSlot().getChildren().get(j) != null) {
+                        RemainingCard.card[j] = (HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j); // card 0 1 2 jadi card 0 2
+                    }
+                }
+
+                // clear the deck and re-adding remaining cards
+                baseGameController.getDeckController().getHandSlot().getChildren().clear();
+                for(int k=0; k<RemainingCard.newSize; k++) {
+                    baseGameController.getDeckController().getHandSlot().add(RemainingCard.card[k], k, 0);
+                }
             } else {
-                activePlayerController = baseGameController.getPlayerTwoController();
+                AlertBox.display("Board sudah penuh!");
             }
-
-            for(i=0; i<5; i++) {
-                if (!activePlayerController.isFilledSlot()[i]) {
-                    xPos = BoardSlot.slot[i].getX();
-                    yPos = BoardSlot.slot[i].getY();
-                    activePlayerController.isFilledSlot()[i] = true;
-                    break;
-                }
-            }
-
-            if (xPos != -1 && yPos != -1) {
-                activePlayerController.getPlayerBoard().add(new BoardCardController(this.baseGameController, this.card), yPos, xPos);
-            }
-
-            Integer selectedCardIdx = GridPane.getColumnIndex(this);
-            baseGameController.getActivePlayer().addCardToBoard(selectedCardIdx);
-
-            /**
-             * Kenapa enggak langsung pake remove card at clicked index aja?
-             * Soalnya deck card bakal dinamis (otomatis fill posisi card yang kosong),
-             * jadinya harus inisialisasi ulang setiap ada card yang di delete
-             */
-
-            // remove clicked card
-            HandCardController removedCard = baseGameController.getDeckController().getClickedCardController(selectedCardIdx);
-            baseGameController.getDeckController().removeHandSlot(removedCard);
-
-            // add removed card to temporary array of card
-            RemainingCard.newSize = baseGameController.getDeckController().getHandSlot().getChildren().size();
-            for(int j=0; j<RemainingCard.newSize; j++) {
-                if (baseGameController.getDeckController().getHandSlot().getChildren().get(j) != null) {
-                    RemainingCard.card[j] = (HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j); // card 0 1 2 jadi card 0 2
-                }
-            }
-
-            // clear the deck and re-adding remaining cards
-            baseGameController.getDeckController().getHandSlot().getChildren().clear();
-            for(int k=0; k<RemainingCard.newSize; k++) {
-                baseGameController.getDeckController().getHandSlot().add(RemainingCard.card[k], k, 0);
-            }
-        } else {
-            AlertBox.display("Board sudah penuh!");
         }
+        else if (this.card instanceof  Potion) {
+            if (((Potion) this.card).getDuration() == 0) {
+                /*
+                * get clicked board card
+                * character add buf based on potion atk health (permanent potion)
+                */
+                // TODO: tambah current card attack dengan buff attack
+//                baseGameController.getActivePlayerBoardController().getClickedCard().setAttack(((Potion) this.card).getAttackBuff());
+//                baseGameController.getActivePlayerBoardController().getClickedCard().setHealth(((Potion) this.card).getHealthBuff());
+                // TODO: harus set card di player board biar keupdate juga guinya
+
+            } else {
+                System.out.println("TODO: HANDLING NON PERMANENT POTION");
+            }
+        }
+        else {
+            System.out.println("CLICKED CARD IS NOT A CHARACTER, ADD HANDLING FOR SPELL!!!!");
+        }
+
+    }
+
+    public void setBoardCardEffect(Card card) {
 
     }
 

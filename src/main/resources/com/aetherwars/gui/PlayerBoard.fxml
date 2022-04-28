@@ -12,9 +12,9 @@
 
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="500.0" type="StackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <VBox prefHeight="70.0" prefWidth="500.0" spacing="10.0">
+            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="500.0" spacing="10.0" VBox.vgrow="NEVER">
                <children>
                   <ProgressBar fx:id="playerHealth" prefHeight="34.0" prefWidth="754.0" progress="0.0" />
                   <Label fx:id="playerName" alignment="CENTER" prefHeight="17.0" prefWidth="476.0" text="Player Name" />
@@ -23,7 +23,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </VBox>
-            <GridPane fx:id="playerBoard" prefHeight="386.0" prefWidth="500.0" style="-fx-background-color: #90fc03; -fx-padding: 10;">
+            <GridPane fx:id="playerBoard" alignment="CENTER" hgap="10.0" maxHeight="386.0" maxWidth="500.0" minHeight="386.0" minWidth="500.0" prefHeight="386.0" prefWidth="500.0" vgap="10.0" VBox.vgrow="NEVER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -37,8 +37,14 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <ImageView fx:id="playerImage" fitHeight="174.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ImageView fx:id="playerImage" fitHeight="178.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </GridPane>
          </children>
       </VBox>

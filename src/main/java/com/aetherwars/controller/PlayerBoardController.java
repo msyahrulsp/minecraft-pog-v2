@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 
 import com.aetherwars.AetherWars;
+import com.aetherwars.model.Character;
 import com.aetherwars.model.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,8 @@ public class PlayerBoardController extends StackPane {
     private BaseGameController baseGameController;
     private Player player;
     private Boolean[] isFilledSlot;
+    private Character clickedCard;
+    private BoardCardController clickedCardController;
 
     @FXML
     private ResourceBundle resources;
@@ -71,5 +74,21 @@ public class PlayerBoardController extends StackPane {
 
     public Boolean[] isFilledSlot() {
         return this.isFilledSlot;
+    }
+
+    public void setClickedCard(Character card) {
+        this.clickedCard = card;
+    }
+
+    public Character getClickedCard() {
+        return this.clickedCard;
+    }
+
+    public void setClickedCardController(BoardCardController boardCardController) {
+        this.clickedCardController = boardCardController;
+    }
+
+    public BoardCardController getClickedCardController() {
+        return this.clickedCardController;
     }
 }

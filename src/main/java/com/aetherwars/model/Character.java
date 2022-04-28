@@ -3,7 +3,6 @@ package com.aetherwars.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.aetherwars.util.Triplet;
-import com.sun.org.apache.bcel.internal.generic.FALOAD;
 
 public class Character extends Card{
   //handle death di main/player aj karena keregister death nya setiap ganti turn

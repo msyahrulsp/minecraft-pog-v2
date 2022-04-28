@@ -67,5 +67,6 @@ public class DrawCardController extends VBox {
         this.controller.setIsDrawing(false);
         this.controller.setIndex(-1);
         this.controller.getDeckController().addDrawCardDeck();
+        this.controller.getDeckController().setDeckInfo();
     }
 }

@@ -124,6 +124,14 @@ public class BaseGameController {
         return this.activePlayer;
     }
 
+    public PlayerBoardController getActivePlayerBoardController() {
+        if (this.activePlayer.getName().equals("Player One")) {
+            return this.playerOneController;
+        } else {
+            return this.playerTwoController;
+        }
+    }
+
     /**
      * Set player interface such as
      * display player one and player two image,
@@ -142,8 +150,10 @@ public class BaseGameController {
             this.drawSlot.getChildren().clear();
             this.drawController = new DrawCardController(this);
             this.drawSlot.getChildren().add(this.drawController);
-
+        } else if (this.activePlayer.getHand().getCards().size() >= 5) {
+            AlertBox.display("Hand can't be more than 5 cards");
         }
+//        System.out.println(this.activePlayer.getHand().getCards().size());
     }
 
     public Player getPlayer() {
