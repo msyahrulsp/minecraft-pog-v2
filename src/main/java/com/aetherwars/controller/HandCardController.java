@@ -5,6 +5,7 @@ import com.aetherwars.model.*;
 import com.aetherwars.model.Character;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,6 +42,16 @@ public class HandCardController extends StackPane {
     private final BaseGameController baseGameController;
     PlayerBoardController activePlayerController;
     private Card card;
+    private Integer selectedCardIdx;
+
+    @FXML
+    private ImageView cardImage;
+    @FXML
+    private Label cardMana;
+    @FXML
+    private Label cardEffect;
+    @FXML
+    private Button throwBtn;
 
     /**
      * Static class to store remaining card
@@ -74,13 +85,10 @@ public class HandCardController extends StackPane {
         }
     }
 
-    @FXML
-    private ImageView cardImage;
-    @FXML
-    private Label cardMana;
-    @FXML
-    private Label cardEffect;
-
+    /** HandCardController Contructor.
+     * @param baseGameController .
+     * @param card - card to be display
+     */
     public HandCardController(BaseGameController baseGameController, Card card) {
         FXMLLoader handLoader = new FXMLLoader(AetherWars.class.getResource("gui/HandCard.fxml"));
         handLoader.setRoot(this);
@@ -92,9 +100,19 @@ public class HandCardController extends StackPane {
             RemainingCard.init();
             this.card = card;
             this.baseGameController = baseGameController;
+            this.setActivePlayerController();
             this.initCard();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    public void setActivePlayerController() {
+        if (baseGameController.getActivePlayer().getName().equals("Player One")) {
+            activePlayerController = baseGameController.getPlayerOneController();
+        } else {
+            activePlayerController = baseGameController.getPlayerTwoController();
         }
     }
 
@@ -118,27 +136,59 @@ public class HandCardController extends StackPane {
         }
     }
 
+    /**
+     * Delete card from hand slot.
+     * @param event - throw button is clicked
+     */
+    @FXML
+    void onClickBtn(MouseEvent event) {
+        if (this.baseGameController.getCurrentPhase() != Phase.PLAN) {
+            AlertBox.display("Throw Card hanya bisa\ndi Phase Planning");
+        } else {
+            selectedCardIdx = GridPane.getColumnIndex(this);
+            baseGameController.getDeckController().removeHandSlot(this);
+            baseGameController.getActivePlayer().throwCardFromHand(selectedCardIdx);
+            this.relayout();
+        }
+    }
+
+    /**
+     * Readjust the layout of hand slot.
+     * eg. fill the empty card space
+     */
+    public void relayout() {
+        // add removed card to temporary array of card
+        RemainingCard.newSize = baseGameController.getDeckController().getHandSlot().getChildren().size();
+        for(int j=0; j<RemainingCard.newSize; j++) {
+            if (baseGameController.getDeckController().getHandSlot().getChildren().get(j) != null) {
+                RemainingCard.card[j] = (HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j); // card 0 1 2 jadi card 0 2
+            }
+        }
+
+        // clear the deck and re-adding remaining cards
+        baseGameController.getDeckController().getHandSlot().getChildren().clear();
+        for(int k=0; k<RemainingCard.newSize; k++) {
+            baseGameController.getDeckController().getHandSlot().add(RemainingCard.card[k], k, 0);
+        }
+    }
+
     @FXML
     //TODO tambahin komentar di semua fungsi
     //TODO implementasi efek spell kalo dipilih
     /*
-    * Card yang ditambahkan ke board controller,
+    * Event card yang ditambahkan ke board baseGameController,
     * memiliki 1 indexing di children dari gridpane player board
      */
     void onClick(MouseEvent event) {
+        selectedCardIdx = GridPane.getColumnIndex(this);
         if (this.card instanceof Character) {
             if (baseGameController.getActivePlayer().getBoard().getSize() < 5) {
-                System.out.println("deck size: " + baseGameController.getActivePlayer().getBoard().getSize());
+                System.out.println("new deck size: " + baseGameController.getActivePlayer().getBoard().getSize() + 1);
                 int i;
                 int xPos = -1;
                 int yPos = -1;
 
-                if (baseGameController.getActivePlayer().getName().equals("Player One")) {
-                    activePlayerController = baseGameController.getPlayerOneController();
-                } else {
-                    activePlayerController = baseGameController.getPlayerTwoController();
-                }
-
+                // get index of empty player's board slot
                 for(i=0; i<5; i++) {
                     if (!activePlayerController.isFilledSlot()[i]) {
                         xPos = BoardSlot.slot[i].getX();
@@ -150,37 +200,13 @@ public class HandCardController extends StackPane {
 
                 if (xPos != -1 && yPos != -1) {
                     BoardCardController temp = new BoardCardController(this.baseGameController, this.card);
-                    System.out.println("added card: " + temp.toString());
+                    baseGameController.getActivePlayer().addCardToBoard(selectedCardIdx); // otomatis throw dari hand
                     activePlayerController.getPlayerBoard().add(temp, yPos, xPos);
-                    System.out.println("children: " + activePlayerController.getPlayerBoard().getChildren().toString());
                 }
-
-                Integer selectedCardIdx = GridPane.getColumnIndex(this);
-                baseGameController.getActivePlayer().addCardToBoard(selectedCardIdx);
-
-                /**
-                 * Kenapa enggak langsung pake remove card at clicked index aja?
-                 * Soalnya deck card bakal dinamis (otomatis fill posisi card yang kosong),
-                 * jadinya harus inisialisasi ulang setiap ada card yang di delete
-                 */
 
                 // remove clicked card
-                HandCardController removedCard = baseGameController.getDeckController().getClickedCardController(selectedCardIdx);
-                baseGameController.getDeckController().removeHandSlot(removedCard);
-
-                // add removed card to temporary array of card
-                RemainingCard.newSize = baseGameController.getDeckController().getHandSlot().getChildren().size();
-                for(int j=0; j<RemainingCard.newSize; j++) {
-                    if (baseGameController.getDeckController().getHandSlot().getChildren().get(j) != null) {
-                        RemainingCard.card[j] = (HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j); // card 0 1 2 jadi card 0 2
-                    }
-                }
-
-                // clear the deck and re-adding remaining cards
-                baseGameController.getDeckController().getHandSlot().getChildren().clear();
-                for(int k=0; k<RemainingCard.newSize; k++) {
-                    baseGameController.getDeckController().getHandSlot().add(RemainingCard.card[k], k, 0);
-                }
+                baseGameController.getDeckController().removeHandSlot(this);
+                this.relayout();
             } else {
                 AlertBox.display("Board sudah penuh!");
             }
@@ -317,7 +343,7 @@ public class HandCardController extends StackPane {
     @FXML
     public void onHover(MouseEvent event) {
         baseGameController.getDeckController().setCardInfo(this.card);
-        System.out.println(GridPane.getColumnIndex(this));
+//        System.out.println("hovered card idx on hand: " + GridPane.getColumnIndex(this));
         this.setStyle("-fx-background-color:" + "#32a85e");
     }
 

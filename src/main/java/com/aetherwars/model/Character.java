@@ -258,7 +258,7 @@ public class Character extends Card{
 
     @Override
     public String toString() {
-      return super.toString() + "\nType: " + this.type + "\nAttack: " + this.attack + "\nHealth: " + this.health + "\nLevel: " + this.lvl + "\nExp: " + this.exp;
+        return super.toString() + "\nAttack: " + this.attack + "\nHealth: " + this.health + "\nLevel: " + this.lvl + "\nExp: " + this.exp + "\nType: " + this.type;
     }
     
     public static void main(String[] args) {

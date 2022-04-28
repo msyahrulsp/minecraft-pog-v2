@@ -55,7 +55,7 @@ public class DeckController extends HBox {
         Image cardImg = new Image(AetherWars.class.getResource(card.getImageLoc()).toString());
         this.cardInfoImage.setImage(cardImg);
         this.cardInfoStats.setText(card.toString());
-        this.cardInfoDesc.setText(card.getDesc());
+        this.cardInfoDesc.setText("\"" + card.getDesc() + "\"");
     }
 
     /**
@@ -64,7 +64,7 @@ public class DeckController extends HBox {
     public void initDeck() {
         this.currentPlayer.getCardToHand("first");
 
-        for(int i=0; i<this.currentPlayer.getHand().getSize(); i++) {
+        for(int i=0; i < this.currentPlayer.getHand().getSize(); i++) {
             this.handSlot.add(new HandCardController(this.baseGameController, this.currentPlayer.getHand().getElmt(i)), i, 0);
         }
     }
@@ -74,7 +74,12 @@ public class DeckController extends HBox {
     }
 
     public void setDeckInfo() {
-        this.deckInfoCount.setText("Deck(s) Remaining: " + ((Integer) this.currentPlayer.getDeck().getSize()).toString());
+        if (this.currentPlayer.getDeck().getSize() != 0) {
+            this.deckInfoCount.setText("Deck(s) Remaining: " + ((Integer) this.currentPlayer.getDeck().getSize()).toString());
+        } else if (this.currentPlayer.getDeck().getSize() == 0 && this.currentPlayer.getAddCard().getSize() < 3) {
+            this.deckInfoCount.setText("Deck(s) Remaining: " + ((Integer) this.currentPlayer.getAddCard().getSize()).toString());
+        }
+        this.manaInfoCount.setText("Mana: " + ((Integer) this.currentPlayer.getMana()).toString() + "/" + this.baseGameController.getManaCap());
     }
 
     /**
@@ -102,4 +107,3 @@ public class DeckController extends HBox {
         this.handSlot.getChildren().remove(removedCard);
     }
 }
-
