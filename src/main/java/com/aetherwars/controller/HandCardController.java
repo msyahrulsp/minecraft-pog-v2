@@ -190,9 +190,8 @@ public class HandCardController extends StackPane {
                 * character add buf based on potion atk health (permanent potion)
                 */
                 // TODO: tambah current card attack dengan buff attack
-//                Integer currentAtk = baseGameController.getActivePlayer
-                baseGameController.getActivePlayerBoardController().getClickedCard().setAttack(((Potion) this.card).getAttackBuff());
-                baseGameController.getActivePlayerBoardController().getClickedCard().setHealth(((Potion) this.card).getHealthBuff());
+//                baseGameController.getActivePlayerBoardController().getClickedCard().setAttack(((Potion) this.card).getAttackBuff());
+//                baseGameController.getActivePlayerBoardController().getClickedCard().setHealth(((Potion) this.card).getHealthBuff());
                 // TODO: harus set card di player board biar keupdate juga guinya
 
             } else {
