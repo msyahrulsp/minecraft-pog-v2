@@ -97,7 +97,7 @@ public class BoardCardController extends StackPane {
             Character cardActive = baseGameController.getActivePlayerBoardController().getClickedCard();
             Character cardIdle = baseGameController.getIdlePlayerBoardController().getClickedCard();
 
-            if (cardActive != null && cardIdle != null) {
+            if (cardActive != null && cardIdle != null && !cardActive.getAlreadyAttacked()) {
                 cardActive.serang(cardIdle, true);
                 System.out.println("Here2");
                 System.out.println(cardActive);

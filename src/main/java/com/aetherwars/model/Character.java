@@ -17,6 +17,7 @@ public class Character extends Card{
     private int exp;
     private int lvl;
     private int swapDuration;
+    private boolean alreadyAtt;
     private ArrayList<Triplet<Integer, Integer, Integer>> buffList;
 
     public Character() {
@@ -28,6 +29,7 @@ public class Character extends Card{
         this.healthUp = 1;
         this.exp = 0;
         this.lvl = 1;
+        this.alreadyAtt = false;
         Character.characterList.add(this);
     }
 
@@ -40,6 +42,7 @@ public class Character extends Card{
         this.healthUp = healthUp;
         this.exp = 0;
         this.lvl = 1;
+        this.alreadyAtt = false;
         Character.characterList.add(this);
     }
 
@@ -53,8 +56,9 @@ public class Character extends Card{
         this.healthUp = c.getHealthUp();
         this.exp = c.getExp();
         this.lvl = c.getLvl();
+        this.alreadyAtt = false;
         this.buffList = new ArrayList<Triplet<Integer, Integer, Integer>>();
-    }//yang hanya punya bufflist hanya character yang dimainkan (yang dibuat dengan copy constructor)
+    }
     
     public void changeTo(Character c) { // buat morph
         this.id = c.getId();
@@ -267,6 +271,7 @@ public class Character extends Card{
         } 
       }
       if (first) {
+          this.setAlreadyAttacked(true);
           c.serang(this, false);
           //serang balik
       }
@@ -280,6 +285,14 @@ public class Character extends Card{
     @Override
     public String toString() {
         return super.toString() + "\nAttack: " + this.attack + "\nHealth: " + this.health + "\nLevel: " + this.lvl + "\nExp: " + this.exp + "\nType: " + this.type;
+    }
+
+    public boolean getAlreadyAttacked(){
+        return this.alreadyAtt;
+    }
+
+    public void setAlreadyAttacked(boolean b){
+        this.alreadyAtt = b;
     }
     
     public static void main(String[] args) {

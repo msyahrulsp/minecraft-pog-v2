@@ -256,12 +256,14 @@ public class BaseGameController {
                 for (Card c : this.playerOne.getBoard().getCards()) {
                     if (c instanceof Character) {
                         ((Character) c).decreaseBuff();
+                        ((Character) c).setAlreadyAttacked(false);
                     }
                 }
 
                 for (Card c : this.playerTwo.getBoard().getCards()) {
                     if (c instanceof Character) {
                         ((Character) c).decreaseBuff();
+                        ((Character) c).setAlreadyAttacked(false);
                     }
                 }
                 this.setDeckInterface(this.activePlayer, false);
