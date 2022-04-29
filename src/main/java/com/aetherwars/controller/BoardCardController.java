@@ -86,16 +86,18 @@ public class BoardCardController extends StackPane {
             baseGameController.getActivePlayerBoardController().setClickedCardController(this);
         }
 
-        // if (phase == phase.ATTACK) {
-        //     Character cardActive = baseGameController.getActivePlayerBoardController().getClickedCard();
-        //     Character cardIdle = baseGameController.getIdlePlayerBoardController().getClickedCard();
+        // TODO handle attack ke player
+        // TODO handle death character
+        // serang balik kapan makenya
+        if (phase == phase.ATTACK) {
+            Character cardActive = baseGameController.getActivePlayerBoardController().getClickedCard();
+            Character cardIdle = baseGameController.getIdlePlayerBoardController().getClickedCard();
 
-        //     if (cardActive != null && cardIdle != null) {
-        //         System.out.println("Berhasil");
-        //     }
-        // }
-        // if (baseGameController.getActivePlayer().getName() != )
-        // System.out.println("Player: " + (this.);
+            if (cardActive != null && cardIdle != null) {
+                cardActive.serang(cardIdle, false);
+            }
+        }
+
         System.out.println("Player: " + this.playerName);
 
         this.setStyle("-fx-background-color:" + "#90ee90");
