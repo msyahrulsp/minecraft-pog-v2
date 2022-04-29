@@ -21,14 +21,14 @@ public class Player {
         this.mana = 0;
     }
 
-    public Player(String name, Integer health, Integer mana, Deck deck, Hand hand, CardHolder addCard, Board board) {
+    public Player(String name, Integer health, Integer mana) {
         this.name = name;
         this.health = health;
         this.mana = mana;
-        this.deck = deck;
-        this.board = board;
-        this.hand = hand;
-        this.addCard = addCard;
+        this.deck = new Deck();
+        this.hand = new Hand();
+        this.addCard = new CardHolder();
+        this.board = new Board();
         this.phase = Phase.DRAW;
     }
 
@@ -159,7 +159,7 @@ public class Player {
         Hand handPlayerOne = new Hand();
         CardHolder addCardPlayerOne = new CardHolder();
         Board boardPlayerOne = new Board();
-        Player playerOne = new Player("kevin", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne, boardPlayerOne);
+        Player playerOne = new Player("kevin", 80, 1);
         try {
             playerOne.deck.loadDeck();
         } catch (Exception err) {

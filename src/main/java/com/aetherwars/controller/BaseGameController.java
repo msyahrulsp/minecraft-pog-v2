@@ -62,20 +62,8 @@ public class BaseGameController {
      */
     @FXML
     public void initialize() {
-        Deck deckPlayerOne = new Deck();
-        Deck deckPlayerTwo = new Deck();
-
-        Hand handPlayerOne = new Hand();
-        Hand handPlayerTwo = new Hand();
-
-        CardHolder addCardOne = new CardHolder();
-        CardHolder addCardTwo = new CardHolder();
-
-        Board boardPlayerOne = new Board();
-        Board boardPlayerTwo = new Board();
-
-        this.playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCardOne, boardPlayerOne);
-        this.playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCardTwo, boardPlayerTwo);
+        this.playerOne = new Player("Player One", 80, 1);
+        this.playerTwo = new Player("Player Two", 80, 1);
 
         this.playerOneController = new PlayerBoardController(this, this.playerOne);
         this.playerTwoController = new PlayerBoardController(this, this.playerTwo);
@@ -311,6 +299,7 @@ public class BaseGameController {
     }
 
     public void setClickedBoardCard(Integer idx) {
+        System.out.println("clicked board card on idx: " + idx);
         this.clickedBoardCard = idx;
     }
 
