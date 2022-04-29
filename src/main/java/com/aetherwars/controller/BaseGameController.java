@@ -1,6 +1,7 @@
 package com.aetherwars.controller;
 
 import com.aetherwars.model.*;
+import com.aetherwars.model.Character;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.Button;
@@ -248,7 +249,16 @@ public class BaseGameController {
                     this.playerTwo.setMana(this.manaCap);
                     this.setDeckInterface(this.activePlayer, false);
                 }
-
+                for (Card c : this.playerOne.getBoard().getCards()){
+                    if (c instanceof Character) {
+                        ((Character) c).decreaseBuff();
+                    }
+                }
+                for (Card c : this.playerTwo.getBoard().getCards()){
+                    if (c instanceof Character) {
+                        ((Character) c).decreaseBuff();
+                    }
+                }
                 this.currentPhase = Phase.DRAW;
             }
             winCondition();
