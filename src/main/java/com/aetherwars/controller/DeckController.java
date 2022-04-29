@@ -51,7 +51,12 @@ public class DeckController extends HBox {
     // onclick dari file .fxmlnya
     @FXML
     public void giveMana() {
-        System.out.println("Give mana here");
+        Character target = this.baseGameController.getActivePlayer().getBoard().getActiveCharacter();
+        if player.getMana() > 0 {
+            target.addExp(4);
+            player.setMana(player.getMana() - 1);
+        }
+        System.out.println("given mana to " + target.getName());
     }
 
     /**
