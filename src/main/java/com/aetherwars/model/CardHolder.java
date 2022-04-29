@@ -32,6 +32,15 @@ public class CardHolder {
     this.elmt.remove(index);
   }
 
+  public int findElmt(Card card) {
+    for (int i = 0; i < this.elmt.size(); i++) {
+      if (this.elmt.get(i).equals(card)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   public void delElmt(Card card) {
     this.elmt.remove(card);
   }

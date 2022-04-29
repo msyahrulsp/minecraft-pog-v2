@@ -7,6 +7,8 @@ import java.util.stream.IntStream;
 import com.aetherwars.AetherWars;
 import com.aetherwars.model.Character;
 import com.aetherwars.model.Player;
+import com.aetherwars.model.Phase;
+import com.aetherwars.model.AlertBox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -66,6 +68,33 @@ public class PlayerBoardController extends StackPane {
         this.playerImage.setImage(playerImg);
         this.playerName.setText(this.player.getName());
         System.out.println(this.player.toString());
+    }
+
+    @FXML
+    public void attackPlayer() {
+        Phase phase = this.baseGameController.getCurrentPhase();
+        Character card = this.baseGameController.getActivePlayerBoardController().getClickedCard();
+        Player activePlayer = this.baseGameController.getActivePlayer();
+        Player idlePlayer = this.baseGameController.getIdlePlayer();
+        if (phase == Phase.ATTACK && card != null) {
+            if (this.player.getName().equals(activePlayer.getName())) {
+                int curHealth = this.baseGameController.getActivePlayer().getHealth();
+                this.baseGameController.getActivePlayer().setHealth(curHealth - card.getAttack());
+                this.baseGameController.getActivePlayerBoardController().playerHealth.setProgress(Double.valueOf(activePlayer.getHealth())/80);
+                if (this.baseGameController.getActivePlayer().getHealth() <= 0) {
+                    AlertBox.display("Player Two Win");
+                    System.exit(0);
+                }
+            } else {
+                int curHealth = this.baseGameController.getIdlePlayer().getHealth();
+                this.baseGameController.getIdlePlayer().setHealth(curHealth - card.getAttack());
+                this.baseGameController.getIdlePlayerBoardController().playerHealth.setProgress(Double.valueOf(idlePlayer.getHealth())/80);
+                if (this.baseGameController.getIdlePlayer().getHealth() <= 0) {
+                    AlertBox.display("Player One Win");
+                    System.exit(0);
+                }
+            }
+        }
     }
 
     public String getPlayerName() {

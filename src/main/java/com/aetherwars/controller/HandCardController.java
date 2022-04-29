@@ -188,7 +188,9 @@ public class HandCardController extends StackPane {
         }
         selectedCardIdx = GridPane.getColumnIndex(this);
         if (this.card instanceof Character) {
-            if (baseGameController.getActivePlayer().getBoard().getSize() < 5) {
+            if (!this.card.isAbleToBeUsedBy(baseGameController.getActivePlayer())) {
+                AlertBox.display("Not Enough Mana");
+            } else if (baseGameController.getActivePlayer().getBoard().getSize() < 5) {
                 System.out.println("new deck size: " + baseGameController.getActivePlayer().getBoard().getSize() + 1);
                 int i;
                 int xPos = -1;
@@ -214,6 +216,7 @@ public class HandCardController extends StackPane {
                 // remove clicked card
                 baseGameController.getDeckController().removeHandSlot(this);
                 this.relayout();
+                baseGameController.getDeckController().setDeckInfo();
             } else {
                 AlertBox.display("Board sudah penuh!");
             }

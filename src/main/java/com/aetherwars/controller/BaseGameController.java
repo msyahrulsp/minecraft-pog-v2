@@ -17,6 +17,7 @@ public class BaseGameController {
     private BoardCardController boardCardController;
 
     private Integer clickedBoardCard;
+    private Integer clickedIdleBoardCard;
 
     /**
      * player one used left board
@@ -299,11 +300,18 @@ public class BaseGameController {
     }
 
     public void setClickedBoardCard(Integer idx) {
-        System.out.println("clicked board card on idx: " + idx);
+        this.clickedBoardCard = idx;
+    }
+
+    public void setClickedIdleBoardCard(Integer idx) {
         this.clickedBoardCard = idx;
     }
 
     public Integer getClickedBoardCard() {
         return this.clickedBoardCard;
+    }
+
+    public Integer getClickedIdleBoardCard() {
+        return this.clickedIdleBoardCard;
     }
 }
