@@ -75,34 +75,55 @@ public class BoardCardController extends StackPane {
         Phase phase = baseGameController.getCurrentPhase();
         String activePlayerName = baseGameController.getActivePlayer().getName();
 
-        baseGameController.setClickedBoardCard(((GridPane)this.getParent()).getChildren().indexOf(this));
-        // TODO Handle attack here
-
         if (!this.playerName.equals(activePlayerName)) {
+            
             baseGameController.getIdlePlayerBoardController().setClickedCard((Character) this.card);
             baseGameController.getIdlePlayerBoardController().setClickedCardController(this);
+
+            int idx = baseGameController.getIdlePlayer().getIdxCard(this.card) + 1;
+            baseGameController.setClickedIdleBoardCard(idx);
         } else {
+            baseGameController.setClickedBoardCard(((GridPane)this.getParent()).getChildren().indexOf(this));
+            System.out.println(baseGameController.getClickedBoardCard());
             baseGameController.getActivePlayerBoardController().setClickedCard((Character) this.card);
             baseGameController.getActivePlayerBoardController().setClickedCardController(this);
         }
 
-        // TODO handle attack ke player
-        // TODO handle death character
-        // serang balik kapan makenya
+        this.setStyle("-fx-background-color:" + "#90ee90");
+        this.getChildren().get(0).setStyle("-fx-border-color:" + "#ffa500");
+        baseGameController.getDeckController().setCardInfo(this.card);
+
         if (phase == phase.ATTACK) {
             Character cardActive = baseGameController.getActivePlayerBoardController().getClickedCard();
             Character cardIdle = baseGameController.getIdlePlayerBoardController().getClickedCard();
 
             if (cardActive != null && cardIdle != null) {
-                cardActive.serang(cardIdle, false);
+                cardActive.serang(cardIdle, true);
+                System.out.println("Here2");
+                System.out.println(cardActive);
+                if (cardActive.getHealth() <= 0) {
+                    System.out.println("Here1");
+                    int idx = baseGameController.getClickedBoardCard() - 1;
+                    System.out.println("Active Idx: " + idx);
+                    baseGameController.getActivePlayer().removeCardFromBoard(idx);
+                }
+
+                if (cardIdle.getHealth() <= 0) {
+                    System.out.println("Here4");
+                    if (cardActive.getHealth() > 0) {
+                        cardActive.addExp(cardIdle.getLvl());
+                    }
+
+                    int idx = baseGameController.getClickedIdleBoardCard() - 1;
+                    System.out.println("Idle Idx: " + idx);
+
+                    baseGameController.getIdlePlayer().removeCardFromBoard(idx);
+                }
+                // this.relayout();
             }
+            // TODO update ui
+            // baseGameController.setDeckInterface(baseGameController.getActivePlayer(), false);
         }
-
-        System.out.println("Player: " + this.playerName);
-
-        this.setStyle("-fx-background-color:" + "#90ee90");
-        this.getChildren().get(0).setStyle("-fx-border-color:" + "#ffa500");
-        baseGameController.getDeckController().setCardInfo(this.card);
     }
 
     public Card getCard() {
@@ -112,5 +133,21 @@ public class BoardCardController extends StackPane {
     public Label getCharLevelLabel() {
         return this.cardLevel;
     }
+
+    // public void relayout() {
+    //     // add removed card to temporary array of card
+    //     RemainingCard.newSize = baseGameController.getDeckController().getHandSlot().getChildren().size();
+    //     for(int j=0; j<RemainingCard.newSize; j++) {
+    //         if (baseGameController.getDeckController().getHandSlot().getChildren().get(j) != null) {
+    //             RemainingCard.card[j] = (HandCardController) baseGameController.getDeckController().getHandSlot().getChildren().get(j); // card 0 1 2 jadi card 0 2
+    //         }
+    //     }
+
+    //     // clear the deck and re-adding remaining cards
+    //     baseGameController.getDeckController().getHandSlot().getChildren().clear();
+    //     for(int k=0; k<RemainingCard.newSize; k++) {
+    //         baseGameController.getDeckController().getHandSlot().add(RemainingCard.card[k], k, 0);
+    //     }
+    // }
 }
 

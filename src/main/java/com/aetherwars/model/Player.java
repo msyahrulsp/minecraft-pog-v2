@@ -149,6 +149,10 @@ public class Player {
         this.board.delElmt(choose);
     }
 
+    public int getIdxCard(Card card) {
+        return this.board.findElmt(card);
+    }
+
     public void getCardInfo(Card card) {
         System.out.println(card);
     }
