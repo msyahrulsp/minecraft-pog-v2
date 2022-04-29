@@ -57,6 +57,8 @@ public class BaseGameController {
     private Label attackPanel;
     @FXML
     private Label endPanel;
+    @FXML
+    private Label curTurn;
 
     /**
      * Initialize all components when main program is started.
@@ -87,6 +89,7 @@ public class BaseGameController {
         //TODO setDrawInterface masih throw null pointer
         this.setPlayerInterface();
         // this.gameState();
+        this.curTurn.setText(this.activePlayer.getName() + "\'s Turn");
 
         this.drawSec.setOnAction(e -> {
             this.setDrawInterface();
@@ -266,6 +269,7 @@ public class BaseGameController {
                         ((Character) c).setAlreadyAttacked(false);
                     }
                 }
+                this.curTurn.setText(this.activePlayer.getName() + "\'s Turn");
                 this.setDeckInterface(this.activePlayer, false);
             }
             winCondition();
