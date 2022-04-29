@@ -15,6 +15,8 @@ public class BaseGameController {
     private HandCardController handCardController;
     private BoardCardController boardCardController;
 
+    private Integer clickedBoardCard;
+
     /**
      * player one used left board
      * player two used right board
@@ -280,5 +282,13 @@ public class BaseGameController {
         if (win) {
             System.exit(0);
         }
+    }
+
+    public void setClickedBoardCard(Integer idx) {
+        this.clickedBoardCard = idx;
+    }
+
+    public Integer getClickedBoardCard() {
+        return this.clickedBoardCard;
     }
 }

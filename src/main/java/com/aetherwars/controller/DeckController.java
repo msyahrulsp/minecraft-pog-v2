@@ -2,6 +2,7 @@ package com.aetherwars.controller;
 
 import com.aetherwars.AetherWars;
 import com.aetherwars.model.*;
+import com.aetherwars.model.Character;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -13,6 +14,7 @@ import javafx.scene.layout.HBox;
 public class DeckController extends HBox {
     private final BaseGameController baseGameController;
     private Player currentPlayer;
+    private Integer clickedCardIdx; // clicked card on board
 
     @FXML
     private GridPane handSlot;
@@ -40,6 +42,7 @@ public class DeckController extends HBox {
             handLoader.load();
             this.currentPlayer = activePlayer;
             this.baseGameController = controller;
+            this.clickedCardIdx = -1;
             this.initDeck(First);
             this.setDeckInfo();
         } catch (Exception e) {
@@ -51,12 +54,22 @@ public class DeckController extends HBox {
     // onclick dari file .fxmlnya
     @FXML
     public void giveMana() {
-        Character target = this.baseGameController.getActivePlayer().getBoard().getActiveCharacter();
-        if player.getMana() > 0 {
-            target.addExp(4);
-            player.setMana(player.getMana() - 1);
+        clickedCardIdx = baseGameController.getClickedBoardCard();
+        if (!this.clickedCardIdx.equals(-1)) {
+            // kalau index cardnya valid
+            BoardCardController target = baseGameController.getActivePlayerBoardController().getClickedCardController(); // baord controller di gridpane player board
+            Character targetChar = (Character) target.getCard();
+            Integer requiredMana = (targetChar.getLvl() + 1)/2;
+            if (targetChar.isAbleToChangeLevel(currentPlayer)) {
+                targetChar.addExp(1); // exp nambah
+                targetChar.handleLevelup(); // level nambah
+                this.manaInfoCount.setText(String.valueOf(currentPlayer.getMana()));
+                target.getCharLevelLabel().setText(String.valueOf(targetChar.getLvl()));
+                System.out.println("after level: " + targetChar.getLvl());
+            } else {
+                AlertBox.display("Mana tidak cukup untuk level up!");
+            }
         }
-        System.out.println("given mana to " + target.getName());
     }
 
     /**

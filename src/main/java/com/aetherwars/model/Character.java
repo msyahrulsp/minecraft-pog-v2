@@ -111,7 +111,7 @@ public class Character extends Card{
         return this.healthUp;
     }
 
-    private void handleLevelup() {
+    public void handleLevelup() {
         int lvlxpcap = this.lvl * 2 - 1;
         while (this.exp >= lvlxpcap && this.lvl < 10){
             this.attack += this.attUp;
@@ -148,6 +148,7 @@ public class Character extends Card{
 
     public boolean isAbleToChangeLevel(Player p) {
         //true jika mana p sudah cukup. jika true langsung mengurangi mana p sesuai mana yang dibutuhkan
+        // buat ngurangin mana
         int manaReq = (this.lvl + 1)/2; // sama aja kayak fungsi ceiling
         if (p.getMana() >= manaReq)
             if (p.getMana() >= manaReq) {

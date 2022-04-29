@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 public class BoardCardController extends StackPane {
@@ -68,17 +69,28 @@ public class BoardCardController extends StackPane {
 
     @FXML
     void onClicked(MouseEvent event) {
+        baseGameController.setClickedBoardCard(((GridPane)this.getParent()).getChildren().indexOf(this));
         // TODO Handle attack here
         baseGameController.getActivePlayerBoardController().setClickedCard((Character) this.card);
         baseGameController.getActivePlayerBoardController().setClickedCardController(this);
+        System.out.println();
         // ini blom ditambahin sama previous attack/health
-        this.cardAttack.setText(String.valueOf(baseGameController.getActivePlayerBoardController().getClickedCard().getAttack()));
-        this.cardHealth.setText(String.valueOf(baseGameController.getActivePlayerBoardController().getClickedCard().getHealth()));
-        System.out.println(baseGameController.getActivePlayerBoardController().getClickedCard().getHealth());
-        System.out.println(baseGameController.getActivePlayerBoardController().getClickedCard().getAttack());
+//        this.cardAttack.setText(String.valueOf(baseGameController.getActivePlayerBoardController().getClickedCard().getAttack()));
+//        this.cardHealth.setText(String.valueOf(baseGameController.getActivePlayerBoardController().getClickedCard().getHealth()));
+//        System.out.println(baseGameController.getActivePlayerBoardController().getClickedCard().getHealth());
+//        System.out.println(baseGameController.getActivePlayerBoardController().getClickedCard().getAttack());
+
         this.setStyle("-fx-background-color:" + "#90ee90");
         this.getChildren().get(0).setStyle("-fx-border-color:" + "#ffa500");
         baseGameController.getDeckController().setCardInfo(this.card);
+    }
+
+    public Card getCard() {
+        return this.card;
+    }
+
+    public Label getCharLevelLabel() {
+        return this.cardLevel;
     }
 }
 
