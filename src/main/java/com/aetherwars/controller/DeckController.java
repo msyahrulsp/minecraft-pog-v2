@@ -63,11 +63,16 @@ public class DeckController extends HBox {
             BoardCardController target = baseGameController.getActivePlayerBoardController().getClickedCardController(); // baord controller di gridpane player board
             Character targetChar = (Character) target.getCard();
             Integer requiredMana = (targetChar.getLvl() + 1)/2;
+
             if (targetChar.isAbleToChangeLevel(currentPlayer)) {
+                String prevExp = ((Integer) targetChar.getExp()).toString();
+                System.out.println(("prev exp: " + prevExp));
                 targetChar.addExp(1); // exp nambah
                 targetChar.handleLevelup(); // level nambah
+                String nextExp = ((Integer)(targetChar.getLvl() * 2 - 1)).toString();
+                System.out.println("next exp: " + nextExp);
                 this.manaInfoCount.setText(String.valueOf(currentPlayer.getMana()));
-                target.getCharLevelLabel().setText(String.valueOf(targetChar.getLvl()));
+                target.getCharLevelLabel().setText(prevExp + "/" + nextExp + " " + String.valueOf("[" + targetChar.getLvl()) + "]");
                 System.out.println("after level: " + targetChar.getLvl());
             } else {
                 AlertBox.display("Mana tidak cukup untuk level up!");

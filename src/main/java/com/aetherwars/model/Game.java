@@ -38,35 +38,35 @@ public class Game {
         return null;
     }
 
-    public static void main(String[] args) {
-        Deck deckPlayerOne = new Deck();
-        Deck deckPlayerTwo = new Deck();
-
-        Hand handPlayerOne = new Hand();
-        Hand handPlayerTwo = new Hand();
-
-        CardHolder addCardPlayerOne = new CardHolder();
-        CardHolder addCardPlayerTwo = new CardHolder();
-
-        Board boardPlayerOne = new Board();
-        Board boardPlayerTwo = new Board();
-
-        Player playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne, boardPlayerOne);
-        Player playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCardPlayerTwo, boardPlayerTwo);
-        
-        Game game = new Game(playerOne, playerTwo);
-
-        try {
-            game.player[0].getDeck().loadDeck();
-            game.player[1].getDeck().loadDeck();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
-        game.player[0].getAddCard().addElmt(game.player[0].getDeck().getElmt(0));
-        game.player[1].getAddCard().addElmt(game.player[1].getDeck().getElmt(0));
-        System.out.println(game.player[0].getAddCard());
-        System.out.println(game.player[1].getAddCard());
+//    public static void main(String[] args) {
+//        Deck deckPlayerOne = new Deck();
+//        Deck deckPlayerTwo = new Deck();
+//
+//        Hand handPlayerOne = new Hand();
+//        Hand handPlayerTwo = new Hand();
+//
+//        CardHolder addCardPlayerOne = new CardHolder();
+//        CardHolder addCardPlayerTwo = new CardHolder();
+//
+//        Board boardPlayerOne = new Board();
+//        Board boardPlayerTwo = new Board();
+//
+//        Player playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCardPlayerOne, boardPlayerOne);
+//        Player playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCardPlayerTwo, boardPlayerTwo);
+//
+//        Game game = new Game(playerOne, playerTwo);
+//
+//        try {
+//            game.player[0].getDeck().loadDeck();
+//            game.player[1].getDeck().loadDeck();
+//        } catch (Exception e) {
+//            System.out.println("Error: " + e.getMessage());
+//        }
+//
+//        game.player[0].getAddCard().addElmt(game.player[0].getDeck().getElmt(0));
+//        game.player[1].getAddCard().addElmt(game.player[1].getDeck().getElmt(0));
+//        System.out.println(game.player[0].getAddCard());
+//        System.out.println(game.player[1].getAddCard());
         
     //     System.out.println(game.player[0].getDeck().getSize());
     //     System.out.println(game.player[1].getDeck().getSize());
@@ -140,6 +140,6 @@ public class Game {
     //     game.player[1].setPhase(game.nextPhase(1));
     //     System.out.println("End of END");
     // }
-    }
+//    }
 
 }

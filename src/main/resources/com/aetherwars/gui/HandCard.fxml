@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#onHover" onMouseExited="#onLeave" prefHeight="181.0" prefWidth="116.0" type="StackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#onHover" onMouseExited="#onLeave" prefHeight="181.0" prefWidth="116.0" style="-fx-border-radius: 15;" type="StackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="BOTTOM_CENTER" prefHeight="159.0" prefWidth="152.0" style="-fx-border-radius: 15;">
          <children>
-            <ImageView fx:id="cardImage" fitHeight="114.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImage" fitHeight="106.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="cardMana" alignment="BOTTOM_CENTER" prefHeight="17.0" prefWidth="116.0" text="MANA 99" />
             <Label fx:id="cardEffect" alignment="BOTTOM_CENTER" prefHeight="17.0" prefWidth="112.0" text="EFFECT" />
-            <Button fx:id="throwBtn" alignment="BOTTOM_CENTER" mnemonicParsing="false" onMouseClicked="#onClickBtn" prefHeight="0.0" prefWidth="53.0" text="Throw">
+            <Button fx:id="throwBtn" alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onClickBtn" prefHeight="25.0" prefWidth="53.0" text="Throw">
                <VBox.margin>
-                  <Insets top="2.0" />
+                  <Insets bottom="-15.0" top="2.0" />
                </VBox.margin>
             </Button>
          </children>
