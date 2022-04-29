@@ -223,85 +223,80 @@ public class HandCardController extends StackPane {
             int atkBuff = ((Potion) this.card).getAttackBuff();
             int healthBuff = ((Potion) this.card).getHealthBuff();
             int duration = ((Potion) this.card).getDuration();
-            this.getChildren().get(0).setStyle("-fx-border-color:" + "#ffa500");
 
-        //    if (this.card.isAbleToBeUsedBy(baseGameController.getActivePlayer())){
-        //        baseGameController.getActivePlayerBoardController().getClickedCard().addBuff(duration, atkBuff, healthBuff);
-        //        System.out.println("Potion " + this.card.getName() + " used on " + baseGameController.getActivePlayerBoardController().getClickedCard().getName());
-        //    }
-        //    else{
-        //        System.out.println("NOT ENOUGH MANA, Potion " + this.card.getName() + " can't be used on " + baseGameController.getActivePlayerBoardController().getClickedCard().getName() );
-        //    }
+            Character targetedChar = baseGameController.getActivePlayerBoardController().getClickedCard();
 
-            baseGameController.getActivePlayerBoardController().getClickedCard().addBuff(duration, atkBuff, healthBuff);
-            removeSpellfromHand();
-            // CHARACTER MATI
-            //    if (targetedChar.getHealth() == 0) {
-            //        Integer selectedCardIdx = GridPane.getColumnIndex(this);
-            //        baseGameController.getActivePlayer().removeCardFromBoard(selectedCardIdx);
-            //    }
+            if (this.card.isAbleToBeUsedBy(baseGameController.getActivePlayer())) {
+                targetedChar.addBuff(duration, atkBuff, healthBuff);
+                removeSpellfromHand();
+                System.out.println("Potion " + this.card.getName() + " used on " + targetedChar.getName());
+
+                if (targetedChar.getHealth() == 0) {
+                    baseGameController.getActivePlayer().removeCardFromBoard(baseGameController.getClickedBoardCard());
+                    System.out.println(targetedChar.getName()+ " has died" );
+                }
+            }
+            else {
+                System.out.println("NOT ENOUGH MANA");
+            }
         }
 
         else if (this.card instanceof  Level) {
-            //TODO benerin class Level & implementasi spell
-//            String levelModifierType = ((Level) this.card).getModifierType();
-//            int targetedCharLvl = baseGameController.getActivePlayerBoardController().getClickedCard().getLvl();
-//
-//            //    if (baseGameController.getActivePlayerBoardController().getClickedCard().isAbleToChangeLevel(baseGameController.getActivePlayer())){
-//            //        copy yang dibawah
-//            //    }
-//            //    else{
-//            //        System.out.println("Cannot use Level spell card due to lack of mana");
-//            //    }
-//
-//            if (levelModifierType.equals("LVLUP")) {
-//                if (targetedCharLvl != 10) {
-//                    baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl+1);
-//                    baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
-//                    removeSpellfromHand();
-//                }
-//                else {
-//                    System.out.println("Target character card is already at max level!");
-//                }
-//            }
-//            else if (levelModifierType.equals("LVLDOWN")) {
-//                if (targetedCharLvl != 1) {
-//                    baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl-1);
-//                    baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
-//                    removeSpellfromHand();
-//                }
-//                else {
-//                    System.out.println("Target character card is already at lowest level!");
-//                }
-//            }
+            String levelModifierType = ((Level) this.card).getModifierType();
+            int targetedCharLvl = baseGameController.getActivePlayerBoardController().getClickedCard().getLvl();
+
+            if (baseGameController.getActivePlayerBoardController().getClickedCard().isAbleToChangeLevel(baseGameController.getActivePlayer())){
+                if (levelModifierType.equals("LVLUP")) {
+                    if (targetedCharLvl != 10) {
+                        baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl+1);
+                        baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
+                        removeSpellfromHand();
+                    }
+                    else {
+                        System.out.println("Target character card is already at max level!");
+                    }
+                }
+                else if (levelModifierType.equals("LVLDOWN")) {
+                    if (targetedCharLvl != 1) {
+                        baseGameController.getActivePlayerBoardController().getClickedCard().setLvl(targetedCharLvl-1);
+                        baseGameController.getActivePlayerBoardController().getClickedCard().setExp(0);
+                        removeSpellfromHand();
+                    }
+                    else {
+                        System.out.println("Target character card is already at lowest level!");
+                    }
+                }
+            }
+            else {
+                System.out.println("Cannot use Level spell card due to lack of mana");
+            }
         }
 
         else if (this.card instanceof  Swap) {
-        //    if (this.card.isAbleToBeUsedBy(baseGameController.getActivePlayer())) {
-        //        copy yang di bawah
-        //    }
-        //    else {
-        //        System.out.println("Cannot use Swap Spell Card due to lack of mana!");
-        //    }
-            Character targetedChar = baseGameController.getActivePlayerBoardController().getClickedCard();
-            System.out.println("Swap " + this.card.getName() + " used on " + baseGameController.getActivePlayerBoardController().getClickedCard().getName());
-            if (targetedChar.getswapDur() > 0) {
-                targetedChar.setswapDur(targetedChar.getswapDur() + ((Swap) this.card).getDuration());
-                removeSpellfromHand();
+            if (this.card.isAbleToBeUsedBy(baseGameController.getActivePlayer())) {
+                Character targetedChar = baseGameController.getActivePlayerBoardController().getClickedCard();
+                if (targetedChar.getswapDur() > 0) {
+                    targetedChar.setswapDur(targetedChar.getswapDur() + ((Swap) this.card).getDuration());
+                    removeSpellfromHand();
+                    System.out.println("Swap " + this.card.getName() + " used on " + targetedChar.getName()+ ", duration increased");
+                }
+                else {
+                    targetedChar.setswapDur(((Swap) this.card).getDuration());
+                    int temp = targetedChar.getHealth();
+                    targetedChar.setHealth(targetedChar.getAttack());
+                    targetedChar.setAttack(temp);
+                    removeSpellfromHand();
+                    System.out.println("Swap " + this.card.getName() + " used on " + targetedChar.getName());
+
+                    if (targetedChar.getHealth() == 0) {
+                        baseGameController.getActivePlayer().removeCardFromBoard(baseGameController.getClickedBoardCard());
+                        System.out.println(targetedChar.getName()+ " has died" );
+
+                    }
+                }
             }
             else {
-                targetedChar.setswapDur(((Swap) this.card).getDuration());
-
-                int temp = targetedChar.getHealth();
-                targetedChar.setHealth(targetedChar.getAttack());
-                targetedChar.setAttack(temp);
-                removeSpellfromHand();
-
-            // CHARACTER MATI
-            //    if (targetedChar.getHealth() == 0) {
-            //        Integer selectedCardIdx = GridPane.getColumnIndex(this);
-            //        baseGameController.getActivePlayer().removeCardFromBoard(selectedCardIdx);
-            //    }
+                System.out.println("Cannot use Swap Spell Card due to lack of mana!");
             }
         }
 
