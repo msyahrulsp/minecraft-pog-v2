@@ -32,7 +32,7 @@ public class Deck extends CardHolder {
         int countCard = 0;
         Random rand = new Random();
         DeckFactory factory = new DeckFactory();
-        while (countCard < 60) {
+        while (countCard < 6) {
           int random = rand.nextInt(11);
           if (random == 0 || random == 5 || random == 6) {
             ToDeck todeck = factory.getDeck("Character");

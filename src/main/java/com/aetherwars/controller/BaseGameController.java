@@ -64,13 +64,14 @@ public class BaseGameController {
         Hand handPlayerOne = new Hand();
         Hand handPlayerTwo = new Hand();
 
-        CardHolder addCard = new CardHolder();
+        CardHolder addCardOne = new CardHolder();
+        CardHolder addCardTwo = new CardHolder();
 
         Board boardPlayerOne = new Board();
         Board boardPlayerTwo = new Board();
 
-        this.playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCard, boardPlayerOne);
-        this.playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCard, boardPlayerTwo);
+        this.playerOne = new Player("Player One", 80, 1, deckPlayerOne, handPlayerOne, addCardOne, boardPlayerOne);
+        this.playerTwo = new Player("Player Two", 80, 1, deckPlayerTwo, handPlayerTwo, addCardTwo, boardPlayerTwo);
 
         this.playerOneController = new PlayerBoardController(this, this.playerOne);
         this.playerTwoController = new PlayerBoardController(this, this.playerTwo);
@@ -207,49 +208,52 @@ public class BaseGameController {
     }
 
     public void nextPhase() {
-        if (this.currentPhase == Phase.DRAW) {
-            this.currentPhase = Phase.PLAN;
-            this.drawPanel.setStyle("-fx-border-color: #000;");
-            this.planPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
-        } else if (this.currentPhase == Phase.PLAN) {
-            this.currentPhase = Phase.ATTACK;
-            this.planPanel.setStyle("-fx-border-color: #000;");
-            this.attackPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
-        } else if (this.currentPhase == Phase.ATTACK) {
-            this.currentPhase = Phase.END;
-            this.attackPanel.setStyle("-fx-border-color: #000;");
-            this.endPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
-        } else if (this.currentPhase == Phase.END) {
-            this.endPanel.setStyle("-fx-border-color: #000;");
-            this.drawPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
-            
-            
-            if (this.activePlayer.getName().equals("Player One")) {
-                this.activePlayer = this.playerTwo;
-                if (this.rounds == 1) {
-                    this.setDeckInterface(this.activePlayer, true);
+        if (isDrawing) {
+            AlertBox.display("Please finish drawing card");
+        } else {
+            if (this.currentPhase == Phase.DRAW) {
+                this.currentPhase = Phase.PLAN;
+                this.drawPanel.setStyle("-fx-border-color: #000;");
+                this.planPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
+            } else if (this.currentPhase == Phase.PLAN) {
+                this.currentPhase = Phase.ATTACK;
+                this.planPanel.setStyle("-fx-border-color: #000;");
+                this.attackPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
+            } else if (this.currentPhase == Phase.ATTACK) {
+                this.currentPhase = Phase.END;
+                this.attackPanel.setStyle("-fx-border-color: #000;");
+                this.endPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
+            } else if (this.currentPhase == Phase.END) {
+                this.endPanel.setStyle("-fx-border-color: #000;");
+                this.drawPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
+
+
+                if (this.activePlayer.getName().equals("Player One")) {
+                    this.activePlayer = this.playerTwo;
+                    if (this.rounds == 1) {
+                        this.setDeckInterface(this.activePlayer, true);
+                    } else {
+                        this.setDeckInterface(this.activePlayer, false);
+                    }
                 } else {
+                    this.activePlayer = this.playerOne;
+                    this.rounds += 1;
+                    this.manaCap += 1;
+
+                    if (this.manaCap > 10) {
+                        this.manaCap = 10;
+                    }
+
+                    this.playerOne.setMana(this.manaCap);
+                    this.playerTwo.setMana(this.manaCap);
                     this.setDeckInterface(this.activePlayer, false);
                 }
-            } else {
-                this.activePlayer = this.playerOne;
-                this.rounds += 1;
-                this.manaCap += 1;
 
-                if (this.manaCap > 10) {
-                    this.manaCap = 10;
-                }
-
-                this.playerOne.setMana(this.manaCap);
-                this.playerTwo.setMana(this.manaCap);
-                this.setDeckInterface(this.activePlayer, false);
+                System.out.println(this.rounds);
+                System.out.println(this.playerOne.getMana());
+                this.currentPhase = Phase.DRAW;
             }
-
-            System.out.println(this.rounds);
-            System.out.println(this.playerOne.getMana());
-            this.currentPhase = Phase.DRAW;
         }
-        
     }
 
     public int getIndex() { return this.index; }
@@ -257,4 +261,6 @@ public class BaseGameController {
     public void setIndex(int idx) { this.index = idx; }
 
     public void setIsDrawing(boolean isDrawing) { this.isDrawing = isDrawing; }
+
+    public boolean getIsDrawing() { return this.isDrawing; }
 }
