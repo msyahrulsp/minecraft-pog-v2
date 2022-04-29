@@ -122,7 +122,14 @@ public class Character extends Card{
         }
         if (this.lvl == 10) this.exp = 0;
     }
-
+    private void handleLeveldown(){
+        if (this.lvl > 1){
+            this.attack -= this.attUp;
+            this.health -= this.healthUp;
+            this.lvl -= 1;
+            
+        } 
+    }
     public void addExp(int expAmount) {
         if (this.lvl < 10){
             this.exp += expAmount;

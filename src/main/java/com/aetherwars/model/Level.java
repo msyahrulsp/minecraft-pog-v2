@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Level extends Spell{
+    private String modifierType;
     public static ArrayList<Level> levelList = new ArrayList<Level>(); //berisi Level "Murni" tapi seharusnya cuma 1 jenis potion untuk level
-    public Level(){
-        super(401,"XP-Bottle","Menambahkan 1 level pada card Karater yang dipilih", 2, "card/spell/xp_bottle.png", spellType.LVL);
+    public Level(String modifierType){
+        super(401,"XP-Bottle","Menambahkan/mengurangi 1 level pada card Karater yang dipilih", 2, "card/spell/xp_bottle.png", spellType.LVL);
+        this.modifierType = modifierType;
         Level.levelList.add(this);
     }
     public Level(Level l){
@@ -20,16 +22,30 @@ public class Level extends Spell{
         }
         return null;
     }
+    public String getModifierType(){
+        return this.modifierType;
+    }
+    public void setModifierType(String modifierType){
+        this.modifierType = modifierType;
+    }
     @Override
     public void useOn(Player caster, Character c){
         if (c.isAbleToBeUsedBy(caster)) {
-            if (c.getLvl() < 10) {
-                c.setExp(0);
+            if (this.modifierType.equals("LVLUP")){
+                if (c.getLvl() < 10) {
+                    c.setExp(0);
 
-                c.addExp(c.getLvl() * 2 - 1);
-                System.out.println("Level up " + c.getName() + " to " + (c.getLvl()));
-            } else {
-                System.out.println(c.getName() + " Level is " + c.getLvl() + ", maximum Level reached");
+                    c.addExp(c.getLvl() * 2 - 1);
+                    System.out.println("Level up " + c.getName() + " to " + (c.getLvl()));
+                } else {
+                    System.out.println(c.getName() + " Level is " + c.getLvl() + ", maximum Level reached");
+                }
+            }
+            else if (this.modifierType.equals("LVLDOWN")){
+                if (c.getLvl() > 1) {
+                    c.setExp(0);
+                    c.setLvl(c.getLvl() - 1);
+                    System.out.println("Level down " + c.getName() + " to " + (c.getLvl()));
             }
         }
         else{
