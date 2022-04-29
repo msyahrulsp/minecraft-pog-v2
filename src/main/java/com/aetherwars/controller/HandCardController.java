@@ -205,7 +205,8 @@ public class HandCardController extends StackPane {
                 }
 
                 if (xPos != -1 && yPos != -1) {
-                    BoardCardController temp = new BoardCardController(this.baseGameController, this.card);
+                    String playerName = baseGameController.getActivePlayer().getName();
+                    BoardCardController temp = new BoardCardController(this.baseGameController, this.card, playerName);
                     baseGameController.getActivePlayer().addCardToBoard(selectedCardIdx); // otomatis throw dari hand
                     activePlayerController.getPlayerBoard().add(temp, yPos, xPos);
                 }

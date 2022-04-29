@@ -21,7 +21,7 @@
                   <VBox prefHeight="71.0" prefWidth="95.0">
                      <children>
                         <ImageView fx:id="cardAttackImg" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="cardAttack" alignment="CENTER" prefHeight="20.0" prefWidth="25.0" text="99" textAlignment="CENTER" />
+                        <Label fx:id="cardAttack" alignment="CENTER" prefHeight="20.0" prefWidth="25.0" wrapText="true" text="99" textAlignment="CENTER" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="10.0" top="5.0" />
@@ -30,7 +30,7 @@
                   <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <ImageView fx:id="cardHealthImg" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="cardHealth" alignment="CENTER" prefHeight="20.0" prefWidth="25.0" text="99" textAlignment="CENTER" />
+                        <Label fx:id="cardHealth" alignment="CENTER" prefHeight="20.0" prefWidth="25.0" wrapText="true" text="99" textAlignment="CENTER" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" right="10.0" top="5.0" />

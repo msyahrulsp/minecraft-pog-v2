@@ -54,9 +54,12 @@ public class DeckController extends HBox {
     // onclick dari file .fxmlnya
     @FXML
     public void giveMana() {
+        // idx kartu yang diklik
         clickedCardIdx = baseGameController.getClickedBoardCard();
         if (!this.clickedCardIdx.equals(-1)) {
             // kalau index cardnya valid
+            
+            // kartu yang ada di controllernya
             BoardCardController target = baseGameController.getActivePlayerBoardController().getClickedCardController(); // baord controller di gridpane player board
             Character targetChar = (Character) target.getCard();
             Integer requiredMana = (targetChar.getLvl() + 1)/2;

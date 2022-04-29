@@ -26,6 +26,7 @@ public class BaseGameController {
     private Player playerTwo;
 
     private Player activePlayer;
+    private Player idlePlayer;
 
     private int index;
     private int rounds;
@@ -92,6 +93,7 @@ public class BaseGameController {
         }
 
         this.activePlayer = this.playerOne;
+        this.idlePlayer = this.playerTwo;
         this.setDeckInterface(this.activePlayer, true);
         //TODO setDrawInterface masih throw null pointer
         this.setPlayerInterface();
@@ -152,8 +154,20 @@ public class BaseGameController {
         return this.activePlayer;
     }
 
+    public Player getIdlePlayer() {
+        return this.idlePlayer;
+    }
+
     public PlayerBoardController getActivePlayerBoardController() {
         if (this.activePlayer.getName().equals("Player One")) {
+            return this.playerOneController;
+        } else {
+            return this.playerTwoController;
+        }
+    }
+
+    public PlayerBoardController getIdlePlayerBoardController() {
+        if (this.idlePlayer.getName().equals("Player One")) {
             return this.playerOneController;
         } else {
             return this.playerTwoController;
@@ -227,15 +241,18 @@ public class BaseGameController {
             } else if (this.currentPhase == Phase.END) {
                 this.endPanel.setStyle("-fx-border-color: #000;");
                 this.drawPanel.setStyle("-fx-border-color: #000; -fx-background-color: #75fc92");
-
+                this.currentPhase = Phase.DRAW;
 
                 if (this.activePlayer.getName().equals("Player One")) {
                     this.activePlayer = this.playerTwo;
+                    this.idlePlayer = this.playerOne;
                     if (this.rounds == 1) {
                         this.setDeckInterface(this.activePlayer, true);
                         return;
+                    }
                 } else {
                     this.activePlayer = this.playerOne;
+                    this.idlePlayer = this.playerTwo;
                     this.rounds += 1;
                     this.manaCap += 1;
 
@@ -247,20 +264,18 @@ public class BaseGameController {
                     this.playerTwo.setMana(this.manaCap);
                 }
 
-                for (Card c : this.playerOne.getBoard().getCards()){
+                for (Card c : this.playerOne.getBoard().getCards()) {
                     if (c instanceof Character) {
                         ((Character) c).decreaseBuff();
                     }
                 }
 
-                for (Card c : this.playerTwo.getBoard().getCards()){
+                for (Card c : this.playerTwo.getBoard().getCards()) {
                     if (c instanceof Character) {
                         ((Character) c).decreaseBuff();
                     }
                 }
-                
                 this.setDeckInterface(this.activePlayer, false);
-                this.currentPhase = Phase.DRAW;
             }
             winCondition();
         }

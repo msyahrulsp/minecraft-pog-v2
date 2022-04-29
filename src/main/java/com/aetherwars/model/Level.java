@@ -28,6 +28,7 @@ public class Level extends Spell{
     public void setModifierType(String modifierType){
         this.modifierType = modifierType;
     }
+    
     @Override
     public void useOn(Player caster, Character c){
         if (c.isAbleToBeUsedBy(caster)) {
@@ -50,28 +51,29 @@ public class Level extends Spell{
         }
         else{
             System.out.println(c.getName() + " is not able to be used by " + caster.getName());
+            }
         }
     }
-    public static void main(String[] args) {
-        Character c1 = new Character(1, "Sepi","sepi nya raju", 3, "-", Type.OVERWORLD,2,2, 3, 4 );
-        Character c2 = new Character(2, "laba","laba di loteng", 3, "-", Type.OVERWORLD,3,2, 3, 4 );
-        Character ingameCard = new Character(c2);
-        System.out.println(ingameCard);
-        Level l = new Level();
-        Level ll = new Level(l);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-//        ll.useOn(ingameCard);
-        System.out.println(ingameCard);
-        // System.out.println(ll);
 
-    }
+    // public static void main(String[] args) {
+    //     Character c1 = new Character(1, "Sepi","sepi nya raju", 3, "-", Type.OVERWORLD,2,2, 3, 4 );
+    //     Character c2 = new Character(2, "laba","laba di loteng", 3, "-", Type.OVERWORLD,3,2, 3, 4 );
+    //     Character ingameCard = new Character(c2);
+    //     System.out.println(ingameCard);
+    //     Level l = new Level();
+    //     Level ll = new Level(l);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    // //    ll.useOn(ingameCard);
+    //     System.out.println(ingameCard);
+    //     System.out.println(ll);
+    // }
 }

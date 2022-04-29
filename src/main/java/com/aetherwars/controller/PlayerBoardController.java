@@ -68,6 +68,10 @@ public class PlayerBoardController extends StackPane {
         System.out.println(this.player.toString());
     }
 
+    public String getPlayerName() {
+        return this.player.getName();
+    }
+
     public GridPane getPlayerBoard() {
         return this.playerBoard;
     }
