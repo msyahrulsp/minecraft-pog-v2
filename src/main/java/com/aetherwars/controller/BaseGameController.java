@@ -187,8 +187,6 @@ public class BaseGameController {
         } else {
             AlertBox.display("Can't draw card in this phase");
         }
-
-//        System.out.println(this.activePlayer.getHand().getCards().size());
     }
 
     public Player getPlayer() {
@@ -249,10 +247,9 @@ public class BaseGameController {
                     this.setDeckInterface(this.activePlayer, false);
                 }
 
-                System.out.println(this.rounds);
-                System.out.println(this.playerOne.getMana());
                 this.currentPhase = Phase.DRAW;
             }
+            winCondition();
         }
     }
 
@@ -263,4 +260,25 @@ public class BaseGameController {
     public void setIsDrawing(boolean isDrawing) { this.isDrawing = isDrawing; }
 
     public boolean getIsDrawing() { return this.isDrawing; }
+
+    public void winCondition() {
+        boolean win = false;
+        if (this.playerOne.getHealth() <= 0) {
+            AlertBox.display("Player Two Win");
+            win = true;
+        } else if (this.playerTwo.getHealth() <= 0) {
+            AlertBox.display("Player One Win");
+            win = true;
+        } else if (this.playerOne.getDeck().getSize() == 0 && this.playerOne.getAddCard().getSize() == 0) {
+            AlertBox.display("Player Two Win");
+            win = true;
+        } else if (this.playerTwo.getDeck().getSize() == 0 && this.playerTwo.getAddCard().getSize() == 0) {
+            AlertBox.display("Player One Win");
+            win = true;
+        }
+
+        if (win) {
+            System.exit(0);
+        }
+    }
 }

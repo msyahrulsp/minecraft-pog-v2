@@ -242,7 +242,7 @@ public class HandCardController extends StackPane {
         }
 
         else if (this.card instanceof  Level) {
-            //TODO benerin class Level
+            //TODO benerin class Level & implementasi spell
 //            String levelModifierType = ((Level) this.card).getModifierType();
 //            int targetedCharLvl = baseGameController.getActivePlayerBoardController().getClickedCard().getLvl();
 //

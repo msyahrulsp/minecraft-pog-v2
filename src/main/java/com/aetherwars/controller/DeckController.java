@@ -47,6 +47,13 @@ public class DeckController extends HBox {
         }
     }
 
+    // TODO handle give mana ke hand here
+    // onclick dari file .fxmlnya
+    @FXML
+    public void giveMana() {
+        System.out.println("Give mana here");
+    }
+
     /**
      * Set deck card info.
      * @param card - onHover card
