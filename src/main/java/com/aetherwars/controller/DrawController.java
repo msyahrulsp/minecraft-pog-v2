@@ -64,17 +64,17 @@ public class DrawController extends VBox {
         System.out.println(this.controller.getIndex());
     }
 
-     public void selectCard() {
+    public void selectCard() {
         int idx = ((HBox)this.getParent()).getChildren().indexOf(this);
         this.controller.setIndex(idx);
 //        System.out.println(this.controller.getIndex());
-        ((VBox)(this.getParent().getParent())).getChildren().clear();
         this.controller.getActivePlayer().addCardToHand(idx);
+        ((VBox)(this.getParent().getParent())).getChildren().clear();
         this.getChildren().clear();
         this.controller.setIsDrawing(false);
         this.controller.setIndex(-1);
         this.controller.getDeckController().addDrawCardDeck();
         this.controller.getDeckController().setDeckInfo();
-//        this.controller.nextPhase();
-     }
+        this.controller.nextPhase();
+    }
 }

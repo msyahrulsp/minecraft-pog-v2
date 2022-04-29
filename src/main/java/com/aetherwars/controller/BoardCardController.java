@@ -68,11 +68,14 @@ public class BoardCardController extends StackPane {
 
     @FXML
     void onClicked(MouseEvent event) {
+        // TODO Handle attack here
         baseGameController.getActivePlayerBoardController().setClickedCard((Character) this.card);
         baseGameController.getActivePlayerBoardController().setClickedCardController(this);
         // ini blom ditambahin sama previous attack/health
         this.cardAttack.setText(String.valueOf(baseGameController.getActivePlayerBoardController().getClickedCard().getAttack()));
         this.cardHealth.setText(String.valueOf(baseGameController.getActivePlayerBoardController().getClickedCard().getHealth()));
+        System.out.println(baseGameController.getActivePlayerBoardController().getClickedCard().getHealth());
+        System.out.println(baseGameController.getActivePlayerBoardController().getClickedCard().getAttack());
         this.setStyle("-fx-background-color:" + "#90ee90");
         this.getChildren().get(0).setStyle("-fx-border-color:" + "#ffa500");
         baseGameController.getDeckController().setCardInfo(this.card);

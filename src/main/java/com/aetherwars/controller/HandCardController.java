@@ -181,6 +181,11 @@ public class HandCardController extends StackPane {
     * memiliki 1 indexing di children dari gridpane player board
      */
     void onClick(MouseEvent event) {
+        Phase phase = this.baseGameController.getCurrentPhase();
+        if (phase != Phase.PLAN) {
+            AlertBox.display("Placing Character can be done\non Planning Phase");
+            return;
+        }
         selectedCardIdx = GridPane.getColumnIndex(this);
         if (this.card instanceof Character) {
             if (baseGameController.getActivePlayer().getBoard().getSize() < 5) {

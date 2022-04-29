@@ -43,6 +43,8 @@ public class BaseGameController {
     @FXML
     private Button nxtPhaseBtn;
     @FXML
+    private Label roundText;
+    @FXML
     private Label drawPanel;
     @FXML
     private Label planPanel;
@@ -108,6 +110,7 @@ public class BaseGameController {
      */
     @FXML
     public void setDeckInterface(Player activePlayer, boolean First) {
+        this.roundText.setText(Integer.toString(this.rounds));
         this.deckSlot.getChildren().clear();
         this.deckController = new DeckController(this, activePlayer, First);
         this.deckSlot.getChildren().add(this.deckController);
@@ -242,27 +245,12 @@ public class BaseGameController {
                 this.setDeckInterface(this.activePlayer, false);
             }
 
-
             System.out.println(this.rounds);
             System.out.println(this.playerOne.getMana());
             this.currentPhase = Phase.DRAW;
-//            if (i == 1) {
-//                rounds++;
-//                capMana++;
-//                if (capMana > 10) {
-//                    capMana = 10;
-//                }
-//                this.player[i].setMana(capMana);
-//            }
         }
         
     }
-
-    // public void gameState() {
-    //     // misal draw udah jalan, sekarang lanjut ke phase plan
-    //     this.activePlayer.setPhase(this.nextPhase(this.activePlayer));
-
-    // }
 
     public int getIndex() { return this.index; }
 
