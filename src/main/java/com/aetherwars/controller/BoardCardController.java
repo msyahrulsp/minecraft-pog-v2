@@ -62,8 +62,8 @@ public class BoardCardController extends StackPane {
         this.cardAttackImg.setImage(attackImg);
         this.cardHealthImg.setImage(healthImg);
 
-        this.cardAttack.setText(Integer.toString(((Character) card).getAttack()));
-        this.cardHealth.setText(Integer.toString(((Character) card).getHealth()));
+        this.cardAttack.setText(Integer.toString(((Character) card).getAttack())+"("+ Integer.toString(((Character) card).getTotalAttackBuff())  +")");
+        this.cardHealth.setText(Integer.toString(((Character) card).getHealth())+"("+ Integer.toString(((Character) card).getTotalHealthBuff())  +")");
     }
 
     @FXML

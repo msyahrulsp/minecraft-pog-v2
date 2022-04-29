@@ -190,7 +190,20 @@ public class Character extends Card{
     public void seeBuff() {
         System.out.println(Arrays.deepToString(this.buffList.toArray()));
     }
-
+    public int getTotalAttackBuff() {
+        int total = 0;
+        for (Triplet<Integer, Integer, Integer> buff : this.buffList) {
+            total += buff.getValue1();
+        }
+        return total;
+    }
+    public int getTotalHealthBuff() {
+        int total = 0;
+        for (Triplet<Integer, Integer, Integer> buff : this.buffList) {
+            total += buff.getValue2();
+        }
+        return total;
+    }
     public static Character getCharacter(int id) {
         for (Character c : Character.characterList){
             if (c.getId() == id) return c;
