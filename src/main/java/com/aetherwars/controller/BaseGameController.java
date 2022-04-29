@@ -233,9 +233,7 @@ public class BaseGameController {
                     this.activePlayer = this.playerTwo;
                     if (this.rounds == 1) {
                         this.setDeckInterface(this.activePlayer, true);
-                    } else {
-                        this.setDeckInterface(this.activePlayer, false);
-                    }
+                        return;
                 } else {
                     this.activePlayer = this.playerOne;
                     this.rounds += 1;
@@ -247,18 +245,21 @@ public class BaseGameController {
 
                     this.playerOne.setMana(this.manaCap);
                     this.playerTwo.setMana(this.manaCap);
-                    this.setDeckInterface(this.activePlayer, false);
                 }
+
                 for (Card c : this.playerOne.getBoard().getCards()){
                     if (c instanceof Character) {
                         ((Character) c).decreaseBuff();
                     }
                 }
+
                 for (Card c : this.playerTwo.getBoard().getCards()){
                     if (c instanceof Character) {
                         ((Character) c).decreaseBuff();
                     }
                 }
+                
+                this.setDeckInterface(this.activePlayer, false);
                 this.currentPhase = Phase.DRAW;
             }
             winCondition();
